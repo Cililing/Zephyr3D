@@ -1,0 +1,12 @@
+[requires]
+glfw/3.3.2@bincrafters/stable
+glad/0.1.33
+stb/20200203
+glm/0.9.8.5@g-truc/stable
+assimp/5.0.1
+imgui/1.75
+bullet3/2.89
+openal/1.19.1
+
+[generators]
+cmake

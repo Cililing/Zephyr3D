@@ -1,0 +1,15 @@
+# Setuptools
+/build
+/dist
+*.eggs
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestFile.cmake
+
+# Visual Studio build files
+*.vcxproj
+*.vcxproj.filters
+*.sln
