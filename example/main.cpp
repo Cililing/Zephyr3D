@@ -1,5 +1,6 @@
 #include "MainScene.h"
 
+#include <Zephyr3D/Engine.h>
 #include <Zephyr3D/init.h>
 
 int main() {
