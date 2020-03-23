@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "scenes/Scene.h"
 
 int zephyr::Engine::Init() {
     // Initialize OpenGL
@@ -33,8 +34,11 @@ int zephyr::Engine::Init() {
     return EXIT_SUCCESS;
 }
 
-void zephyr::Engine::StartScene() {
-
+void zephyr::Engine::StartScene(Scene& scene) {
+    scene.Initialize();
+    scene.CreateScene();
+    scene.Run();
+    scene.Destroy();
 }
 
 void zephyr::Engine::Destroy() {

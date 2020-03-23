@@ -5,10 +5,7 @@ int main() {
     zephyr::Engine::Instance().Init();
 
     MainScene main_scene;
-    main_scene.Initialize();
-    main_scene.CreateScene();
-    main_scene.Run();
-    main_scene.Destroy();
+    zephyr::Engine::Instance().StartScene(main_scene);
 
     zephyr::Engine::Instance().Destroy();
 

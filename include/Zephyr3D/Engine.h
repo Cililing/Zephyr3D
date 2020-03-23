@@ -18,6 +18,8 @@
 #include <fstream>
 #pragma warning(pop)
 
+class Scene;
+
 namespace zephyr {
 
 class Engine {
@@ -33,7 +35,7 @@ public:
     Engine& operator=(Engine&&) = delete;
 
     int Init();
-    void StartScene();
+    void StartScene(Scene& scene);
     void Destroy();
 
     Time& GetTime();
