@@ -1,8 +1,7 @@
 #include "MainScene.h"
 
-#include <Zephyr3D/cbs/components/Camera.h>
-#include <Zephyr3D/cbs/components/DirectionalLight.h>
-#include <Zephyr3D/cbs/components/Cube.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include <Zephyr3D/Engine.h>
 
 void MainScene::CreateScene() {
     FrameRateLimit(60);
@@ -26,7 +25,7 @@ void MainScene::CreateScene() {
         camera->Root().Rotate(glm::vec3(0.0f, glm::radians(-20.0f), 0.0f));
 
         camera->CreateComponent<Camera>(glm::radians(45.0f), 
-                                        static_cast<float>(g_Window.Width()) / static_cast<float>(g_Window.Height()), 
+                                        static_cast<float>(Engine::Instance().GetWindow().Width()) / static_cast<float>(Engine::Instance().GetWindow().Height()), 
                                         0.1f, 
                                         500.0f);
     }

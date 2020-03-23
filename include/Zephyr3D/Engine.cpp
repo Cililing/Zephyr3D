@@ -1,8 +1,5 @@
 #include "Engine.h"
 
-// Global objects
-Window g_Window;
-
 int Engine::Init() {
     // Initialize OpenGL
     glfwInit();
@@ -13,13 +10,13 @@ int Engine::Init() {
     glfwWindowHint(GLFW_SAMPLES, 4);
 
     // Create window
-    g_Window.Initialize(1920, 1080, "Zephyr3D");
-    if (!g_Window) {
+    Engine::Instance().GetWindow().Initialize(1920, 1080, "Zephyr3D");
+    if (!Engine::Instance().GetWindow()) {
         glfwTerminate();
         std::cout << "Failed to create GLFW window\n";
         return EXIT_FAILURE;
     }
-    glfwMakeContextCurrent(g_Window);
+    glfwMakeContextCurrent(Engine::Instance().GetWindow());
 
     // Load glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -28,11 +25,11 @@ int Engine::Init() {
     }
 
     // Set callbacks
-    glfwSetFramebufferSizeCallback(g_Window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(g_Window, mouse_callback);
-    glfwSetScrollCallback(g_Window, scroll_callback);
+    glfwSetFramebufferSizeCallback(Engine::Instance().GetWindow(), framebuffer_size_callback);
+    glfwSetCursorPosCallback(Engine::Instance().GetWindow(), mouse_callback);
+    glfwSetScrollCallback(Engine::Instance().GetWindow(), scroll_callback);
 
-    glfwSetInputMode(g_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(Engine::Instance().GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     return EXIT_SUCCESS;
 }
 
@@ -41,7 +38,7 @@ void Engine::StartScene() {
 }
 
 void Engine::Destroy() {
-    glfwSetWindowShouldClose(g_Window, true);
+    glfwSetWindowShouldClose(Engine::Instance().GetWindow(), true);
     glfwTerminate();
 }
 

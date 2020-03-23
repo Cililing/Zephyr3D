@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "../Engine.h"
 
 void Window::Initialize(unsigned int width, unsigned int height, const std::string& title) {
     m_Width = width;
@@ -11,7 +12,7 @@ void Window::Initialize(unsigned int width, unsigned int height, const std::stri
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     (void*)window;
 
-    g_Window.m_Width = width;
-    g_Window.m_Height = height;
+    Engine::Instance().GetWindow().m_Width = width;
+    Engine::Instance().GetWindow().m_Height = height;
     glViewport(0, 0, width, height);
 }

@@ -39,7 +39,7 @@ public:
     Window& GetWindow();
 
 private:
-    Engine() = default;
+    Engine() {}
 
     Time m_Time;
     Input m_Input;

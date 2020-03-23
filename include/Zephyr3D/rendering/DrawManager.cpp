@@ -1,5 +1,6 @@
 #include "DrawManager.h"
 
+#include "../Engine.h"
 #include "IDrawable.h"
 #include "IShaderProperty.h"
 #include "IGUIWidget.h"
@@ -18,7 +19,7 @@ void DrawManager::Initialize() {
     // Dear imgui initialiation
     /*ImGui::CreateContext();
     ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(g_Window, true);
+    ImGui_ImplGlfw_InitForOpenGL(Engine::Instance().GetWindow(), true);
     ImGui_ImplOpenGL3_Init("#version 330 core");
 
     // Load default font
@@ -170,5 +171,5 @@ void DrawManager::CallDraws() {
     ImGui::EndFrame();*/
 
     // End of drawing
-    glfwSwapBuffers(g_Window);
+    glfwSwapBuffers(Engine::Instance().GetWindow());
 }

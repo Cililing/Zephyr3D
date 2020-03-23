@@ -1,6 +1,7 @@
 #ifndef TextRenderer_h
 #define TextRenderer_h
 
+#include "../../Engine.h"
 #include "Component.h"
 #include "../../rendering/IGUIWidget.h"
 #include "../Object.h"

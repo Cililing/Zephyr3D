@@ -10,7 +10,7 @@ Input::Input()
     , m_MouseFirstMove(true)
     , m_ScrollChanged(true)
     , m_ScrollOffset(0.0f)
-    , m_MousePosition(g_Window.Width() / 2.0f, g_Window.Height() / 2.0f)
+    , m_MousePosition(0.0f, 0.0f)
     , m_MouseLastPosition(m_MousePosition)
     , m_MouseOffset(0.0f) {
     

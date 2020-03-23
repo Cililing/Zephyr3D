@@ -20,7 +20,7 @@ void Scene::Run() {
     Engine::Instance().GetTime().Initialize();
     
     // Game loop
-    while (m_Running && !glfwWindowShouldClose(g_Window)) {
+    while (m_Running && !glfwWindowShouldClose(Engine::Instance().GetWindow())) {
         // If frame rate is greater than limit then wait
         do {
             Engine::Instance().GetTime().Hold();
@@ -29,7 +29,7 @@ void Scene::Run() {
         
         // Update global systems
         Engine::Instance().GetTime().Update();
-        Engine::Instance().GetInput().Update(g_Window);
+        Engine::Instance().GetInput().Update(Engine::Instance().GetWindow());
         
         // Update managers
         m_PhysicsManager.StepSimulation(Engine::Instance().GetTime().DeltaTime());

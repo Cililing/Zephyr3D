@@ -1,6 +1,4 @@
 #include "MainScene.h"
-
-#define STB_IMAGE_IMPLEMENTATION
 #include <Zephyr3D/Engine.h>
 
 int main() {

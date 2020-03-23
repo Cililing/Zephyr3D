@@ -29,6 +29,4 @@ private:
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-extern Window g_Window;
-
 #endif
