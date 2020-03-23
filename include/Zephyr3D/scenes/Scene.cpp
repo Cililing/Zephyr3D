@@ -17,22 +17,22 @@ void Scene::Run() {
 
     // Initialize Time manager as close to game loop as possible
     // to avoid misrepresented delta time
-    Engine::Instance().GetTime().Initialize();
+    zephyr::Engine::Instance().GetTime().Initialize();
     
     // Game loop
-    while (m_Running && !glfwWindowShouldClose(Engine::Instance().GetWindow())) {
+    while (m_Running && !glfwWindowShouldClose(zephyr::Engine::Instance().GetWindow())) {
         // If frame rate is greater than limit then wait
         do {
-            Engine::Instance().GetTime().Hold();
+            zephyr::Engine::Instance().GetTime().Hold();
             glfwPollEvents();
-        } while (Engine::Instance().GetTime().DeltaTime() < m_FrameRateLimit);
+        } while (zephyr::Engine::Instance().GetTime().DeltaTime() < m_FrameRateLimit);
         
         // Update global systems
-        Engine::Instance().GetTime().Update();
-        Engine::Instance().GetInput().Update(Engine::Instance().GetWindow());
+        zephyr::Engine::Instance().GetTime().Update();
+        zephyr::Engine::Instance().GetInput().Update(zephyr::Engine::Instance().GetWindow());
         
         // Update managers
-        m_PhysicsManager.StepSimulation(Engine::Instance().GetTime().DeltaTime());
+        m_PhysicsManager.StepSimulation(zephyr::Engine::Instance().GetTime().DeltaTime());
         m_ObjectManager.ProcessFrame();
         m_DrawManager.CallDraws();
     }
@@ -56,7 +56,7 @@ float Scene::FrameRateLimit() const {
 }
 
 float Scene::FrameRate() const {
-    return 1.0f / Engine::Instance().GetTime().DeltaTime();
+    return 1.0f / zephyr::Engine::Instance().GetTime().DeltaTime();
 }
 
 

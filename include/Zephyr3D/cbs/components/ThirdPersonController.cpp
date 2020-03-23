@@ -19,34 +19,34 @@ void ThirdPersonController::Initialize() {
 
 void ThirdPersonController::Update() {
     // Camera input
-    if (Engine::Instance().GetInput().KeyHold(GLFW_MOUSE_BUTTON_2)) {
+    if (zephyr::Engine::Instance().GetInput().KeyHold(GLFW_MOUSE_BUTTON_2)) {
         // Rotate camera with mouse
-        m_XRotation -= glm::radians(Engine::Instance().GetInput().MouseOffset().y * m_MouseSensitivity);
-        m_YRotation += glm::radians(Engine::Instance().GetInput().MouseOffset().x * m_MouseSensitivity);
+        m_XRotation -= glm::radians(zephyr::Engine::Instance().GetInput().MouseOffset().y * m_MouseSensitivity);
+        m_YRotation += glm::radians(zephyr::Engine::Instance().GetInput().MouseOffset().x * m_MouseSensitivity);
     } else {
         // Rotate camera with numeric keypad
-        if (Engine::Instance().GetInput().KeyPressed(GLFW_KEY_KP_1)) {
+        if (zephyr::Engine::Instance().GetInput().KeyPressed(GLFW_KEY_KP_1)) {
             // Set camera to look at front
             m_XRotation = 0.0f;
             m_YRotation = 0.0f;
-        } else if (Engine::Instance().GetInput().KeyPressed(GLFW_KEY_KP_3)) {
+        } else if (zephyr::Engine::Instance().GetInput().KeyPressed(GLFW_KEY_KP_3)) {
             // Set camera to look at right
             m_XRotation = 0.0f;
             m_YRotation = glm::radians(90.0f);
-        } else if (Engine::Instance().GetInput().KeyPressed(GLFW_KEY_KP_7)) {
+        } else if (zephyr::Engine::Instance().GetInput().KeyPressed(GLFW_KEY_KP_7)) {
             // Set camera to look at top
             m_XRotation = ROTATION_LIMIT;
             m_YRotation = 0.0f;
         } else {
             // Rotate
-            if (Engine::Instance().GetInput().KeyHold(GLFW_KEY_KP_2)) {
+            if (zephyr::Engine::Instance().GetInput().KeyHold(GLFW_KEY_KP_2)) {
                 m_XRotation -= glm::radians(5.0f);
-            } else if (Engine::Instance().GetInput().KeyHold(GLFW_KEY_KP_8)) {
+            } else if (zephyr::Engine::Instance().GetInput().KeyHold(GLFW_KEY_KP_8)) {
                 m_XRotation += glm::radians(5.0f);
             }
-            if (Engine::Instance().GetInput().KeyHold(GLFW_KEY_KP_4)) {
+            if (zephyr::Engine::Instance().GetInput().KeyHold(GLFW_KEY_KP_4)) {
                 m_YRotation -= glm::radians(5.0f);
-            } else if (Engine::Instance().GetInput().KeyHold(GLFW_KEY_KP_6)) {
+            } else if (zephyr::Engine::Instance().GetInput().KeyHold(GLFW_KEY_KP_6)) {
                 m_YRotation += glm::radians(5.0f);
             }
         }

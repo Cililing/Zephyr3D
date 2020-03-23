@@ -1,6 +1,6 @@
 #include "Engine.h"
 
-int Engine::Init() {
+int zephyr::Engine::Init() {
     // Initialize OpenGL
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -33,23 +33,23 @@ int Engine::Init() {
     return EXIT_SUCCESS;
 }
 
-void Engine::StartScene() {
+void zephyr::Engine::StartScene() {
 
 }
 
-void Engine::Destroy() {
+void zephyr::Engine::Destroy() {
     glfwSetWindowShouldClose(Engine::Instance().GetWindow(), true);
     glfwTerminate();
 }
 
-Time& Engine::GetTime() {
+Time& zephyr::Engine::GetTime() {
     return m_Time;
 }
 
-Input& Engine::GetInput() {
+Input& zephyr::Engine::GetInput() {
     return m_Input;
 }
 
-Window& Engine::GetWindow() {
+Window& zephyr::Engine::GetWindow() {
     return m_Window;
 }

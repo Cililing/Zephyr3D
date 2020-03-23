@@ -171,5 +171,5 @@ void DrawManager::CallDraws() {
     ImGui::EndFrame();*/
 
     // End of drawing
-    glfwSwapBuffers(Engine::Instance().GetWindow());
+    glfwSwapBuffers(zephyr::Engine::Instance().GetWindow());
 }

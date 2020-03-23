@@ -24,15 +24,15 @@ void Controller::Update() {
     // 
     m_CurrSteering *= 0.95f;
 
-    if (Engine::Instance().GetInput().KeyHold(m_Forward)) {
+    if (zephyr::Engine::Instance().GetInput().KeyHold(m_Forward)) {
         m_CurrEngineForce = m_MaxEngineForce;
-    } else if (Engine::Instance().GetInput().KeyHold(m_Backward)) {
+    } else if (zephyr::Engine::Instance().GetInput().KeyHold(m_Backward)) {
         m_CurrBreakingForce = m_MaxBreakingForce;
     }
 
-    if (Engine::Instance().GetInput().KeyHold(m_Left) && m_CurrSteering < m_MaxSteering) {
+    if (zephyr::Engine::Instance().GetInput().KeyHold(m_Left) && m_CurrSteering < m_MaxSteering) {
         m_CurrSteering += m_Steering;
-    } else if (Engine::Instance().GetInput().KeyHold(m_Right) && m_CurrSteering > -m_MaxSteering) {
+    } else if (zephyr::Engine::Instance().GetInput().KeyHold(m_Right) && m_CurrSteering > -m_MaxSteering) {
         m_CurrSteering -= m_Steering;
     }
 

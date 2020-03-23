@@ -2,7 +2,7 @@
 #include <Zephyr3D/Engine.h>
 
 int main() {
-    Engine::Instance().Init();
+    zephyr::Engine::Instance().Init();
 
     MainScene main_scene;
     main_scene.Initialize();
@@ -10,7 +10,7 @@ int main() {
     main_scene.Run();
     main_scene.Destroy();
 
-    Engine::Instance().Destroy();
+    zephyr::Engine::Instance().Destroy();
 
     return 0;
 }

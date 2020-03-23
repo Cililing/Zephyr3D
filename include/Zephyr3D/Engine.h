@@ -18,6 +18,8 @@
 #include <fstream>
 #pragma warning(pop)
 
+namespace zephyr {
+
 class Engine {
 public:
     static Engine& Instance() {
@@ -45,5 +47,7 @@ private:
     Input m_Input;
     Window m_Window;
 };
+
+}
 
 #endif
