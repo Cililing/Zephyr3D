@@ -1,16 +1,18 @@
 #include "MainScene.h"
 
+#define STB_IMAGE_IMPLEMENTATION
 #include <Zephyr3D/Engine.h>
-#include <Zephyr3D/init.h>
 
 int main() {
-    init();
+    Engine::Instance().Init();
 
     MainScene main_scene;
     main_scene.Initialize();
     main_scene.CreateScene();
     main_scene.Run();
     main_scene.Destroy();
+
+    Engine::Instance().Destroy();
 
     return 0;
 }
