@@ -76,7 +76,7 @@ void Vehicle::Initialize() {
 
 void Vehicle::Update() {
     const float speed = std::abs(m_Vehicle->getCurrentSpeedKmHour()) / 3.6f; // km/h to m/s
-    const float rotation = speed * g_Time.FixedDeltaTime() / m_WheelCircumference * 2 * M_PI;
+    const float rotation = speed * Engine::Instance().GetTime().FixedDeltaTime() / m_WheelCircumference * 2 * M_PI;
 
     // Not the best solution but works for now
     const float delta_steer = m_Vehicle->getWheelInfo(0).m_steering - m_PrevSteer;

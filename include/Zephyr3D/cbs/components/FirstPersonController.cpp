@@ -44,16 +44,16 @@ void FirstPersonController::Update() {
 
     glm::vec3 movement(0.0f);
     if (g_Input.KeyHold(GLFW_KEY_UP)) {
-        movement.x = m_CurrentMovementSpeed * g_Time.DeltaTime();;
+        movement.x = m_CurrentMovementSpeed * Engine::Instance().GetTime().DeltaTime();;
     }
     if (g_Input.KeyHold(GLFW_KEY_DOWN)) {
-        movement.x = -m_CurrentMovementSpeed * g_Time.DeltaTime();;
+        movement.x = -m_CurrentMovementSpeed * Engine::Instance().GetTime().DeltaTime();;
     }
     if (g_Input.KeyHold(GLFW_KEY_LEFT)) {
-        movement.z = -m_CurrentMovementSpeed * g_Time.DeltaTime();;
+        movement.z = -m_CurrentMovementSpeed * Engine::Instance().GetTime().DeltaTime();;
     }
     if (g_Input.KeyHold(GLFW_KEY_RIGHT)) {
-        movement.z = m_CurrentMovementSpeed * g_Time.DeltaTime();;
+        movement.z = m_CurrentMovementSpeed * Engine::Instance().GetTime().DeltaTime();;
     }
 
     TransformIn.Value()->Move(movement);

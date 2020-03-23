@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "../Engine.h"
 
 Scene::Scene() 
     : m_ObjectManager(*this)
@@ -16,22 +17,22 @@ void Scene::Run() {
 
     // Initialize Time manager as close to game loop as possible
     // to avoid misrepresented delta time
-    g_Time.Initialize();
+    Engine::Instance().GetTime().Initialize();
     
     // Game loop
     while (m_Running && !glfwWindowShouldClose(g_Window)) {
         // If frame rate is greater than limit then wait
         do {
-            g_Time.Hold();
+            Engine::Instance().GetTime().Hold();
             glfwPollEvents();
-        } while (g_Time.DeltaTime() < m_FrameRateLimit);
+        } while (Engine::Instance().GetTime().DeltaTime() < m_FrameRateLimit);
         
         // Update global systems
-        g_Time.Update();
+        Engine::Instance().GetTime().Update();
         g_Input.Update(g_Window);
         
         // Update managers
-        m_PhysicsManager.StepSimulation(g_Time.DeltaTime());
+        m_PhysicsManager.StepSimulation(Engine::Instance().GetTime().DeltaTime());
         m_ObjectManager.ProcessFrame();
         m_DrawManager.CallDraws();
     }
@@ -48,6 +49,14 @@ void Scene::Exit() {
 
 void Scene::FrameRateLimit(unsigned int frame_rate) {
     m_FrameRateLimit = frame_rate != 0 ? 1.0f / (float)frame_rate : 0.0f;
+}
+
+float Scene::FrameRateLimit() const {
+    return m_FrameRateLimit;
+}
+
+float Scene::FrameRate() const {
+    return 1.0f / Engine::Instance().GetTime().DeltaTime();
 }
 
 

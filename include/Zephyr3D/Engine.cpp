@@ -1,7 +1,6 @@
 #include "Engine.h"
 
 // Global objects
-Time g_Time;
 Input g_Input;
 Window g_Window;
 
@@ -45,4 +44,16 @@ void Engine::StartScene() {
 void Engine::Destroy() {
     glfwSetWindowShouldClose(g_Window, true);
     glfwTerminate();
+}
+
+Time& Engine::GetTime() {
+    return m_Time;
+}
+
+Input& Engine::GetInput() {
+    return m_Input;
+}
+
+Window& Engine::GetWindow() {
+    return m_Window;
 }

@@ -32,8 +32,8 @@ public:
     // Scene functions
     void Exit();
     void FrameRateLimit(unsigned int frame_rate);
-    float FrameRateLimit() const { return m_FrameRateLimit; }
-    float FrameRate() const { return 1.0f / g_Time.DeltaTime(); }
+    float FrameRateLimit() const;
+    float FrameRate() const;
 
     // ObjectManager functions
     Object* CreateObject(const std::string& name);

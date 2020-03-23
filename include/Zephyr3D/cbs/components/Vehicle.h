@@ -1,6 +1,7 @@
 #ifndef Vehicle_h
 #define Vehicle_h
 
+#include "../../Engine.h"
 #include "Component.h"
 #include "../connections/PropertyIn.h"
 #include "../connections/PropertyOut.h"

@@ -1,6 +1,10 @@
 #ifndef Engine_h
 #define Engine_h
 
+#include "Zephyr3D/utilities/Time.h"
+#include "Zephyr3D/utilities/Input.h"
+#include "Zephyr3D/utilities/Window.h"
+
 #pragma warning(push, 0)
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -13,10 +17,6 @@
 #include <iostream>
 #include <fstream>
 #pragma warning(pop)
-
-#include "Zephyr3D/utilities/Time.h"
-#include "Zephyr3D/utilities/Input.h"
-#include "Zephyr3D/utilities/Window.h"
 
 class Engine {
 public:
@@ -34,8 +34,16 @@ public:
     void StartScene();
     void Destroy();
 
+    Time& GetTime();
+    Input& GetInput();
+    Window& GetWindow();
+
 private:
     Engine() = default;
+
+    Time m_Time;
+    Input m_Input;
+    Window m_Window;
 };
 
 #endif

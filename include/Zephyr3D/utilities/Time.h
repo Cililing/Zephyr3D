@@ -35,6 +35,4 @@ private:
     unsigned int m_TimeMultiplier;
 };
 
-extern Time g_Time;
-
 #endif

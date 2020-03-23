@@ -1,6 +1,7 @@
 #ifndef FirstPersonController_h
 #define FirstPersonController_h
 
+#include "../../Engine.h"
 #include "Component.h"
 #include "../Object.h"
 #include "../connections/PropertyIn.h"
