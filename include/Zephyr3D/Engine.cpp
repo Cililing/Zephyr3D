@@ -1,7 +1,6 @@
 #include "Engine.h"
 
 // Global objects
-Input g_Input;
 Window g_Window;
 
 int Engine::Init() {

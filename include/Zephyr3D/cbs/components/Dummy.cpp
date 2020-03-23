@@ -8,7 +8,7 @@ void Dummy::Initialize() {
 }
 
 void Dummy::Update() {
-    if (g_Input.KeyPressed(GLFW_MOUSE_BUTTON_1)) {
+    if (Engine::Instance().GetInput().KeyPressed(GLFW_MOUSE_BUTTON_1)) {
         btVector3 start(0.0f, -0.5f, -4.0f);
         btVector3 end(0.0f, -0.5f, 4.0f);
         btDynamicsWorld::ClosestRayResultCallback raycast(start, end);

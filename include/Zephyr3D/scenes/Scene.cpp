@@ -29,7 +29,7 @@ void Scene::Run() {
         
         // Update global systems
         Engine::Instance().GetTime().Update();
-        g_Input.Update(g_Window);
+        Engine::Instance().GetInput().Update(g_Window);
         
         // Update managers
         m_PhysicsManager.StepSimulation(Engine::Instance().GetTime().DeltaTime());

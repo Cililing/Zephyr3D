@@ -24,15 +24,15 @@ void Controller::Update() {
     // 
     m_CurrSteering *= 0.95f;
 
-    if (g_Input.KeyHold(m_Forward)) {
+    if (Engine::Instance().GetInput().KeyHold(m_Forward)) {
         m_CurrEngineForce = m_MaxEngineForce;
-    } else if (g_Input.KeyHold(m_Backward)) {
+    } else if (Engine::Instance().GetInput().KeyHold(m_Backward)) {
         m_CurrBreakingForce = m_MaxBreakingForce;
     }
 
-    if (g_Input.KeyHold(m_Left) && m_CurrSteering < m_MaxSteering) {
+    if (Engine::Instance().GetInput().KeyHold(m_Left) && m_CurrSteering < m_MaxSteering) {
         m_CurrSteering += m_Steering;
-    } else if (g_Input.KeyHold(m_Right) && m_CurrSteering > -m_MaxSteering) {
+    } else if (Engine::Instance().GetInput().KeyHold(m_Right) && m_CurrSteering > -m_MaxSteering) {
         m_CurrSteering -= m_Steering;
     }
 

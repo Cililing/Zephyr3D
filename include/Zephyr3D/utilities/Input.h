@@ -54,6 +54,4 @@ private:
 void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);
 void scroll_callback(GLFWwindow* window, double x_pos, double y_pos);
 
-extern Input g_Input;
-
 #endif

@@ -1,6 +1,7 @@
 #ifndef Dummy_h
 #define Dummy_h
 
+#include "../../Engine.h"
 #include "Component.h"
 
 class Dummy : public Component {

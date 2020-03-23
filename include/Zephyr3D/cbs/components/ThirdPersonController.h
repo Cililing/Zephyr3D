@@ -1,6 +1,7 @@
 #ifndef ThirdPersonController_h
 #define ThirdPersonController_h
 
+#include "../../Engine.h"
 #include "Component.h"
 #include "../Object.h"
 #include "../../scenes/Scene.h"

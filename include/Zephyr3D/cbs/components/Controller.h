@@ -1,6 +1,7 @@
 #ifndef Controller_h
 #define Controller_h
 
+#include "../../Engine.h"
 #include "Component.h"
 #include "../connections/PropertyIn.h"
 #include "../connections/MessageOut.h"

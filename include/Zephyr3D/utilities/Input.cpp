@@ -1,5 +1,6 @@
 #include "Input.h"
 #include "Window.h"
+#include "../Engine.h"
 
 #pragma warning(disable: 26495)
 Input::Input()
@@ -95,20 +96,20 @@ Input::EKeyState Input::KeyState(int glfw_key_enum) const {
 void mouse_callback(GLFWwindow* window, double x_pos, double y_pos) {
     (void*)window;
 
-    g_Input.m_MousePosition.x = static_cast<float>(x_pos);
-    g_Input.m_MousePosition.y = static_cast<float>(y_pos);
+    Engine::Instance().GetInput().m_MousePosition.x = static_cast<float>(x_pos);
+    Engine::Instance().GetInput().m_MousePosition.y = static_cast<float>(y_pos);
     
     // Executed only once at the beginning
-    if (g_Input.m_MouseFirstMove) {
-        g_Input.m_MouseLastPosition = g_Input.m_MousePosition;
-        g_Input.m_MouseFirstMove = false;
+    if (Engine::Instance().GetInput().m_MouseFirstMove) {
+        Engine::Instance().GetInput().m_MouseLastPosition = Engine::Instance().GetInput().m_MousePosition;
+        Engine::Instance().GetInput().m_MouseFirstMove = false;
     }
 }
 
 void scroll_callback(GLFWwindow* window, double x_offset, double y_offset) {
     (void*)window;
     (void)x_offset;
-    g_Input.m_ScrollOffset = static_cast<float>(y_offset);
+    Engine::Instance().GetInput().m_ScrollOffset = static_cast<float>(y_offset);
     
-    g_Input.m_ScrollChanged = true;
+    Engine::Instance().GetInput().m_ScrollChanged = true;
 }
