@@ -6,6 +6,8 @@
 
 #include <vector>
 
+namespace zephyr::rendering {
+
 class Model {
 public:
     explicit Model(const RawModel& raw_model);
@@ -22,5 +24,7 @@ public:
 private:
     std::vector<Mesh> m_Meshes;
 };
+
+}
 
 #endif

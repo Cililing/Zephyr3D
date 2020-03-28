@@ -3,6 +3,8 @@
 
 #include "ShaderProgram.h"
 
+namespace zephyr::rendering {
+
 class IDrawable {
 public:
     IDrawable() = default;
@@ -14,5 +16,7 @@ public:
 
     virtual void Draw(const ShaderProgram &shader) const = 0;
 };
+
+}
 
 #endif

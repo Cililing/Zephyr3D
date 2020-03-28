@@ -24,14 +24,14 @@
 constexpr float NoiseIncrement = 0.1f;
 
 template <unsigned int Width, unsigned int Length>
-class Chunk : public IDrawable, public IPhysicalObject {
+class Chunk : public zephyr::rendering::IDrawable, public IPhysicalObject {
     using Grid_t = std::array<std::array<float, Length + 1>, Width + 1>;
 
 public:
     Chunk(const glm::ivec2& chunk_index, const RawTexture& texture, float min_height, float max_height);
     ~Chunk();
 
-    void Draw(const ShaderProgram& shader) const override;
+    void Draw(const zephyr::rendering::ShaderProgram& shader) const override;
 
     void OnCollision(const btCollisionObject* collider) override {}
     void PhysicsUpdate() override {}
@@ -52,7 +52,7 @@ private:
     GLuint m_VBO;
     GLuint m_EBO;
     GLuint m_IndicesCount;
-    std::unique_ptr<Texture> m_Texture;
+    std::unique_ptr<zephyr::rendering::Texture> m_Texture;
 
     // Physics
     btRigidBody* m_RigidBody;
@@ -62,7 +62,7 @@ private:
 
 template<unsigned int Width, unsigned int Length>
 inline Chunk<Width, Length>::Chunk(const glm::ivec2& chunk_index, const RawTexture& texture, float min_height, float max_height)
-    : m_Texture(std::make_unique<Texture>(texture, Texture::EType::Diffuse))
+    : m_Texture(std::make_unique<zephyr::rendering::Texture>(texture, zephyr::rendering::Texture::EType::Diffuse))
     , m_ChunkIndex(chunk_index)
     , m_IndicesCount(Width* Length * 6) {
 
@@ -88,7 +88,7 @@ inline Chunk<Width, Length>::~Chunk() {
 }
 
 template<unsigned int Width, unsigned int Length>
-inline void Chunk<Width, Length>::Draw(const ShaderProgram& shader) const {
+inline void Chunk<Width, Length>::Draw(const zephyr::rendering::ShaderProgram& shader) const {
     shader.Uniform("model", glm::mat4(1.0f));
 
     glActiveTexture(GL_TEXTURE0);

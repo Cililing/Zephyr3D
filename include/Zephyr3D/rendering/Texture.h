@@ -7,6 +7,8 @@
 #include <glad/glad.h>
 #pragma warning(pop)
 
+namespace zephyr::rendering {
+
 class Texture {
 public:
     enum class EType {
@@ -43,6 +45,8 @@ private:
     GLuint m_ID;
     EType m_Type;
 };
+
+}
 
 #endif
 

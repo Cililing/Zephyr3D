@@ -3,6 +3,8 @@
 
 #include "../IDrawable.h"
 
+namespace zephyr::rendering {
+
 class Sphere : public IDrawable {
 public:
     Sphere(glm::mat4 model, glm::vec3 color);
@@ -22,5 +24,7 @@ private:
     GLuint m_VAO;
     glm::mat4 m_Model;
 };
+
+}
 
 #endif

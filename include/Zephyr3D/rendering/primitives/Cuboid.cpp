@@ -9,7 +9,7 @@
 //G  0.5f,  0.5f, -0.5f, color.x, color.y, color.z,
 //H  0.5f,  0.5f,  0.5f, color.x, color.y, color.z,
 
-Cuboid::Cuboid(glm::mat4 model, glm::vec3 color)
+zephyr::rendering::Cuboid::Cuboid(glm::mat4 model, glm::vec3 color)
     : m_Model(model) {
     float vertices[] = {
         -0.5f, -0.5f, -0.5f, color.x, color.y, color.z,
@@ -50,12 +50,12 @@ Cuboid::Cuboid(glm::mat4 model, glm::vec3 color)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-Cuboid::~Cuboid() {
+zephyr::rendering::Cuboid::~Cuboid() {
     glDeleteVertexArrays(1, &m_VAO);
     glDeleteBuffers(1, &m_VBO);
 }
 
-void Cuboid::Draw(const ShaderProgram& shader) const {
+void zephyr::rendering::Cuboid::Draw(const ShaderProgram& shader) const {
     shader.Uniform("model", m_Model);
 
     glBindVertexArray(m_VAO);

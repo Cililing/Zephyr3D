@@ -11,22 +11,22 @@
 #include "../../rendering/Model/Model.h"
 
 class Transform;
-class MeshRenderer : public Component, public IDrawable {
+class MeshRenderer : public Component, public zephyr::rendering::IDrawable {
 public:
-    MeshRenderer(RawModel& model, EShaderType shader);
+    MeshRenderer(RawModel& model, zephyr::rendering::EShaderType shader);
 
     void Initialize() override;
     void Destroy() override;
 
-    void Draw(const ShaderProgram& shader) const override;
+    void Draw(const zephyr::rendering::ShaderProgram& shader) const override;
 
     PropertyIn<Transform*> TransformIn{ this };
 
 private:
-    void DrawMesh(const ShaderProgram& shader, const Mesh& mesh) const;
+    void DrawMesh(const zephyr::rendering::ShaderProgram& shader, const zephyr::rendering::Mesh& mesh) const;
 
-    Model m_Model;
-    EShaderType m_ShaderType;
+    zephyr::rendering::Model m_Model;
+    zephyr::rendering::EShaderType m_ShaderType;
 };
 
 #pragma warning(default: 26495)

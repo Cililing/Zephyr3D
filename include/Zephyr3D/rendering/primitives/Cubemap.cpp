@@ -1,12 +1,12 @@
 #include "Cubemap.h"
 #include "../DrawManager.h"
 
-Cubemap::Cubemap(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front) {
+zephyr::rendering::Cubemap::Cubemap(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front) {
     m_Load(right, left, top, bottom, back, front);
     m_Initialize();
 }
 
-void Cubemap::Draw(const ShaderProgram& shader) const {
+void zephyr::rendering::Cubemap::Draw(const ShaderProgram& shader) const {
     shader.Uniform("skybox", 0);
     
     glBindVertexArray(m_VAO);
@@ -16,7 +16,7 @@ void Cubemap::Draw(const ShaderProgram& shader) const {
     glBindVertexArray(0);
 }
 
-void Cubemap::m_Load(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front) {
+void zephyr::rendering::Cubemap::m_Load(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front) {
     glGenTextures(1, &m_ID);
     glBindTexture(GL_TEXTURE_CUBE_MAP, m_ID);
     
@@ -76,7 +76,7 @@ void Cubemap::m_Load(const std::string& right, const std::string& left, const st
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 }
 
-void Cubemap::m_Initialize() {
+void zephyr::rendering::Cubemap::m_Initialize() {
     float vertices[] = {
         -1.0f,  1.0f, -1.0f,
         -1.0f, -1.0f, -1.0f,

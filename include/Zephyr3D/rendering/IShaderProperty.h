@@ -3,6 +3,8 @@
 
 #include "ShaderProgram.h"
 
+namespace zephyr::rendering {
+
 class IShaderProperty {
 public:
     IShaderProperty() = default;
@@ -14,5 +16,7 @@ public:
 
     virtual void SetProperty(const ShaderProgram& shader) const = 0;
 };
+
+}
 
 #endif

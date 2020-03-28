@@ -16,6 +16,8 @@
 #include <sstream>
 #pragma warning(pop)
 
+namespace zephyr::rendering {
+
 class IDrawable;
 class IShaderProperty;
 
@@ -75,5 +77,7 @@ private:
 };
 
 ENABLE_BITMASK_OPERATORS(ShaderProgram::ETrait);
+
+}
 
 #endif

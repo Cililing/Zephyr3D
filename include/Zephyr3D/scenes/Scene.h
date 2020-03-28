@@ -40,12 +40,12 @@ public:
     void DestroyObject(Object::ID_t id);
 
     // DrawManager functions
-    void RegisterDrawCall(const IDrawable* drawable, EShaderType shader);
-    void UnregisterDrawCall(const IDrawable* drawable, EShaderType shader);
-    void RegisterShaderProperty(const IShaderProperty* property, EShaderType shader);
-    void UnregisterShaderProperty(const IShaderProperty* property, EShaderType shader);
-    void RegisterGUIWidget(IGUIWidget* widget);
-    void UnregisterGUIWidget(IGUIWidget* widget);
+    void RegisterDrawCall(const zephyr::rendering::IDrawable* drawable, zephyr::rendering::EShaderType shader);
+    void UnregisterDrawCall(const zephyr::rendering::IDrawable* drawable, zephyr::rendering::EShaderType shader);
+    void RegisterShaderProperty(const zephyr::rendering::IShaderProperty* property, zephyr::rendering::EShaderType shader);
+    void UnregisterShaderProperty(const zephyr::rendering::IShaderProperty* property, zephyr::rendering::EShaderType shader);
+    void RegisterGUIWidget(zephyr::rendering::IGUIWidget* widget);
+    void UnregisterGUIWidget(zephyr::rendering::IGUIWidget* widget);
     void DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color);
     void DrawPlane(glm::mat4 model, glm::vec3 color);
     void DrawCuboid(glm::mat4 model, glm::vec3 color);
@@ -82,7 +82,7 @@ public:
 
 private:
     ObjectManager m_ObjectManager;
-    DrawManager m_DrawManager;
+    zephyr::rendering::DrawManager m_DrawManager;
     PhysicsManager m_PhysicsManager;
     AudioManager m_AudioManager;
     ResourcesManager m_ResourceManager;

@@ -12,7 +12,7 @@
 #include "../rendering/primitives/Cubemap.h"
 #include "../cbs/components/Camera.h"
 
-void DrawManager::Initialize() {
+void zephyr::rendering::DrawManager::Initialize() {
     INFO_LOG(Logger::ESender::Rendering, "Initializing draw manager");
 
     // TODO: Dear ImGui
@@ -47,46 +47,46 @@ void DrawManager::Initialize() {
     glEnable(GL_MULTISAMPLE);
 }
 
-void DrawManager::RegisterCamera(Camera *camera) {
+void zephyr::rendering::DrawManager::RegisterCamera(Camera *camera) {
     m_Camera = camera;
 }
 
-Camera* DrawManager::MainCamera() const {
+Camera* zephyr::rendering::DrawManager::MainCamera() const {
     return m_Camera;
 }
 
-void DrawManager::Skybox(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front) {
+void zephyr::rendering::DrawManager::Skybox(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front) {
     m_Skybox = std::make_unique<Cubemap>(right, left, top, bottom, back, front);
 }
 
-void DrawManager::Background(const glm::vec3& background) {
+void zephyr::rendering::DrawManager::Background(const glm::vec3& background) {
     m_Background = background;
 }
 
-void DrawManager::RegisterDrawCall(const IDrawable* drawable, EShaderType shader) {
+void zephyr::rendering::DrawManager::RegisterDrawCall(const IDrawable* drawable, EShaderType shader) {
     m_ShaderPrograms[static_cast<size_t>(shader)].RegisterDrawCall(drawable);
 }
 
-void DrawManager::UnregisterDrawCall(const IDrawable* drawable, EShaderType shader) {
+void zephyr::rendering::DrawManager::UnregisterDrawCall(const IDrawable* drawable, EShaderType shader) {
     m_ShaderPrograms[static_cast<size_t>(shader)].UnregisterDrawCall(drawable);
 }
 
-void DrawManager::RegisterShaderProperty(const IShaderProperty* property, EShaderType shader) {
+void zephyr::rendering::DrawManager::RegisterShaderProperty(const IShaderProperty* property, EShaderType shader) {
     m_ShaderPrograms[static_cast<size_t>(shader)].RegisterShaderProperty(property);
 }
 
-void DrawManager::UnregisterShaderProperty(const IShaderProperty* property, EShaderType shader) {
+void zephyr::rendering::DrawManager::UnregisterShaderProperty(const IShaderProperty* property, EShaderType shader) {
     m_ShaderPrograms[static_cast<size_t>(shader)].UnregisterShaderProperty(property);
 }
 
-void DrawManager::RegisterGUIWidget(IGUIWidget* widget) {
+void zephyr::rendering::DrawManager::RegisterGUIWidget(IGUIWidget* widget) {
     // Ensure that each widget is registered at most once
     assert(std::find(m_GUIWidgets.begin(), m_GUIWidgets.end(), widget) == m_GUIWidgets.end());
 
     m_GUIWidgets.push_back(widget);
 }
 
-void DrawManager::UnregisterGUIWidget(IGUIWidget* widget) {
+void zephyr::rendering::DrawManager::UnregisterGUIWidget(IGUIWidget* widget) {
     // Unregistering not registered widget has no effect
     auto to_erase = std::find(m_GUIWidgets.begin(), m_GUIWidgets.end(), widget);
     if (to_erase != m_GUIWidgets.end()) {
@@ -95,26 +95,26 @@ void DrawManager::UnregisterGUIWidget(IGUIWidget* widget) {
 }
 
 // TODO optimise 
-void DrawManager::DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color) {
+void zephyr::rendering::DrawManager::DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color) {
     m_NextFrameDraws.push(new Line(start, end, color));
 }
 
 // TODO optimise
-void DrawManager::DrawPlane(glm::mat4 model, glm::vec3 color) {
+void zephyr::rendering::DrawManager::DrawPlane(glm::mat4 model, glm::vec3 color) {
     m_NextFrameDraws.push(new Plane(model, color));
 }
 
 // TODO optimise
-void DrawManager::DrawCuboid(glm::mat4 model, glm::vec3 color) {
+void zephyr::rendering::DrawManager::DrawCuboid(glm::mat4 model, glm::vec3 color) {
     m_NextFrameDraws.push(new Cuboid(model, color));
 }
 
 // TODO optimise
-void DrawManager::DrawSphere(glm::mat4 model, glm::vec3 color) {
+void zephyr::rendering::DrawManager::DrawSphere(glm::mat4 model, glm::vec3 color) {
 
 }
 
-void DrawManager::CallDraws() {
+void zephyr::rendering::DrawManager::CallDraws() {
     glClearColor(m_Background.x, m_Background.y, m_Background.z, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

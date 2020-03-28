@@ -1,6 +1,6 @@
 #include "Plane.h"
 
-Plane::Plane(glm::mat4 model, glm::vec3 color)
+zephyr::rendering::Plane::Plane(glm::mat4 model, glm::vec3 color)
     : m_Model(model) {
     float vertices[] = {
          0.5f,  0.5f, 0.0f, color.x, color.y, color.z, // top right
@@ -29,12 +29,12 @@ Plane::Plane(glm::mat4 model, glm::vec3 color)
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 }
 
-Plane::~Plane() {
+zephyr::rendering::Plane::~Plane() {
     glDeleteBuffers(1, &m_VBO);
     glDeleteVertexArrays(1, &m_VAO);
 }
 
-void Plane::Draw(const ShaderProgram& shader) const {
+void zephyr::rendering::Plane::Draw(const ShaderProgram& shader) const {
     shader.Uniform("model", m_Model);
 
     glBindVertexArray(m_VAO);

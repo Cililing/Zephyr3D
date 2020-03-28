@@ -11,14 +11,14 @@
 #include <glm/glm.hpp>
 #pragma warning(pop)
 
-class PointLight : public Component, public IShaderProperty {
+class PointLight : public Component, public zephyr::rendering::IShaderProperty {
 public:
     PointLight(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic);
     
     void Initialize() override;
     void Destroy() override;
     
-    void SetProperty(const ShaderProgram& shader) const override;
+    void SetProperty(const zephyr::rendering::ShaderProgram& shader) const override;
     
     const glm::vec3& Ambient() const { return m_Ambient; }
     void Ambient(const glm::vec3& ambient);

@@ -10,6 +10,8 @@
 
 #include <vector>
 
+namespace zephyr::rendering {
+
 class Mesh {
 public:
     explicit Mesh(const RawMesh& raw_mesh);
@@ -38,5 +40,7 @@ private:
     std::unique_ptr<Texture> m_Specular{ nullptr };
     float m_Shininess;
 };
+
+}
 
 #endif

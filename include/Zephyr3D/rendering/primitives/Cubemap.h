@@ -10,6 +10,8 @@
 #include <iostream>
 #include <string>
 
+namespace zephyr::rendering {
+
 class Cubemap : public IDrawable {
 public:
     Cubemap(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front);
@@ -24,5 +26,7 @@ private:
     void m_Load(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front);
     void m_Initialize();
 };
+
+}
 
 #endif

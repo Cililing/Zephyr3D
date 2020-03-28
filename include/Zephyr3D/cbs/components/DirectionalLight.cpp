@@ -8,14 +8,14 @@ DirectionalLight::DirectionalLight(glm::vec3 direction, glm::vec3 ambient, glm::
 }
 
 void DirectionalLight::Initialize() {
-    Object().Scene().RegisterShaderProperty(this, EShaderType::Phong);
+    Object().Scene().RegisterShaderProperty(this, zephyr::rendering::EShaderType::Phong);
 }
 
 void DirectionalLight::Destroy() {
-    Object().Scene().UnregisterShaderProperty(this, EShaderType::Phong);
+    Object().Scene().UnregisterShaderProperty(this, zephyr::rendering::EShaderType::Phong);
 }
 
-void DirectionalLight::SetProperty(const ShaderProgram& shader) const {
+void DirectionalLight::SetProperty(const zephyr::rendering::ShaderProgram& shader) const {
     shader.Uniform("dirLight.direction", m_Direction);
     shader.Uniform("dirLight.ambient", m_Ambient);
     shader.Uniform("dirLight.diffuse", m_Diffuse);

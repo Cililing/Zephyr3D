@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(const RawMesh& raw_mesh) 
+zephyr::rendering::Mesh::Mesh(const RawMesh& raw_mesh)
     : m_IndicesCount(raw_mesh.Indices().size())
     , m_Shininess(static_cast<float>(raw_mesh.Shininess())) {
     if (raw_mesh.Diffuse()) {
@@ -40,13 +40,13 @@ Mesh::Mesh(const RawMesh& raw_mesh)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-Mesh::~Mesh() {
+zephyr::rendering::Mesh::~Mesh() {
     glDeleteVertexArrays(1, &m_VAO);
     glDeleteBuffers(1, &m_VBO);
     glDeleteBuffers(1, &m_EBO);
 }
 
-Mesh::Mesh(Mesh&& other) noexcept
+zephyr::rendering::Mesh::Mesh(Mesh&& other) noexcept
     : m_VAO(std::exchange(other.m_VAO, 0))
     , m_VBO(std::exchange(other.m_VBO, 0))
     , m_EBO(std::exchange(other.m_EBO, 0))
@@ -56,7 +56,7 @@ Mesh::Mesh(Mesh&& other) noexcept
     m_Shininess = other.m_Shininess;
 }
 
-Mesh& Mesh::operator=(Mesh&& other) noexcept {
+zephyr::rendering::Mesh& zephyr::rendering::Mesh::operator=(Mesh&& other) noexcept {
     m_VAO = std::exchange(other.m_VAO, 0);
     m_VBO = std::exchange(other.m_VBO, 0);
     m_EBO = std::exchange(other.m_EBO, 0);

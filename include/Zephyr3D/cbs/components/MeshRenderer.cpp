@@ -1,7 +1,7 @@
 #include "MeshRenderer.h"
 #include "Transform.h"
 
-MeshRenderer::MeshRenderer(RawModel& raw_model, EShaderType shader)
+MeshRenderer::MeshRenderer(RawModel& raw_model, zephyr::rendering::EShaderType shader)
     : m_Model(raw_model)
     , m_ShaderType(shader) {
 }
@@ -14,7 +14,7 @@ void MeshRenderer::Destroy() {
     Object().Scene().UnregisterDrawCall(this, m_ShaderType);
 }
 
-void MeshRenderer::Draw(const ShaderProgram& shader) const {
+void MeshRenderer::Draw(const zephyr::rendering::ShaderProgram& shader) const {
     shader.Uniform("model", TransformIn.Value()->Model());
 
     auto end = m_Model.Meshes().end();
@@ -23,7 +23,7 @@ void MeshRenderer::Draw(const ShaderProgram& shader) const {
     }
 }
 
-void MeshRenderer::DrawMesh(const ShaderProgram& shader, const Mesh& mesh) const {
+void MeshRenderer::DrawMesh(const zephyr::rendering::ShaderProgram& shader, const zephyr::rendering::Mesh& mesh) const {
     if (mesh.Diffuse()) {
         glActiveTexture(GL_TEXTURE0);
         shader.Uniform("material.diffuse", 0);

@@ -19,6 +19,9 @@
 
 
 class Camera;
+
+namespace zephyr::rendering {
+
 class IDrawable;
 class IShaderProperty;
 class IGUIWidget;
@@ -67,5 +70,7 @@ private:
     std::stack<IDrawable*> m_NextFrameDraws;
     std::vector<IGUIWidget*> m_GUIWidgets;
 };
+
+}
 
 #endif

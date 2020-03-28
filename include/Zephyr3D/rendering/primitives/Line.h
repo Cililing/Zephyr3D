@@ -3,6 +3,8 @@
 
 #include "../IDrawable.h"
 
+namespace zephyr::rendering {
+
 class Line : public IDrawable {
 public:
     Line(glm::vec3 start, glm::vec3 end, glm::vec3 color);
@@ -21,5 +23,7 @@ private:
     GLuint m_VAO;
     glm::vec3 m_Color;
 };
+
+}
 
 #endif

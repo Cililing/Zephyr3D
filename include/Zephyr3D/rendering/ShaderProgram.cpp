@@ -3,20 +3,20 @@
 #include "IDrawable.h"
 #include "IShaderProperty.h"
 
-ShaderProgram::ShaderProgram()
+zephyr::rendering::ShaderProgram::ShaderProgram()
     : m_Traits(ETrait::NONE) {
     m_ID = glCreateProgram();
 }
 
-ShaderProgram::~ShaderProgram() {
+zephyr::rendering::ShaderProgram::~ShaderProgram() {
     glDeleteProgram(m_ID);
 }
 
-void ShaderProgram::Use() const {
+void zephyr::rendering::ShaderProgram::Use() const {
     glUseProgram(m_ID);
 }
 
-void ShaderProgram::AttachShaders(const char *vertex_path, const char *fragment_path, const char *geometry_path) {
+void zephyr::rendering::ShaderProgram::AttachShaders(const char *vertex_path, const char *fragment_path, const char *geometry_path) {
     // Compile shaders from given files
     unsigned int vertex_shader = AttachShader(vertex_path, GL_VERTEX_SHADER);
     unsigned int fragment_shader = AttachShader(fragment_path, GL_FRAGMENT_SHADER);
@@ -32,14 +32,14 @@ void ShaderProgram::AttachShaders(const char *vertex_path, const char *fragment_
     }
 }
 
-void ShaderProgram::RegisterDrawCall(const IDrawable* drawable) {
+void zephyr::rendering::ShaderProgram::RegisterDrawCall(const IDrawable* drawable) {
     // Ensure that each component is registered at most once
     assert(std::find(m_Drawables.begin(), m_Drawables.end(), drawable) == m_Drawables.end());
 
     m_Drawables.push_back(drawable);
 }
 
-void ShaderProgram::UnregisterDrawCall(const IDrawable* drawable) {
+void zephyr::rendering::ShaderProgram::UnregisterDrawCall(const IDrawable* drawable) {
     // Unregistering not registered component has no effect
     auto to_erase = std::find(m_Drawables.begin(), m_Drawables.end(), drawable);
     if (to_erase != m_Drawables.end()) {
@@ -47,14 +47,14 @@ void ShaderProgram::UnregisterDrawCall(const IDrawable* drawable) {
     }
 }
 
-void ShaderProgram::RegisterShaderProperty(const IShaderProperty* property) {
+void zephyr::rendering::ShaderProgram::RegisterShaderProperty(const IShaderProperty* property) {
     // Ensure that each component is registered at most once
     assert(std::find(m_Properties.begin(), m_Properties.end(), property) == m_Properties.end());
 
     m_Properties.push_back(property);
 }
 
-void ShaderProgram::UnregisterShaderProperty(const IShaderProperty* property) {
+void zephyr::rendering::ShaderProgram::UnregisterShaderProperty(const IShaderProperty* property) {
     // Unregistering not registered component has no effect
     auto to_erase = std::find(m_Properties.begin(), m_Properties.end(), property);
     if (to_erase != m_Properties.end()) {
@@ -62,67 +62,67 @@ void ShaderProgram::UnregisterShaderProperty(const IShaderProperty* property) {
     }
 }
 
-void ShaderProgram::CallProperties() const {
+void zephyr::rendering::ShaderProgram::CallProperties() const {
     for (auto& property : m_Properties) {
         property->SetProperty(*this);
     }
 }
 
-void ShaderProgram::CallDraws() const {
+void zephyr::rendering::ShaderProgram::CallDraws() const {
     for (auto& drawable : m_Drawables) {
         drawable->Draw(*this);
     }
 }
 
-void ShaderProgram::Uniform(const std::string &name, bool value) const {
+void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, bool value) const {
     glUniform1i(glGetUniformLocation(m_ID, name.c_str()), (int)value);
 }
 
-void ShaderProgram::Uniform(const std::string &name, int value) const {
+void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, int value) const {
     glUniform1i(glGetUniformLocation(m_ID, name.c_str()), value);
 }
 
-void ShaderProgram::Uniform(const std::string &name, float value) const {
+void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, float value) const {
     glUniform1f(glGetUniformLocation(m_ID, name.c_str()), value);
 }
 
-void ShaderProgram::Uniform(const std::string &name, const glm::vec2 &vec) const {
+void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, const glm::vec2 &vec) const {
     glUniform2fv(glGetUniformLocation(m_ID, name.c_str()), 1, &vec[0]);
 }
 
-void ShaderProgram::Uniform(const std::string &name, float x, float y) const {
+void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, float x, float y) const {
     glUniform2f(glGetUniformLocation(m_ID, name.c_str()), x, y);
 }
 
-void ShaderProgram::Uniform(const std::string &name, const glm::vec3 &vec) const {
+void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, const glm::vec3 &vec) const {
     glUniform3fv(glGetUniformLocation(m_ID, name.c_str()), 1, &vec[0]);
 }
 
-void ShaderProgram::Uniform(const std::string &name, float x, float y, float z) const {
+void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, float x, float y, float z) const {
     glUniform3f(glGetUniformLocation(m_ID, name.c_str()), x, y, z);
 }
 
-void ShaderProgram::Uniform(const std::string &name, const glm::vec4 &vec) const {
+void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, const glm::vec4 &vec) const {
     glUniform4fv(glGetUniformLocation(m_ID, name.c_str()), 1, &vec[0]);
 }
 
-void ShaderProgram::Uniform(const std::string &name, float x, float y, float z, float w) const {
+void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, float x, float y, float z, float w) const {
     glUniform4f(glGetUniformLocation(m_ID, name.c_str()), x, y, z, w);
 }
 
-void ShaderProgram::Uniform(const std::string &name, const glm::mat2 &mat) const {
+void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, const glm::mat2 &mat) const {
     glUniformMatrix2fv(glGetUniformLocation(m_ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-void ShaderProgram::Uniform(const std::string &name, const glm::mat3 &mat) const {
+void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, const glm::mat3 &mat) const {
     glUniformMatrix3fv(glGetUniformLocation(m_ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-void ShaderProgram::Uniform(const std::string &name, const glm::mat4 &mat) const {
+void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, const glm::mat4 &mat) const {
     glUniformMatrix4fv(glGetUniformLocation(m_ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-unsigned int ShaderProgram::AttachShader(const char *path, GLenum shader_type) {
+unsigned int zephyr::rendering::ShaderProgram::AttachShader(const char *path, GLenum shader_type) {
     std::string shader_code;
     std::fstream shader_file;
     
@@ -160,7 +160,7 @@ unsigned int ShaderProgram::AttachShader(const char *path, GLenum shader_type) {
     return shader;
 }
 
-void ShaderProgram::LinkProgram() {
+void zephyr::rendering::ShaderProgram::LinkProgram() {
     glLinkProgram(m_ID);
     
     // Check linking errors

@@ -1,6 +1,6 @@
 #include "PhysicsRenderer.h"
 
-PhysicsRenderer::PhysicsRenderer(DrawManager& draw_manager)
+PhysicsRenderer::PhysicsRenderer(zephyr::rendering::DrawManager& draw_manager)
     : m_DrawManager(draw_manager) {
 }
 

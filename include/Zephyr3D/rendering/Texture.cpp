@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-Texture::Texture(const RawTexture& raw_texture, Texture::EType type)
+zephyr::rendering::Texture::Texture(const RawTexture& raw_texture, Texture::EType type)
     : m_Type(type) {
     const GLenum format = [&]() {
         switch (raw_texture.Components()) {
@@ -31,7 +31,7 @@ Texture::Texture(const RawTexture& raw_texture, Texture::EType type)
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-Texture::Texture(const RawTexture& raw_texture, EType type, GLenum wrap_s, GLenum wrap_t, GLenum min_filter, GLenum mag_filter)
+zephyr::rendering::Texture::Texture(const RawTexture& raw_texture, EType type, GLenum wrap_s, GLenum wrap_t, GLenum min_filter, GLenum mag_filter)
     : m_Type(type) {
     const GLenum format = [&]() {
         switch (raw_texture.Components()) {
@@ -62,23 +62,23 @@ Texture::Texture(const RawTexture& raw_texture, EType type, GLenum wrap_s, GLenu
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-Texture::Texture(Texture&& other) noexcept
+zephyr::rendering::Texture::Texture(Texture&& other) noexcept
     : m_ID(std::exchange(other.m_ID, 0))
     , m_Type(other.m_Type) {
 }
 
-Texture& Texture::operator=(Texture&& other) noexcept {
+zephyr::rendering::Texture& zephyr::rendering::Texture::operator=(Texture&& other) noexcept {
     m_ID = std::exchange(other.m_ID, 0);
     m_Type = other.m_Type;
 
     return *this;
 }
 
-Texture::~Texture() {
+zephyr::rendering::Texture::~Texture() {
     glDeleteTextures(1, &m_ID);
 }
 
-std::string Texture::TypeName() const {
+std::string zephyr::rendering::Texture::TypeName() const {
     switch (m_Type) {
     case Texture::EType::Diffuse:
         return "diffuse";

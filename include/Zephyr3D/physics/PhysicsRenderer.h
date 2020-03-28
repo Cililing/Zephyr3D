@@ -8,7 +8,7 @@
 
 class PhysicsRenderer : public btIDebugDraw {
 public:
-    PhysicsRenderer(DrawManager& draw_manager);
+    PhysicsRenderer(zephyr::rendering::DrawManager& draw_manager);
 
     void drawLine(const btVector3& from, const btVector3& to, const btVector3& color) override;
 
@@ -26,7 +26,7 @@ public:
     int getDebugMode() const override { return 1; }
 
 private:
-    DrawManager& m_DrawManager;
+    zephyr::rendering::DrawManager& m_DrawManager;
 };
 
 #endif

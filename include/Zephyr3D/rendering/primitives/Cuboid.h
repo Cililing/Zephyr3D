@@ -3,6 +3,8 @@
 
 #include "../IDrawable.h"
 
+namespace zephyr::rendering {
+
 class Cuboid : public IDrawable {
 public:
     Cuboid(glm::mat4 model, glm::vec3 color);
@@ -21,5 +23,7 @@ private:
     GLuint m_VAO;
     glm::mat4 m_Model;
 };
+
+}
 
 #endif

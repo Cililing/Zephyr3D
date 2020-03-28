@@ -7,11 +7,11 @@
 #include "../connections/PropertyIn.h"
 #include "../../rendering/IDrawable.h"
 
-class Cube : public Component, public IDrawable {
+class Cube : public Component, public zephyr::rendering::IDrawable {
 public:
     Cube(const glm::vec3& color);
 
-    void Draw(const ShaderProgram& shader) const override;
+    void Draw(const zephyr::rendering::ShaderProgram& shader) const override;
 
     void Initialize() override;
     void Destroy() override;

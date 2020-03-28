@@ -10,7 +10,7 @@
 
 #include <string>
 
-class TextRenderer : public Component, public IGUIWidget {
+class TextRenderer : public Component, public zephyr::rendering::IGUIWidget {
 public:
     TextRenderer(const std::string& font_path, float size);
 

@@ -64,7 +64,7 @@ Cube::Cube(const glm::vec3& color) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Cube::Draw(const ShaderProgram& shader) const {
+void Cube::Draw(const zephyr::rendering::ShaderProgram& shader) const {
     shader.Uniform("model", TransformIn.Value()->Model());
 
     glBindVertexArray(m_VAO);
@@ -73,9 +73,9 @@ void Cube::Draw(const ShaderProgram& shader) const {
 }
 
 void Cube::Initialize() {
-    Object().Scene().RegisterDrawCall(this, EShaderType::PureColor);
+    Object().Scene().RegisterDrawCall(this, zephyr::rendering::EShaderType::PureColor);
 }
 
 void Cube::Destroy() {
-    Object().Scene().UnregisterDrawCall(this, EShaderType::PureColor);
+    Object().Scene().UnregisterDrawCall(this, zephyr::rendering::EShaderType::PureColor);
 }

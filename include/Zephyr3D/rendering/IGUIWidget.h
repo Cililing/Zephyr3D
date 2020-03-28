@@ -1,6 +1,8 @@
 #ifndef IWidget_h
 #define IWidget_h
 
+namespace zephyr::rendering {
+
 class IGUIWidget {
 public:
     enum class EAlign {
@@ -38,5 +40,7 @@ protected:
         }
     }
 };
+
+}
 
 #endif

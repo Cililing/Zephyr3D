@@ -1,6 +1,6 @@
 #include "Line.h"
 
-Line::Line(glm::vec3 start, glm::vec3 end, glm::vec3 color)
+zephyr::rendering::Line::Line(glm::vec3 start, glm::vec3 end, glm::vec3 color)
     : m_Color(color) {
     GLfloat vertices[] = { 
         start.x, start.y, start.z, color.x, color.y, color.z,
@@ -26,12 +26,12 @@ Line::Line(glm::vec3 start, glm::vec3 end, glm::vec3 color)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-Line::~Line() {
+zephyr::rendering::Line::~Line() {
     glDeleteBuffers(1, &m_VBO);
     glDeleteVertexArrays(1, &m_VAO);
 }
 
-void Line::Draw(const ShaderProgram &shader) const {
+void zephyr::rendering::Line::Draw(const ShaderProgram &shader) const {
     shader.Uniform("model", glm::mat4(1.0f));
 
     glBindVertexArray(m_VAO);
