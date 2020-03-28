@@ -47,11 +47,11 @@ void zephyr::rendering::DrawManager::Initialize() {
     glEnable(GL_MULTISAMPLE);
 }
 
-void zephyr::rendering::DrawManager::RegisterCamera(Camera *camera) {
+void zephyr::rendering::DrawManager::RegisterCamera(ICamera *camera) {
     m_Camera = camera;
 }
 
-Camera* zephyr::rendering::DrawManager::MainCamera() const {
+zephyr::rendering::ICamera* zephyr::rendering::DrawManager::MainCamera() const {
     return m_Camera;
 }
 
@@ -118,14 +118,14 @@ void zephyr::rendering::DrawManager::CallDraws() {
     glClearColor(m_Background.x, m_Background.y, m_Background.z, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glm::mat4 pv = m_Camera->Projection() * m_Camera->ViewMatrix();
+    glm::mat4 pv = m_Camera->Projection() * m_Camera->View();
 
     // Call draws in all shaders
     for (auto shader = m_ShaderPrograms.begin(); shader != m_ShaderPrograms.end(); shader++) {
         shader->Use();
 
         shader->Uniform("pv", pv);
-        shader->Uniform("viewPos", m_Camera->Object().Root().Position());
+        shader->Uniform("viewPos", m_Camera->Position());
 
         shader->CallProperties();
         shader->CallDraws();
@@ -149,7 +149,7 @@ void zephyr::rendering::DrawManager::CallDraws() {
         const ShaderProgram& skybox_shader = m_ShaderPrograms[static_cast<size_t>(EShaderType::Skybox)];
 
         skybox_shader.Use();
-        skybox_shader.Uniform("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->ViewMatrix())));
+        skybox_shader.Uniform("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->View())));
 
         m_Skybox->Draw(skybox_shader);
 

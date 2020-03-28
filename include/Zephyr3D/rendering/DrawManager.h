@@ -2,6 +2,10 @@
 #define DrawManager_h
 
 #include "ShaderProgram.h"
+#include "ICamera.h"
+#include "IDrawable.h"
+#include "IShaderProperty.h"
+#include "IGUIWidget.h"
 #include "primitives/Cubemap.h"
 
 #pragma warning(push, 0)
@@ -17,14 +21,7 @@
 #include <array>
 #include <assert.h>
 
-
-class Camera;
-
 namespace zephyr::rendering {
-
-class IDrawable;
-class IShaderProperty;
-class IGUIWidget;
 
 enum class EShaderType {
     PureColor = 0,
@@ -39,8 +36,8 @@ class DrawManager {
 public:
     void Initialize();
 
-    void RegisterCamera(Camera* camera);
-    Camera* MainCamera() const;
+    void RegisterCamera(ICamera* camera);
+    ICamera* MainCamera() const;
 
     void Skybox(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front);
     void Background(const glm::vec3& background);
@@ -65,7 +62,7 @@ private:
     glm::vec3 m_Background{ 0.0f };
     std::unique_ptr<Cubemap> m_Skybox{ nullptr };
 
-    Camera* m_Camera{ nullptr };
+    ICamera* m_Camera{ nullptr };
     std::array<ShaderProgram, static_cast<size_t>(EShaderType::Count)> m_ShaderPrograms;
     std::stack<IDrawable*> m_NextFrameDraws;
     std::vector<IGUIWidget*> m_GUIWidgets;

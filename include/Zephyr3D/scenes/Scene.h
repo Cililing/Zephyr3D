@@ -50,8 +50,8 @@ public:
     void DrawPlane(glm::mat4 model, glm::vec3 color);
     void DrawCuboid(glm::mat4 model, glm::vec3 color);
     void DrawSphere(glm::mat4 model, glm::vec3 color);
-    void RegisterCamera(Camera* camera);
-    Camera* MainCamera() const;
+    void RegisterCamera(zephyr::rendering::ICamera* camera);
+    zephyr::rendering::ICamera* MainCamera() const;
     void Skybox(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front);
     void Background(const glm::vec3& background);
 

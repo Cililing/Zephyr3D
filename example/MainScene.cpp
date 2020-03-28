@@ -24,10 +24,11 @@ void MainScene::CreateScene() {
         camera->Root().Rotate(glm::vec3(0.0f, 0.0f, glm::radians(-15.0f)));
         camera->Root().Rotate(glm::vec3(0.0f, glm::radians(-20.0f), 0.0f));
 
-        camera->CreateComponent<Camera>(glm::radians(45.0f), 
-                                        static_cast<float>(zephyr::Engine::Instance().GetWindow().Width()) / static_cast<float>(zephyr::Engine::Instance().GetWindow().Height()),
-                                        0.1f, 
-                                        500.0f);
+        auto comp = camera->CreateComponent<Camera>(glm::radians(45.0f), 
+                                                    static_cast<float>(zephyr::Engine::Instance().GetWindow().Width()) / static_cast<float>(zephyr::Engine::Instance().GetWindow().Height()),
+                                                    0.1f, 
+                                                    500.0f);
+        camera->Connect(camera->Root().This, comp->TransformIn);
     }
     
     auto cube = CreateObject("Cube"); {

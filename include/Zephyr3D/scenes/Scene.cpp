@@ -109,11 +109,11 @@ void Scene::DrawSphere(glm::mat4 model, glm::vec3 color) {
     //TODO
 }
 
-void Scene::RegisterCamera(Camera* camera) {
+void Scene::RegisterCamera(zephyr::rendering::ICamera* camera) {
     m_DrawManager.RegisterCamera(camera);
 }
 
-Camera* Scene::MainCamera() const {
+zephyr::rendering::ICamera* Scene::MainCamera() const {
     return m_DrawManager.MainCamera();
 }
 

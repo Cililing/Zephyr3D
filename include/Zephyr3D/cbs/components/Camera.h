@@ -1,11 +1,12 @@
-#pragma once
+#ifndef Camera_h
+#define Camera_h
 
 #include "Component.h"
+#include "../connections/PropertyIn.h"
 #include "../Object.h"
 #include "../../scenes/Scene.h"
-#include "../../utilities/Time.h"
-#include "../../utilities/Input.h"
-#include "../../rendering/primitives/Cubemap.h"
+#include "../../rendering/PerspectiveCamera.h"
+#include "../../rendering/OrthographicCamera.h"
 
 #pragma warning(push, 0)
 #include <glad/glad.h>
@@ -18,23 +19,20 @@
 #include <iostream>
 #include <string>
 
+#undef far
+#undef near
+
 class Camera : public Component {
 public:
-    Camera(glm::mat4 perspective);
     Camera(float fovy, float aspect, float near, float far);
-    Camera(float left, float right, float bottom, float top, float near, float far);
-    
-    void Initialize() override;
-    
-    glm::mat4 ViewMatrix() const;
-    const glm::mat4& Projection() const { return m_Projection; }
-    
-private:
-    glm::mat4 Perspective(float fovy, float aspect, float near, float far);
-    glm::mat4 Orthographic(float left, float right, float bottom, float top, float near, float far);
 
-    glm::mat4 m_ViewMatrix;
-    glm::mat4 m_Projection;
-    
-    Transform* m_Transform;
+    void Initialize() override;
+    void Update() override;
+
+    PropertyIn<Transform*> TransformIn { this };
+
+private:
+    zephyr::rendering::PerspectiveCamera m_Camera;
 };
+
+#endif
