@@ -10,9 +10,11 @@
 
 #include <string>
 
+constexpr char* TITLE_PREFIX = "__dummy";
+
 class TextRenderer : public Component, public zephyr::rendering::IGUIWidget {
 public:
-    TextRenderer(const std::string& font_path, float size);
+    TextRenderer(EAlign horizontal, EAlign vertical, float size, const std::string& font_path = "");
 
     void Initialize() override;
     void Destroy() override;
@@ -33,6 +35,9 @@ public:
     MessageIn<glm::vec4, TextRenderer, &TextRenderer::Color> ColorIn{ this };
 
 private:
+    static unsigned int s_Index;
+
+    std::string m_Title { TITLE_PREFIX };
     std::string m_Text;
 
     EAlign m_Horizontal;

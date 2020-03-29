@@ -1,11 +1,11 @@
 #ifndef MainScene_h
 #define MainScene_h
 
-
 #include <Zephyr3D/scenes/Scene.h>
 #include <Zephyr3D/cbs/components/Camera.h>
 #include <Zephyr3D/cbs/components/DirectionalLight.h>
 #include <Zephyr3D/cbs/components/Cube.h>
+#include <Zephyr3D/cbs/components/TextRenderer.h>
 
 class MainScene : public Scene {
 public:

@@ -1,14 +1,25 @@
 #include "TextRenderer.h"
 
-TextRenderer::TextRenderer(const std::string& font_path, float size)
-    : m_Horizontal(EAlign::NONE)
-    , m_Vertical(EAlign::NONE)
+unsigned int TextRenderer::s_Index = 1;
+
+TextRenderer::TextRenderer(EAlign horizontal, EAlign vertical, float size, const std::string& font_path)
+    : m_Horizontal(horizontal)
+    , m_Vertical(vertical)
     , m_Offset(0.0f)
     , m_Color(0.0f, 0.0f, 0.0f, 1.0f) {
 
     ImGuiIO& io = ImGui::GetIO();
-    m_Font = io.Fonts->AddFontFromFileTTF(font_path.c_str(), size);
-    io.Fonts->Build();
+
+    if (font_path.empty()) {
+        // TODO deafult font with resize
+        m_Font = io.Fonts->Fonts[0];
+    } else {
+        m_Font = io.Fonts->AddFontFromFileTTF(font_path.c_str(), size);
+        io.Fonts->Build();
+    }
+
+    m_Title.append(std::to_string(s_Index));
+    s_Index++;
 }
 
 void TextRenderer::Initialize() {
@@ -20,7 +31,7 @@ void TextRenderer::Destroy() {
 }
 
 void TextRenderer::Draw() const {
-    ImGui::Begin("dummy", nullptr, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::Begin(m_Title.c_str(), nullptr, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_AlwaysAutoResize);
     ImGui::PushFont(m_Font);
 
     const glm::vec2 margin = ImGui::GetWindowContentRegionMin();       // Might not be correct

@@ -1,5 +1,6 @@
-#include "MainScene.h"
 #include <Zephyr3D/Engine.h>
+
+#include "MainScene.h"
 
 int main() {
     zephyr::Engine::Instance().Init();

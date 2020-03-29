@@ -1,7 +1,9 @@
 #include "MainScene.h"
 
-#define STB_IMAGE_IMPLEMENTATION
 #include <Zephyr3D/Engine.h>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 void MainScene::CreateScene() {
     FrameRateLimit(60);
@@ -34,5 +36,10 @@ void MainScene::CreateScene() {
     auto cube = CreateObject("Cube"); {
         auto comp = cube->CreateComponent<Cube>(glm::vec3(1.0f, 0.0f, 0.0f));
         cube->Connect(cube->Root().This, comp->TransformIn);
+    }
+
+    auto gui = CreateObject("gui"); {
+        auto title = gui->CreateComponent<TextRenderer>(zephyr::rendering::IGUIWidget::EAlign::CENTER, zephyr::rendering::IGUIWidget::EAlign::BEGIN, 0.0f);
+        title->Text("Zephyr3D Demo Scene");
     }
 }

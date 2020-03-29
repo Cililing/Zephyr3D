@@ -10,6 +10,8 @@
 
 #pragma warning(push, 0)
 #include <imgui.h>
+#include "../dependencies/imgui_impl_opengl3.h"
+#include "../dependencies/imgui_impl_glfw.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
