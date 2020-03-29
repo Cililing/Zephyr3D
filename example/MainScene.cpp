@@ -5,12 +5,12 @@
 
 void MainScene::CreateScene() {
     FrameRateLimit(60);
-    Skybox("../../assets/skyboxes/basic_blue/right.png",
-           "../../assets/skyboxes/basic_blue/left.png",
-           "../../assets/skyboxes/basic_blue/top.png",
-           "../../assets/skyboxes/basic_blue/bottom.png",
-           "../../assets/skyboxes/basic_blue/back.png",
-           "../../assets/skyboxes/basic_blue/front.png");
+    Skybox(LoadTexture("../../assets/skyboxes/basic_blue/right.png"),
+           LoadTexture("../../assets/skyboxes/basic_blue/left.png"),
+           LoadTexture("../../assets/skyboxes/basic_blue/top.png"),
+           LoadTexture("../../assets/skyboxes/basic_blue/bottom.png"),
+           LoadTexture("../../assets/skyboxes/basic_blue/back.png"),
+           LoadTexture("../../assets/skyboxes/basic_blue/front.png"));
 
     auto light = CreateObject("Light"); {
         light->CreateComponent<DirectionalLight>(glm::vec3(-1.0f, -0.5f, -0.5f),

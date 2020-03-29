@@ -117,7 +117,7 @@ zephyr::rendering::ICamera* Scene::MainCamera() const {
     return m_DrawManager.MainCamera();
 }
 
-void Scene::Skybox(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front) {
+void Scene::Skybox(const RawTexture& right, const RawTexture& left, const RawTexture& top, const RawTexture& bottom, const RawTexture& back, const RawTexture& front) {
     m_DrawManager.Skybox(right, left, top, bottom, back, front);
 }
 

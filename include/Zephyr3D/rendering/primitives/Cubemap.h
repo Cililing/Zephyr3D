@@ -2,6 +2,7 @@
 #define Cubemap_h
 
 #include "../IDrawable.h"
+#include "../../resources/RawTexture.h"
 
 #pragma warning(push, 0)
 #include <stb_image.h>
@@ -15,6 +16,7 @@ namespace zephyr::rendering {
 class Cubemap : public IDrawable {
 public:
     Cubemap(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front);
+    Cubemap(const RawTexture& right, const RawTexture& left, const RawTexture& top, const RawTexture& bottom, const RawTexture& back, const RawTexture& front);
 
     void Draw(const ShaderProgram& shader) const override;
 

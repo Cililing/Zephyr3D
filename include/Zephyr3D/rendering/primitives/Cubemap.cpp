@@ -6,6 +6,26 @@ zephyr::rendering::Cubemap::Cubemap(const std::string& right, const std::string&
     m_Initialize();
 }
 
+zephyr::rendering::Cubemap::Cubemap(const RawTexture& right, const RawTexture& left, const RawTexture& top, const RawTexture& bottom, const RawTexture& back, const RawTexture& front) {
+    glGenTextures(1, &m_ID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, m_ID);
+
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGB, right.Width(), right.Height(), 0, GL_RGB, GL_UNSIGNED_BYTE, right.Data());
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGB, left.Width(), left.Height(), 0, GL_RGB, GL_UNSIGNED_BYTE, left.Data());
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGB, top.Width(), top.Height(), 0, GL_RGB, GL_UNSIGNED_BYTE, top.Data());
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGB, bottom.Width(), bottom.Height(), 0, GL_RGB, GL_UNSIGNED_BYTE, bottom.Data());
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGB, back.Width(), back.Height(), 0, GL_RGB, GL_UNSIGNED_BYTE, back.Data());
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGB, front.Width(), front.Height(), 0, GL_RGB, GL_UNSIGNED_BYTE, front.Data());
+
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    m_Initialize();
+}
+
 void zephyr::rendering::Cubemap::Draw(const ShaderProgram& shader) const {
     shader.Uniform("skybox", 0);
     

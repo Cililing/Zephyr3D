@@ -39,7 +39,7 @@ public:
     void RegisterCamera(ICamera* camera);
     ICamera* MainCamera() const;
 
-    void Skybox(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front);
+    void Skybox(const RawTexture& right, const RawTexture& left, const RawTexture& top, const RawTexture& bottom, const RawTexture& back, const RawTexture& front);
     void Background(const glm::vec3& background);
 
     void RegisterDrawCall(const IDrawable* drawable, EShaderType shader);

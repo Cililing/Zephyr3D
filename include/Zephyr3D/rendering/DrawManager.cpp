@@ -55,7 +55,7 @@ zephyr::rendering::ICamera* zephyr::rendering::DrawManager::MainCamera() const {
     return m_Camera;
 }
 
-void zephyr::rendering::DrawManager::Skybox(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front) {
+void zephyr::rendering::DrawManager::Skybox(const RawTexture& right, const RawTexture& left, const RawTexture& top, const RawTexture& bottom, const RawTexture& back, const RawTexture& front) {
     m_Skybox = std::make_unique<Cubemap>(right, left, top, bottom, back, front);
 }
 
