@@ -15,7 +15,6 @@
 void zephyr::rendering::DrawManager::Initialize() {
     INFO_LOG(Logger::ESender::Rendering, "Initializing draw manager");
 
-    // TODO: Dear ImGui
     // Dear imgui initialiation
     ImGui::CreateContext();
     ImGui::StyleColorsDark();

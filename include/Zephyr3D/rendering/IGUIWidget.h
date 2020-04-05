@@ -6,7 +6,6 @@ namespace zephyr::rendering {
 class IGUIWidget {
 public:
     enum class EAlign {
-        NONE,
         BEGIN,
         CENTER,
         END
@@ -24,10 +23,6 @@ public:
 protected:
     template <class T>
     void Align(T* value, const T& min, const T& max, EAlign align) const {
-        if (align == EAlign::NONE) {
-            return;
-        }
-
         if (align == EAlign::BEGIN) {
             *value = min;
             return;

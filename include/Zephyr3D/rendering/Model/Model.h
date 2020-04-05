@@ -15,8 +15,8 @@ public:
     Model() = delete;
     Model(const Model&) = delete;
     Model& operator=(const Model&) = delete;
-    Model(Model&&) = delete;
-    Model& operator=(Model&&) = delete;
+    Model(Model&&) = default;
+    Model& operator=(Model&&) = default;
     ~Model() = default;
 
     const std::vector<Mesh>& Meshes() const { return m_Meshes; }
