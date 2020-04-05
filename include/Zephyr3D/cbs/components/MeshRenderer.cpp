@@ -17,13 +17,12 @@ void MeshRenderer::Destroy() {
 void MeshRenderer::Draw(const zephyr::rendering::ShaderProgram& shader) const {
     shader.Uniform("model", TransformIn.Value()->Model());
 
-    auto end = m_Model.Meshes().end();
-    for (auto it = m_Model.Meshes().begin(); it != end; it++) {
+    for (auto it = m_Model.Meshes().begin(); it != m_Model.Meshes().end(); it++) {
         DrawMesh(shader, *it);
     }
 }
 
-void MeshRenderer::DrawMesh(const zephyr::rendering::ShaderProgram& shader, const zephyr::rendering::Mesh& mesh) const {
+void MeshRenderer::DrawMesh(const zephyr::rendering::ShaderProgram& shader, const zephyr::rendering::Model::Mesh& mesh) const {
     if (mesh.Diffuse()) {
         glActiveTexture(GL_TEXTURE0);
         shader.Uniform("material.diffuse", 0);

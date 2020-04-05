@@ -23,7 +23,7 @@ public:
     PropertyIn<Transform*> TransformIn{ this };
 
 private:
-    void DrawMesh(const zephyr::rendering::ShaderProgram& shader, const zephyr::rendering::Mesh& mesh) const;
+    void DrawMesh(const zephyr::rendering::ShaderProgram& shader, const zephyr::rendering::Model::Mesh& mesh) const;
 
     zephyr::rendering::Model m_Model;
     zephyr::rendering::EShaderType m_ShaderType;
