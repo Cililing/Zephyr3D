@@ -1,9 +1,9 @@
 #ifndef Model_h
 #define Model_h
 
-#include "../Texture.h"
-#include "../../resources/RawModel/RawModel.h"
-#include "../../resources/RawModel/RawMesh.h"
+#include "Texture.h"
+#include "../resources/RawModel/RawModel.h"
+#include "../resources/RawModel/RawMesh.h"
 
 #include <vector>
 

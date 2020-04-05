@@ -8,7 +8,7 @@
 #include "../connections/PropertyIn.h"
 #include "../../scenes/Scene.h"
 #include "../../rendering/IDrawable.h"
-#include "../../rendering/Model/Model.h"
+#include "../../rendering/Model.h"
 
 class Transform;
 class MeshRenderer : public Component, public zephyr::rendering::IDrawable {
