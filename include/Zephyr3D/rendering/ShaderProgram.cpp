@@ -4,7 +4,7 @@
 #include "IShaderProperty.h"
 
 zephyr::rendering::ShaderProgram::ShaderProgram()
-    : m_Traits(ETrait::NONE) {
+    : m_Traits(ETrait::None) {
     m_ID = glCreateProgram();
 }
 

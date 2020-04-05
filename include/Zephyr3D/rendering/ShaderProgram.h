@@ -24,8 +24,11 @@ class IShaderProperty;
 class ShaderProgram {
 public:
     enum class ETrait : unsigned char {
-        NONE = 0,
-        LIGHT_RECEIVER = 1 << 0
+        None = 0,
+        Position = 1 << 0,
+        Normal = 1 << 1,
+        TexCoord = 1 << 2,
+        Color = 1 << 3
     };
 
     ShaderProgram();

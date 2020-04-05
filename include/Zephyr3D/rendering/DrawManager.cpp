@@ -28,19 +28,27 @@ void zephyr::rendering::DrawManager::Initialize() {
     // Create shader programs
     m_ShaderPrograms[static_cast<size_t>(EShaderType::PureColor)].AttachShaders("../../include/Zephyr3D/shaders/PURE_COLOR.vert",
                                                                                 "../../include/Zephyr3D/shaders/PURE_COLOR.frag");
-
+    m_ShaderPrograms[static_cast<size_t>(EShaderType::PureColor)].Traits(
+        ShaderProgram::ETrait::Position | ShaderProgram::ETrait::Color
+    );
 
     m_ShaderPrograms[static_cast<size_t>(EShaderType::PureTexture)].AttachShaders("../../include/Zephyr3D/shaders/PURE_TEXTURE.vert",
                                                                                   "../../include/Zephyr3D/shaders/PURE_TEXTURE.frag");
-
+    m_ShaderPrograms[static_cast<size_t>(EShaderType::PureTexture)].Traits(
+        ShaderProgram::ETrait::Position | ShaderProgram::ETrait::TexCoord
+    );
 
     m_ShaderPrograms[static_cast<size_t>(EShaderType::Phong)].AttachShaders("../../include/Zephyr3D/shaders/PHONG.vert",
                                                                             "../../include/Zephyr3D/shaders/PHONG.frag");
-    m_ShaderPrograms[static_cast<size_t>(EShaderType::Phong)].Traits(ShaderProgram::ETrait::LIGHT_RECEIVER);
-
+    m_ShaderPrograms[static_cast<size_t>(EShaderType::Phong)].Traits(
+        ShaderProgram::ETrait::Position | ShaderProgram::ETrait::Normal | ShaderProgram::ETrait::TexCoord
+    );
 
     m_ShaderPrograms[static_cast<size_t>(EShaderType::Skybox)].AttachShaders("../../include/Zephyr3D/shaders/SKYBOX.vert",
                                                                              "../../include/Zephyr3D/shaders/SKYBOX.frag");
+    m_ShaderPrograms[static_cast<size_t>(EShaderType::Skybox)].Traits(
+        ShaderProgram::ETrait::Position
+    );
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
