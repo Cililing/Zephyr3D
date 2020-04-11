@@ -73,9 +73,9 @@ void Cube::Draw(const zephyr::rendering::ShaderProgram& shader) const {
 }
 
 void Cube::Initialize() {
-    Object().Scene().RegisterDrawCall(this, zephyr::rendering::EShaderType::PureColor);
+    Object().Scene().RegisterDrawCall(this, "PureColor");
 }
 
 void Cube::Destroy() {
-    Object().Scene().UnregisterDrawCall(this, zephyr::rendering::EShaderType::PureColor);
+    Object().Scene().UnregisterDrawCall(this, "PureColor");
 }

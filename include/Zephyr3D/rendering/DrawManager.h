@@ -21,18 +21,10 @@
 #include <stack>
 #include <vector>
 #include <array>
+#include <map>
 #include <assert.h>
 
 namespace zephyr::rendering {
-
-enum class EShaderType {
-    PureColor = 0,
-    PureTexture,
-    Phong,
-    Skybox,
-
-    Count
-};
 
 class DrawManager {
 public:
@@ -44,11 +36,11 @@ public:
     void Skybox(const RawTexture& right, const RawTexture& left, const RawTexture& top, const RawTexture& bottom, const RawTexture& back, const RawTexture& front);
     void Background(const glm::vec3& background);
 
-    void RegisterDrawCall(const IDrawable* drawable, EShaderType shader);
-    void UnregisterDrawCall(const IDrawable* drawable, EShaderType shader);
+    void RegisterDrawCall(const IDrawable* drawable, const std::string& shader_name);
+    void UnregisterDrawCall(const IDrawable* drawable, const std::string& shader_name);
 
-    void RegisterShaderProperty(const IShaderProperty* property, EShaderType shader);
-    void UnregisterShaderProperty(const IShaderProperty* property, EShaderType shader);
+    void RegisterShaderProperty(const IShaderProperty* property, const std::string& shader_name);
+    void UnregisterShaderProperty(const IShaderProperty* property, const std::string& shader_name);
 
     void RegisterGUIWidget(IGUIWidget* widget);
     void UnregisterGUIWidget(IGUIWidget* widget);
@@ -65,7 +57,7 @@ private:
     std::unique_ptr<Cubemap> m_Skybox{ nullptr };
 
     ICamera* m_Camera{ nullptr };
-    std::array<ShaderProgram, static_cast<size_t>(EShaderType::Count)> m_ShaderPrograms;
+    std::map<std::string, ShaderProgram> m_Shaders;
     std::stack<IDrawable*> m_NextFrameDraws;
     std::vector<IGUIWidget*> m_GUIWidgets;
 };

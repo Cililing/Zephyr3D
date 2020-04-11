@@ -69,20 +69,20 @@ void Scene::DestroyObject(Object::ID_t id) {
 }
 
 
-void Scene::RegisterDrawCall(const zephyr::rendering::IDrawable* drawable, zephyr::rendering::EShaderType shader) {
-    m_DrawManager.RegisterDrawCall(drawable, shader);
+void Scene::RegisterDrawCall(const zephyr::rendering::IDrawable* drawable, const std::string& shader_name) {
+    m_DrawManager.RegisterDrawCall(drawable, shader_name);
 }
 
-void Scene::UnregisterDrawCall(const zephyr::rendering::IDrawable* drawable, zephyr::rendering::EShaderType shader) {
-    m_DrawManager.UnregisterDrawCall(drawable, shader);
+void Scene::UnregisterDrawCall(const zephyr::rendering::IDrawable* drawable, const std::string& shader_name) {
+    m_DrawManager.UnregisterDrawCall(drawable, shader_name);
 }
 
-void Scene::RegisterShaderProperty(const zephyr::rendering::IShaderProperty* property, zephyr::rendering::EShaderType shader) {
-    m_DrawManager.RegisterShaderProperty(property, shader);
+void Scene::RegisterShaderProperty(const zephyr::rendering::IShaderProperty* property, const std::string& shader_name) {
+    m_DrawManager.RegisterShaderProperty(property, shader_name);
 }
 
-void Scene::UnregisterShaderProperty(const zephyr::rendering::IShaderProperty* property, zephyr::rendering::EShaderType shader) {
-    m_DrawManager.UnregisterShaderProperty(property, shader);
+void Scene::UnregisterShaderProperty(const zephyr::rendering::IShaderProperty* property, const std::string& shader_name) {
+    m_DrawManager.UnregisterShaderProperty(property, shader_name);
 }
 
 void Scene::RegisterGUIWidget(zephyr::rendering::IGUIWidget* widget) {

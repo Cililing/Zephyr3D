@@ -54,7 +54,7 @@ void World::LoadChunks() {
 }
 
 void World::LoadChunk(FixedChunk* to_load) {
-    Object().Scene().RegisterDrawCall(to_load, zephyr::rendering::EShaderType::PureTexture);
+    Object().Scene().RegisterDrawCall(to_load, "PureTexture");
     Object().Scene().AddRigidBody(to_load->PhysicsHandler());
 }
 
@@ -66,7 +66,7 @@ void World::UnloadChunks() {
 }
 
 void World::UnloadChunk(FixedChunk* to_unload) {
-    Object().Scene().UnregisterDrawCall(to_unload, zephyr::rendering::EShaderType::PureTexture);
+    Object().Scene().UnregisterDrawCall(to_unload, "PureTexture");
     Object().Scene().RemoveRigidBody(to_unload->PhysicsHandler());
 }
 

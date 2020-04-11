@@ -40,10 +40,10 @@ public:
     void DestroyObject(Object::ID_t id);
 
     // DrawManager functions
-    void RegisterDrawCall(const zephyr::rendering::IDrawable* drawable, zephyr::rendering::EShaderType shader);
-    void UnregisterDrawCall(const zephyr::rendering::IDrawable* drawable, zephyr::rendering::EShaderType shader);
-    void RegisterShaderProperty(const zephyr::rendering::IShaderProperty* property, zephyr::rendering::EShaderType shader);
-    void UnregisterShaderProperty(const zephyr::rendering::IShaderProperty* property, zephyr::rendering::EShaderType shader);
+    void RegisterDrawCall(const zephyr::rendering::IDrawable* drawable, const std::string& shader_name);
+    void UnregisterDrawCall(const zephyr::rendering::IDrawable* drawable, const std::string& shader_name);
+    void RegisterShaderProperty(const zephyr::rendering::IShaderProperty* property, const std::string& shader_name);
+    void UnregisterShaderProperty(const zephyr::rendering::IShaderProperty* property, const std::string& shader_name);
     void RegisterGUIWidget(zephyr::rendering::IGUIWidget* widget);
     void UnregisterGUIWidget(zephyr::rendering::IGUIWidget* widget);
     void DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color);

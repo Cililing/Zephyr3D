@@ -25,30 +25,38 @@ void zephyr::rendering::DrawManager::Initialize() {
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->AddFontDefault();
 
-    // Create shader programs
-    m_ShaderPrograms[static_cast<size_t>(EShaderType::PureColor)].AttachShaders("../../include/Zephyr3D/shaders/PURE_COLOR.vert",
-                                                                                "../../include/Zephyr3D/shaders/PURE_COLOR.frag");
-    m_ShaderPrograms[static_cast<size_t>(EShaderType::PureColor)].Traits(
-        ShaderProgram::ETrait::Position | ShaderProgram::ETrait::Color
-    );
+    // Create default shader programs
+    {auto [it, vld] = m_Shaders.try_emplace("PureColor", "PureColor");
+    if (vld) {
+        it->second.AttachShaders("../../include/Zephyr3D/rendering/shaders/PureColorVert.glsl", "../../include/Zephyr3D/rendering/shaders/PureColorFrag.glsl");
+        it->second.Traits(ShaderProgram::ETrait::Position | ShaderProgram::ETrait::Color);
+    } else {
+        ERROR_LOG(Logger::ESender::Rendering, "Failed to create PureColor shader\n");
+    }}
 
-    m_ShaderPrograms[static_cast<size_t>(EShaderType::PureTexture)].AttachShaders("../../include/Zephyr3D/shaders/PURE_TEXTURE.vert",
-                                                                                  "../../include/Zephyr3D/shaders/PURE_TEXTURE.frag");
-    m_ShaderPrograms[static_cast<size_t>(EShaderType::PureTexture)].Traits(
-        ShaderProgram::ETrait::Position | ShaderProgram::ETrait::TexCoord
-    );
+    {auto [it, vld] = m_Shaders.try_emplace("PureTexture", "PureTexture");
+    if (vld) {
+        it->second.AttachShaders("../../include/Zephyr3D/rendering/shaders/PureTextureVert.glsl", "../../include/Zephyr3D/rendering/shaders/PureTextureFrag.glsl");
+        it->second.Traits(ShaderProgram::ETrait::Position | ShaderProgram::ETrait::TexCoord);
+    } else {
+        ERROR_LOG(Logger::ESender::Rendering, "Failed to create PureTexture shader\n");
+    }}
 
-    m_ShaderPrograms[static_cast<size_t>(EShaderType::Phong)].AttachShaders("../../include/Zephyr3D/shaders/PHONG.vert",
-                                                                            "../../include/Zephyr3D/shaders/PHONG.frag");
-    m_ShaderPrograms[static_cast<size_t>(EShaderType::Phong)].Traits(
-        ShaderProgram::ETrait::Position | ShaderProgram::ETrait::Normal | ShaderProgram::ETrait::TexCoord
-    );
+    {auto [it, vld] = m_Shaders.try_emplace("Phong", "Phong");
+    if (vld) {
+        it->second.AttachShaders("../../include/Zephyr3D/rendering/shaders/PhongVert.glsl", "../../include/Zephyr3D/rendering/shaders/PhongFrag.glsl");
+        it->second.Traits(ShaderProgram::ETrait::Position | ShaderProgram::ETrait::Normal | ShaderProgram::ETrait::TexCoord);
+    } else {
+        ERROR_LOG(Logger::ESender::Rendering, "Failed to create Phong shader\n");
+    }}
 
-    m_ShaderPrograms[static_cast<size_t>(EShaderType::Skybox)].AttachShaders("../../include/Zephyr3D/shaders/SKYBOX.vert",
-                                                                             "../../include/Zephyr3D/shaders/SKYBOX.frag");
-    m_ShaderPrograms[static_cast<size_t>(EShaderType::Skybox)].Traits(
-        ShaderProgram::ETrait::Position
-    );
+    {auto [it, vld] = m_Shaders.try_emplace("Skybox", "Skybox");
+    if (vld) {
+        it->second.AttachShaders("../../include/Zephyr3D/rendering/shaders/SkyboxVert.glsl", "../../include/Zephyr3D/rendering/shaders/SkyboxFrag.glsl");
+        it->second.Traits(ShaderProgram::ETrait::Position);
+    } else {
+        ERROR_LOG(Logger::ESender::Rendering, "Failed to create Skybox shader\n");
+    }}
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
@@ -70,20 +78,20 @@ void zephyr::rendering::DrawManager::Background(const glm::vec3& background) {
     m_Background = background;
 }
 
-void zephyr::rendering::DrawManager::RegisterDrawCall(const IDrawable* drawable, EShaderType shader) {
-    m_ShaderPrograms[static_cast<size_t>(shader)].RegisterDrawCall(drawable);
+void zephyr::rendering::DrawManager::RegisterDrawCall(const IDrawable* drawable, const std::string& shader_name) {
+    m_Shaders.at(shader_name).RegisterDrawCall(drawable);
 }
 
-void zephyr::rendering::DrawManager::UnregisterDrawCall(const IDrawable* drawable, EShaderType shader) {
-    m_ShaderPrograms[static_cast<size_t>(shader)].UnregisterDrawCall(drawable);
+void zephyr::rendering::DrawManager::UnregisterDrawCall(const IDrawable* drawable, const std::string& shader_name) {
+    m_Shaders.at(shader_name).UnregisterDrawCall(drawable);
 }
 
-void zephyr::rendering::DrawManager::RegisterShaderProperty(const IShaderProperty* property, EShaderType shader) {
-    m_ShaderPrograms[static_cast<size_t>(shader)].RegisterShaderProperty(property);
+void zephyr::rendering::DrawManager::RegisterShaderProperty(const IShaderProperty* property, const std::string& shader_name) {
+    m_Shaders.at(shader_name).RegisterShaderProperty(property);
 }
 
-void zephyr::rendering::DrawManager::UnregisterShaderProperty(const IShaderProperty* property, EShaderType shader) {
-    m_ShaderPrograms[static_cast<size_t>(shader)].UnregisterShaderProperty(property);
+void zephyr::rendering::DrawManager::UnregisterShaderProperty(const IShaderProperty* property, const std::string& shader_name) {
+    m_Shaders.at(shader_name).UnregisterShaderProperty(property);
 }
 
 void zephyr::rendering::DrawManager::RegisterGUIWidget(IGUIWidget* widget) {
@@ -128,18 +136,20 @@ void zephyr::rendering::DrawManager::CallDraws() {
     glm::mat4 pv = m_Camera->Projection() * m_Camera->View();
 
     // Call draws in all shaders
-    for (auto shader = m_ShaderPrograms.begin(); shader != m_ShaderPrograms.end(); shader++) {
-        shader->Use();
+    for (auto it = m_Shaders.begin(); it != m_Shaders.end(); it++) {
+        auto& shader = it->second;
 
-        shader->Uniform("pv", pv);
-        shader->Uniform("viewPos", m_Camera->Position());
+        shader.Use();
 
-        shader->CallProperties();
-        shader->CallDraws();
+        shader.Uniform("pv", pv);
+        shader.Uniform("viewPos", m_Camera->Position());
+
+        shader.CallProperties();
+        shader.CallDraws();
     }
 
     // Call one-frame draws
-    auto& pure_color_shader = m_ShaderPrograms[static_cast<size_t>(EShaderType::PureColor)];
+    auto& pure_color_shader = m_Shaders.at("PureColor");
     pure_color_shader.Use();
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     while (!m_NextFrameDraws.empty()) {
@@ -153,7 +163,7 @@ void zephyr::rendering::DrawManager::CallDraws() {
     // Draw skybox
     if (m_Skybox != nullptr) {
         glDepthFunc(GL_LEQUAL);
-        const ShaderProgram& skybox_shader = m_ShaderPrograms[static_cast<size_t>(EShaderType::Skybox)];
+        const ShaderProgram& skybox_shader = m_Shaders.at("Skybox");
 
         skybox_shader.Use();
         skybox_shader.Uniform("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->View())));

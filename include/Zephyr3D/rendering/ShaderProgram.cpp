@@ -3,8 +3,9 @@
 #include "IDrawable.h"
 #include "IShaderProperty.h"
 
-zephyr::rendering::ShaderProgram::ShaderProgram()
-    : m_Traits(ETrait::None) {
+zephyr::rendering::ShaderProgram::ShaderProgram(const std::string& name)
+    : m_Traits(ETrait::None)
+    , m_Name(name) {
     m_ID = glCreateProgram();
 }
 

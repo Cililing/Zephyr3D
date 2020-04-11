@@ -31,11 +31,11 @@ PointLight::PointLight(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular,
 }
 
 void PointLight::Initialize() {
-    Object().Scene().RegisterShaderProperty(this, zephyr::rendering::EShaderType::Phong);
+    Object().Scene().RegisterShaderProperty(this, "Phong");
 }
 
 void PointLight::Destroy() {
-    Object().Scene().UnregisterShaderProperty(this, zephyr::rendering::EShaderType::Phong);
+    Object().Scene().UnregisterShaderProperty(this, "Phong");
 }
 
 void PointLight::SetProperty(const zephyr::rendering::ShaderProgram& shader) const {

@@ -1,17 +1,17 @@
 #include "MeshRenderer.h"
 #include "Transform.h"
 
-MeshRenderer::MeshRenderer(RawModel& raw_model, zephyr::rendering::EShaderType shader)
+MeshRenderer::MeshRenderer(RawModel& raw_model, const std::string& shader_name)
     : m_Model(raw_model)
-    , m_ShaderType(shader) {
+    , m_ShaderName(shader_name) {
 }
 
 void MeshRenderer::Initialize() {
-    Object().Scene().RegisterDrawCall(this, m_ShaderType);
+    Object().Scene().RegisterDrawCall(this, m_ShaderName);
 }
 
 void MeshRenderer::Destroy() {
-    Object().Scene().UnregisterDrawCall(this, m_ShaderType);
+    Object().Scene().UnregisterDrawCall(this, m_ShaderName);
 }
 
 void MeshRenderer::Draw(const zephyr::rendering::ShaderProgram& shader) const {

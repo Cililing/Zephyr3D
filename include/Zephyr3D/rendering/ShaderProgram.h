@@ -31,17 +31,18 @@ public:
         Color = 1 << 3
     };
 
-    ShaderProgram();
+    ShaderProgram(const std::string& name);
     ShaderProgram(const ShaderProgram&) = delete;
     ShaderProgram& operator=(const ShaderProgram&) = delete;
-    ShaderProgram(ShaderProgram&&) = default;
-    ShaderProgram& operator=(ShaderProgram&&) = default;
+    ShaderProgram(ShaderProgram&&) = delete;
+    ShaderProgram& operator=(ShaderProgram&&) = delete;
     ~ShaderProgram();
     
     void AttachShaders(const char *vertex_path, const char *fragment_path, const char *geometry_path = nullptr);
     void Use() const;
 
     GLuint ID() const { return m_ID; }
+    std::string Name() const { return m_Name; }
 
     ETrait Traits() const { return m_Traits; }
     void Traits(ETrait traits) { m_Traits = traits; }
@@ -75,6 +76,7 @@ private:
 
     GLuint m_ID;
     ETrait m_Traits;
+    std::string m_Name;
     std::vector<const IDrawable*> m_Drawables;
     std::vector<const IShaderProperty*> m_Properties;
 };

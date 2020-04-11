@@ -13,7 +13,7 @@
 class Transform;
 class MeshRenderer : public Component, public zephyr::rendering::IDrawable {
 public:
-    MeshRenderer(RawModel& model, zephyr::rendering::EShaderType shader);
+    MeshRenderer(RawModel& model, const std::string& shader_name);
 
     void Initialize() override;
     void Destroy() override;
@@ -26,7 +26,7 @@ private:
     void DrawMesh(const zephyr::rendering::ShaderProgram& shader, const zephyr::rendering::Model::Mesh& mesh) const;
 
     zephyr::rendering::Model m_Model;
-    zephyr::rendering::EShaderType m_ShaderType;
+    std::string m_ShaderName;
 };
 
 #pragma warning(default: 26495)
