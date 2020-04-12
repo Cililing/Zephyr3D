@@ -31,6 +31,8 @@ public:
         Color = 1 << 3
     };
 
+    ShaderProgram(const std::string& name, ETrait traits, const std::string& vertex_path, const std::string& fragment_path, const std::string& geometry_path = "");
+
     ShaderProgram(const std::string& name);
     ShaderProgram(const ShaderProgram&) = delete;
     ShaderProgram& operator=(const ShaderProgram&) = delete;

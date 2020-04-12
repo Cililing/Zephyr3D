@@ -9,6 +9,14 @@ zephyr::rendering::ShaderProgram::ShaderProgram(const std::string& name)
     m_ID = glCreateProgram();
 }
 
+zephyr::rendering::ShaderProgram::ShaderProgram(const std::string& name, ETrait traits, const std::string& vertex_path, const std::string& fragment_path, const std::string& geometry_path)
+    : m_Traits(ETrait::None)
+    , m_Name(name) {
+    m_ID = glCreateProgram();
+
+    AttachShaders(vertex_path.c_str(), fragment_path.c_str(), geometry_path.c_str());
+}
+
 zephyr::rendering::ShaderProgram::~ShaderProgram() {
     glDeleteProgram(m_ID);
 }
@@ -18,18 +26,19 @@ void zephyr::rendering::ShaderProgram::Use() const {
 }
 
 void zephyr::rendering::ShaderProgram::AttachShaders(const char *vertex_path, const char *fragment_path, const char *geometry_path) {
-    // Compile shaders from given files
     unsigned int vertex_shader = AttachShader(vertex_path, GL_VERTEX_SHADER);
     unsigned int fragment_shader = AttachShader(fragment_path, GL_FRAGMENT_SHADER);
-    unsigned int geometry_shader = geometry_path != nullptr ? AttachShader(geometry_path, GL_GEOMETRY_SHADER) : -1;
+    //unsigned int geometry_shader = geometry_path != "" ? AttachShader(geometry_path, GL_GEOMETRY_SHADER) : -1;
+
+    // Either vertex and fragment shaders are mandatory
+    assert(vertex_shader != -1 && fragment_shader != -1);
 
     LinkProgram();
 
-    // Free memory
     glDeleteShader(vertex_shader);
     glDeleteShader(fragment_shader);
     if(geometry_path != nullptr) {
-        glDeleteShader(geometry_shader);
+        //glDeleteShader(geometry_shader);
     }
 }
 
@@ -139,6 +148,7 @@ unsigned int zephyr::rendering::ShaderProgram::AttachShader(const char *path, GL
         shader_code = shader_stream.str();
     } catch(const std::ifstream::failure &e) {
         ERROR_LOG(Logger::ESender::Rendering, "Failed to read shader file %s:\n%s", path, e.what());
+        return -1;
     }
 
     // Compile shader
@@ -154,6 +164,7 @@ unsigned int zephyr::rendering::ShaderProgram::AttachShader(const char *path, GL
     if (!success) {
         glGetShaderInfoLog(shader, 1024, NULL, info_log);
         ERROR_LOG(Logger::ESender::Rendering, "Failed to compile shader %s:\n%s", path, info_log);
+        return -1;
     }
     
     glAttachShader(m_ID, shader);

@@ -20,7 +20,6 @@
 #include <iostream>
 #include <stack>
 #include <vector>
-#include <array>
 #include <map>
 #include <assert.h>
 
@@ -57,7 +56,7 @@ private:
     std::unique_ptr<Cubemap> m_Skybox{ nullptr };
 
     ICamera* m_Camera{ nullptr };
-    std::map<std::string, ShaderProgram> m_Shaders;
+    std::map<std::string, std::unique_ptr<ShaderProgram>> m_Shaders;
     std::stack<IDrawable*> m_NextFrameDraws;
     std::vector<IGUIWidget*> m_GUIWidgets;
 };
