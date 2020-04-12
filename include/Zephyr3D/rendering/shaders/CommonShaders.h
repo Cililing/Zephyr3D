@@ -11,8 +11,9 @@ public:
         : ShaderProgram(
             "Phong",
             ShaderProgram::ETrait::Position | ShaderProgram::ETrait::Normal | ShaderProgram::ETrait::TexCoord,
-            "../../include/Zephyr3D/rendering/shaders/PhongVert.glsl",
-            "../../include/Zephyr3D/rendering/shaders/PhongFrag.glsl"
+            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PhongVert.glsl"),
+            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PhongFrag.glsl"),
+            ""
         ) { }
 
     Phong(const Phong&) = delete;
@@ -29,8 +30,9 @@ public:
         : ShaderProgram(
             "PureColor",
             ShaderProgram::ETrait::Position | ShaderProgram::ETrait::Color,
-            "../../include/Zephyr3D/rendering/shaders/PureColorVert.glsl",
-            "../../include/Zephyr3D/rendering/shaders/PureColorFrag.glsl"
+            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PureColorVert.glsl"),
+            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PureColorFrag.glsl"),
+            ""
         ) { }
 
     PureColor(const PureColor&) = delete;
@@ -47,8 +49,9 @@ public:
         : ShaderProgram(
             "PureTexture",
             ShaderProgram::ETrait::Position | ShaderProgram::ETrait::TexCoord,
-            "../../include/Zephyr3D/rendering/shaders/PureTextureVert.glsl",
-            "../../include/Zephyr3D/rendering/shaders/PureTextureFrag.glsl"
+            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PureTextureVert.glsl"),
+            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PureTextureFrag.glsl"),
+            ""
         ) { }
 
     PureTexture(const PureTexture&) = delete;
@@ -65,8 +68,9 @@ public:
         : ShaderProgram(
             "Skybox",
             ShaderProgram::ETrait::Position,
-            "../../include/Zephyr3D/rendering/shaders/SkyboxVert.glsl",
-            "../../include/Zephyr3D/rendering/shaders/SkyboxFrag.glsl"
+            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/SkyboxVert.glsl"),
+            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/SkyboxFrag.glsl"),
+            ""
         ) { }
 
     Skybox(const Skybox&) = delete;

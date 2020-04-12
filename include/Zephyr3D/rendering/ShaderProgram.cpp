@@ -3,32 +3,14 @@
 #include "IDrawable.h"
 #include "IShaderProperty.h"
 
-zephyr::rendering::ShaderProgram::ShaderProgram(const std::string& name)
-    : m_Traits(ETrait::None)
-    , m_Name(name) {
-    m_ID = glCreateProgram();
-}
-
 zephyr::rendering::ShaderProgram::ShaderProgram(const std::string& name, ETrait traits, const std::string& vertex_path, const std::string& fragment_path, const std::string& geometry_path)
     : m_Traits(ETrait::None)
     , m_Name(name) {
     m_ID = glCreateProgram();
 
-    AttachShaders(vertex_path.c_str(), fragment_path.c_str(), geometry_path.c_str());
-}
-
-zephyr::rendering::ShaderProgram::~ShaderProgram() {
-    glDeleteProgram(m_ID);
-}
-
-void zephyr::rendering::ShaderProgram::Use() const {
-    glUseProgram(m_ID);
-}
-
-void zephyr::rendering::ShaderProgram::AttachShaders(const char *vertex_path, const char *fragment_path, const char *geometry_path) {
-    unsigned int vertex_shader = AttachShader(vertex_path, GL_VERTEX_SHADER);
-    unsigned int fragment_shader = AttachShader(fragment_path, GL_FRAGMENT_SHADER);
-    //unsigned int geometry_shader = geometry_path != "" ? AttachShader(geometry_path, GL_GEOMETRY_SHADER) : -1;
+    unsigned int vertex_shader = CompileShader(vertex_path, GL_VERTEX_SHADER);
+    unsigned int fragment_shader = CompileShader(fragment_path, GL_FRAGMENT_SHADER);
+    unsigned int geometry_shader = geometry_path != "" ? CompileShader(geometry_path, GL_GEOMETRY_SHADER) : -1;
 
     // Either vertex and fragment shaders are mandatory
     assert(vertex_shader != -1 && fragment_shader != -1);
@@ -37,9 +19,17 @@ void zephyr::rendering::ShaderProgram::AttachShaders(const char *vertex_path, co
 
     glDeleteShader(vertex_shader);
     glDeleteShader(fragment_shader);
-    if(geometry_path != nullptr) {
-        //glDeleteShader(geometry_shader);
+    if (geometry_shader != -1) {
+        glDeleteShader(geometry_shader);
     }
+}
+
+zephyr::rendering::ShaderProgram::~ShaderProgram() {
+    glDeleteProgram(m_ID);
+}
+
+void zephyr::rendering::ShaderProgram::Use() const {
+    glUseProgram(m_ID);
 }
 
 void zephyr::rendering::ShaderProgram::RegisterDrawCall(const IDrawable* drawable) {
@@ -132,28 +122,30 @@ void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, const gl
     glUniformMatrix4fv(glGetUniformLocation(m_ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-unsigned int zephyr::rendering::ShaderProgram::AttachShader(const char *path, GLenum shader_type) {
-    std::string shader_code;
+std::string zephyr::rendering::ShaderProgram::ReadShaderFile(const std::string& path) {
     std::fstream shader_file;
-    
+    std::stringstream shader_stream;
+
     shader_file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    
+
     // Read file
     try {
         shader_file.open(path);
-        std::stringstream shader_stream;
         shader_stream << shader_file.rdbuf();
         shader_file.close();
-        
-        shader_code = shader_stream.str();
-    } catch(const std::ifstream::failure &e) {
+    }
+    catch (const std::ifstream::failure & e) {
         ERROR_LOG(Logger::ESender::Rendering, "Failed to read shader file %s:\n%s", path, e.what());
-        return -1;
+        return "";
     }
 
+    return shader_stream.str();
+}
+
+unsigned int zephyr::rendering::ShaderProgram::CompileShader(std::string code, GLenum shader_type) {
     // Compile shader
     unsigned int shader = glCreateShader(shader_type);
-    const char *shader_code_ptr = shader_code.c_str();
+    const char *shader_code_ptr = code.c_str();
     glShaderSource(shader, 1, &shader_code_ptr, nullptr);
     glCompileShader(shader);
     
@@ -163,7 +155,7 @@ unsigned int zephyr::rendering::ShaderProgram::AttachShader(const char *path, GL
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
         glGetShaderInfoLog(shader, 1024, NULL, info_log);
-        ERROR_LOG(Logger::ESender::Rendering, "Failed to compile shader %s:\n%s", path, info_log);
+        ERROR_LOG(Logger::ESender::Rendering, "Failed to compile shader %s:\n%s", info_log);
         return -1;
     }
     

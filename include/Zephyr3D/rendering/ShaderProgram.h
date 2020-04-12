@@ -31,23 +31,19 @@ public:
         Color = 1 << 3
     };
 
-    ShaderProgram(const std::string& name, ETrait traits, const std::string& vertex_path, const std::string& fragment_path, const std::string& geometry_path = "");
+    ShaderProgram(const std::string& name, ETrait traits, const std::string& vertex_code, const std::string& fragment_code, const std::string& geometry_code);
 
-    ShaderProgram(const std::string& name);
     ShaderProgram(const ShaderProgram&) = delete;
     ShaderProgram& operator=(const ShaderProgram&) = delete;
     ShaderProgram(ShaderProgram&&) = delete;
     ShaderProgram& operator=(ShaderProgram&&) = delete;
-    ~ShaderProgram();
-    
-    void AttachShaders(const char *vertex_path, const char *fragment_path, const char *geometry_path = nullptr);
+    virtual ~ShaderProgram();
+
     void Use() const;
 
     GLuint ID() const { return m_ID; }
     std::string Name() const { return m_Name; }
-
     ETrait Traits() const { return m_Traits; }
-    void Traits(ETrait traits) { m_Traits = traits; }
 
     void RegisterDrawCall(const IDrawable* drawable);
     void UnregisterDrawCall(const IDrawable* drawable);
@@ -55,8 +51,8 @@ public:
     void RegisterShaderProperty(const IShaderProperty* property);
     void UnregisterShaderProperty(const IShaderProperty* property);
 
-    void CallProperties() const;
-    void CallDraws() const;
+    virtual void CallProperties() const;
+    virtual void CallDraws() const;
 
     // Setters for OpenGL shaders
     void Uniform(const std::string &name, bool value) const;
@@ -72,9 +68,12 @@ public:
     void Uniform(const std::string &name, const glm::mat3 &mat) const;
     void Uniform(const std::string &name, const glm::mat4 &mat) const;
 
+protected:
+    std::string ReadShaderFile(const std::string& path);
+
 private:
     void LinkProgram();
-    unsigned int AttachShader(const char *path, GLenum shader);
+    unsigned int CompileShader(std::string code, GLenum shader);
 
     GLuint m_ID;
     ETrait m_Traits;
