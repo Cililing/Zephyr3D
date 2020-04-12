@@ -62,13 +62,13 @@ void zephyr::rendering::ShaderProgram::UnregisterShaderProperty(const IShaderPro
     }
 }
 
-void zephyr::rendering::ShaderProgram::CallProperties() const {
+void zephyr::rendering::ShaderProgram::CallProperties() {
     for (auto& property : m_Properties) {
         property->SetProperty(*this);
     }
 }
 
-void zephyr::rendering::ShaderProgram::CallDraws() const {
+void zephyr::rendering::ShaderProgram::CallDraws() {
     for (auto& drawable : m_Drawables) {
         drawable->Draw(*this);
     }

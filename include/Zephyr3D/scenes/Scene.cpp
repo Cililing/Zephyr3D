@@ -90,19 +90,19 @@ void Scene::RegisterGUIWidget(zephyr::rendering::IGUIWidget* widget) {
 }
 
 void Scene::UnregisterGUIWidget(zephyr::rendering::IGUIWidget* widget) {
-    m_DrawManager.UnregisterGUIWidget(widget);
+    //m_DrawManager.UnregisterGUIWidget(widget);
 }
 
 void Scene::DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color) {
-    m_DrawManager.DrawLine(start, end, color);
+    //m_DrawManager.DrawLine(start, end, color);
 }
 
 void Scene::DrawPlane(glm::mat4 model, glm::vec3 color) {
-    m_DrawManager.DrawPlane(model, color);
+    //m_DrawManager.DrawPlane(model, color);
 }
 
 void Scene::DrawCuboid(glm::mat4 model, glm::vec3 color) {
-    m_DrawManager.DrawCuboid(model, color);
+    //m_DrawManager.DrawCuboid(model, color);
 }
 
 void Scene::DrawSphere(glm::mat4 model, glm::vec3 color) {

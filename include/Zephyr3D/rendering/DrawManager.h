@@ -6,7 +6,7 @@
 #include "IDrawable.h"
 #include "IShaderProperty.h"
 #include "IGUIWidget.h"
-#include "primitives/Cubemap.h"
+#include "Cubemap.h"
 
 #pragma warning(push, 0)
 #include <imgui.h>
@@ -43,11 +43,6 @@ public:
 
     void RegisterGUIWidget(IGUIWidget* widget);
     void UnregisterGUIWidget(IGUIWidget* widget);
-
-    void DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color);
-    void DrawPlane(glm::mat4 model, glm::vec3 color);
-    void DrawCuboid(glm::mat4 model, glm::vec3 color);
-    void DrawSphere(glm::mat4 model, glm::vec3 color);
 
     void CallDraws();
 

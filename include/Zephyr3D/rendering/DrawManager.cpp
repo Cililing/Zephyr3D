@@ -5,12 +5,7 @@
 #include "IShaderProperty.h"
 #include "IGUIWidget.h"
 #include "shaders/CommonShaders.h"
-#include "primitives/Line.h"
-#include "primitives/Plane.h"
-#include "primitives/Cuboid.h"
-#include "primitives/Cubemap.h"
 #include "../utilities/Window.h"
-#include "../rendering/primitives/Cubemap.h"
 #include "../cbs/components/Camera.h"
 
 void zephyr::rendering::DrawManager::Initialize() {
@@ -96,26 +91,6 @@ void zephyr::rendering::DrawManager::UnregisterGUIWidget(IGUIWidget* widget) {
     if (to_erase != m_GUIWidgets.end()) {
         m_GUIWidgets.erase(to_erase);
     }
-}
-
-// TODO optimise 
-void zephyr::rendering::DrawManager::DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color) {
-    m_NextFrameDraws.push(new Line(start, end, color));
-}
-
-// TODO optimise
-void zephyr::rendering::DrawManager::DrawPlane(glm::mat4 model, glm::vec3 color) {
-    m_NextFrameDraws.push(new Plane(model, color));
-}
-
-// TODO optimise
-void zephyr::rendering::DrawManager::DrawCuboid(glm::mat4 model, glm::vec3 color) {
-    m_NextFrameDraws.push(new Cuboid(model, color));
-}
-
-// TODO optimise
-void zephyr::rendering::DrawManager::DrawSphere(glm::mat4 model, glm::vec3 color) {
-
 }
 
 void zephyr::rendering::DrawManager::CallDraws() {

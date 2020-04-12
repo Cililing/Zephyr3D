@@ -9,7 +9,7 @@ void PhysicsRenderer::drawLine(const btVector3& from, const btVector3& to, const
     glm::vec3 end(to.getX(), to.getY(), to.getZ());
     glm::vec3 col(color.getX(), color.getY(), color.getZ());
 
-    m_DrawManager.DrawLine(start, end, col);
+    //m_DrawManager.DrawLine(start, end, col);
 }
 
 void PhysicsRenderer::reportErrorWarning(const char* warningString) {

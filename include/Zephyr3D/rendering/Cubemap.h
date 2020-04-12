@@ -1,8 +1,8 @@
 #ifndef Cubemap_h
 #define Cubemap_h
 
-#include "../IDrawable.h"
-#include "../../resources/RawTexture.h"
+#include "IDrawable.h"
+#include "../resources/RawTexture.h"
 
 #pragma warning(push, 0)
 #include <stb_image.h>

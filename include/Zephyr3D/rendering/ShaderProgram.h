@@ -51,8 +51,8 @@ public:
     void RegisterShaderProperty(const IShaderProperty* property);
     void UnregisterShaderProperty(const IShaderProperty* property);
 
-    virtual void CallProperties() const;
-    virtual void CallDraws() const;
+    virtual void CallProperties();
+    virtual void CallDraws();
 
     // Setters for OpenGL shaders
     void Uniform(const std::string &name, bool value) const;
