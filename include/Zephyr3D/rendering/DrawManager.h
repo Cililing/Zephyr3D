@@ -7,6 +7,7 @@
 #include "IShaderProperty.h"
 #include "IGUIWidget.h"
 #include "Cubemap.h"
+#include "shaders/CommonShaders.h"
 
 #pragma warning(push, 0)
 #include <imgui.h>
@@ -52,7 +53,8 @@ private:
 
     ICamera* m_Camera{ nullptr };
     std::map<std::string, std::unique_ptr<ShaderProgram>> m_Shaders;
-    std::stack<IDrawable*> m_NextFrameDraws;
+    class Skybox m_SkyboxShader;
+    Debug m_DebugShader;
     std::vector<IGUIWidget*> m_GUIWidgets;
 };
 

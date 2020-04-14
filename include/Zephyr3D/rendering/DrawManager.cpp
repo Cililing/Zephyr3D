@@ -1,10 +1,6 @@
 #include "DrawManager.h"
 
 #include "../Engine.h"
-#include "IDrawable.h"
-#include "IShaderProperty.h"
-#include "IGUIWidget.h"
-#include "shaders/CommonShaders.h"
 #include "../utilities/Window.h"
 #include "../cbs/components/Camera.h"
 
@@ -35,11 +31,6 @@ void zephyr::rendering::DrawManager::Initialize() {
     {auto [it, vld] = m_Shaders.try_emplace("Phong", std::make_unique<Phong>());
     if (!vld) {
         ERROR_LOG(Logger::ESender::Rendering, "Failed to emplace Phong shader\n");
-    }}
-
-    {auto [it, vld] = m_Shaders.try_emplace("Skybox", std::make_unique<class Skybox>());
-    if (!vld) {
-        ERROR_LOG(Logger::ESender::Rendering, "Failed to emplace Skybox shader\n");
     }}
 
     glEnable(GL_DEPTH_TEST);
@@ -112,27 +103,14 @@ void zephyr::rendering::DrawManager::CallDraws() {
         shader->CallDraws();
     }
 
-    // Call one-frame draws
-    auto& pure_color_shader = m_Shaders.at("PureColor");
-    pure_color_shader->Use();
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    while (!m_NextFrameDraws.empty()) {
-        m_NextFrameDraws.top()->Draw(*pure_color_shader);
-
-        delete m_NextFrameDraws.top();
-        m_NextFrameDraws.pop();
-    }
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
     // Draw skybox
     if (m_Skybox != nullptr) {
         glDepthFunc(GL_LEQUAL);
-        ShaderProgram* skybox_shader = m_Shaders.at("Skybox").get();
 
-        skybox_shader->Use();
-        skybox_shader->Uniform("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->View())));
+        m_SkyboxShader.Use();
+        m_SkyboxShader.Uniform("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->View())));
 
-        m_Skybox->Draw(*skybox_shader);
+        m_Skybox->Draw(m_SkyboxShader);
 
         glDepthFunc(GL_LESS);
     }

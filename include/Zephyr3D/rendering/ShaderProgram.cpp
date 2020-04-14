@@ -155,7 +155,7 @@ unsigned int zephyr::rendering::ShaderProgram::CompileShader(std::string code, G
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
         glGetShaderInfoLog(shader, 1024, NULL, info_log);
-        ERROR_LOG(Logger::ESender::Rendering, "Failed to compile shader %s:\n%s", info_log);
+        ERROR_LOG(Logger::ESender::Rendering, "Failed to compile shader %d:\n%s", shader_type, info_log);
         return -1;
     }
     
