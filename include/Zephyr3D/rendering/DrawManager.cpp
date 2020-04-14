@@ -33,12 +33,12 @@ void zephyr::rendering::DrawManager::Initialize() {
     }}
 
     {auto [it, vld] = m_Shaders.try_emplace("Phong", std::make_unique<Phong>());
-    if (vld) {
+    if (!vld) {
         ERROR_LOG(Logger::ESender::Rendering, "Failed to emplace Phong shader\n");
     }}
 
     {auto [it, vld] = m_Shaders.try_emplace("Skybox", std::make_unique<class Skybox>());
-    if (vld) {
+    if (!vld) {
         ERROR_LOG(Logger::ESender::Rendering, "Failed to emplace Skybox shader\n");
     }}
 
