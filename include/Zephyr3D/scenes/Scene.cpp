@@ -94,7 +94,7 @@ void Scene::UnregisterGUIWidget(zephyr::rendering::IGUIWidget* widget) {
 }
 
 void Scene::DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color) {
-    //m_DrawManager.DrawLine(start, end, color);
+    m_DrawManager.DrawLine(start, end, color);
 }
 
 void Scene::DrawPlane(glm::mat4 model, glm::vec3 color) {

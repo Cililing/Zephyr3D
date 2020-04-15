@@ -103,6 +103,10 @@ void zephyr::rendering::DrawManager::CallDraws() {
         shader->CallDraws();
     }
 
+    m_DebugShader.Use();
+    m_DebugShader.Uniform("pv", pv);
+    m_DebugShader.CallDraws();
+
     // Draw skybox
     if (m_Skybox != nullptr) {
         glDepthFunc(GL_LEQUAL);
@@ -130,4 +134,8 @@ void zephyr::rendering::DrawManager::CallDraws() {
 
     // End of drawing
     glfwSwapBuffers(zephyr::Engine::Instance().GetWindow());
+}
+
+void zephyr::rendering::DrawManager::DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color) {
+    m_DebugShader.DrawLine(start, end, color);
 }

@@ -6,6 +6,8 @@
 #include <Zephyr3D/cbs/components/DirectionalLight.h>
 #include <Zephyr3D/cbs/components/Cube.h>
 #include <Zephyr3D/cbs/components/TextRenderer.h>
+#include <Zephyr3D/cbs/components/RigidBody.h>
+#include <Zephyr3D/cbs/components/FirstPersonController.h>
 
 class MainScene : public Scene {
 public:

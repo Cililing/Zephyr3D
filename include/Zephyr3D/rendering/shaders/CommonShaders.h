@@ -100,7 +100,6 @@ public:
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/DebugVert.glsl"),
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/DebugFrag.glsl"),
             "") {
-        PrepareVAO(m_Line.VAO());
     }
 
     Debug(const Debug&) = delete;
@@ -110,26 +109,25 @@ public:
     ~Debug() = default;
 
     void CallDraws() override {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
         DrawLines();
 
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 
     void DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color) {
         // All calculation are made with assumption that prefab line define points <origin, (1, 0, 0)>
-        
+        const glm::vec3 prefab_end(1.0f, 0.0f, 0.0f);
+
         // Translation to move new line from it's position to origin
         glm::vec3 translation = -start;
 
-        // Move line to the origin, no needs to create start_prime
-        glm::vec3 end_prime = end + translation;
-
         // Calculate angle matrix between prefab line and translated new line
-        glm::vec3 v = glm::vec3(0.0f, -end_prime.z, end_prime.y);
-        float angle = acos(end_prime.x / glm::length(end_prime));
-        glm::mat4 rotation = glm::rotate(angle, v);
+        // Move line to the origin, no needs to create start_prime
+        glm::vec3 end_prime = glm::normalize(end + translation);
+        glm::quat rot = glm::rotation(prefab_end, end_prime);
+        glm::mat4 rotation = glm::toMat4(rot);
 
         // Lengths ratio equals to new line magnitude because prefab line has legnth 1
         float length = glm::length((end - start));
@@ -138,13 +136,6 @@ public:
         glm::mat4 model = glm::translate(glm::mat4(1.0f), -translation);
         model = model * rotation;
         model = glm::scale(model, glm::vec3(length));
-        
-        glm::vec3 start_t = model * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-        glm::vec3 end_t = model * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
-
-        std::cout << "Effect:\n";
-        std::cout << start_t.x << ' ' << start_t.y << ' ' << start_t.z << '\n';
-        std::cout << end_t.x << ' ' << end_t.y << ' ' << end_t.z << "\n\n";
 
         m_Lines.emplace_back(model, color);
     }
@@ -152,46 +143,48 @@ public:
 private:
     // Prefabs
     Line m_Line;
-
-    //                    model      color
     std::vector<std::pair<glm::mat4, glm::vec3>> m_Lines;
 
-    void PrepareVAO(GLuint vao) {
-        glBindVertexArray(vao);
+    void DrawLines() {
+        constexpr auto element_size = sizeof(m_Lines[0]);
 
-        // Add color
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+        // Bind vertex array
+        glBindVertexArray(m_Line.VAO());
+
+        // Prepare instance instance_buffer
+        GLuint instance_buffer;
+        glGenBuffers(1, &instance_buffer);
+        glBindBuffer(GL_ARRAY_BUFFER, instance_buffer);
+        glBufferData(GL_ARRAY_BUFFER, element_size * m_Lines.size(), &m_Lines[0], GL_STATIC_DRAW);
 
         // Add model
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, element_size, (void*)(0));
         glEnableVertexAttribArray(2);
-        glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(0 * sizeof(glm::vec4)));
+        glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, element_size, (void*)(1 * sizeof(glm::vec4)));
         glEnableVertexAttribArray(3);
-        glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(1 * sizeof(glm::vec4)));
+        glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, element_size, (void*)(2 * sizeof(glm::vec4)));
         glEnableVertexAttribArray(4);
-        glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(2 * sizeof(glm::vec4)));
-        glEnableVertexAttribArray(5);
-        glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(3 * sizeof(glm::vec4)));
+        glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, element_size, (void*)(3 * sizeof(glm::vec4)));
 
-        //Divisor
+        // Add color
+        glEnableVertexAttribArray(5);
+        glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, element_size, (void*)(sizeof(glm::mat4)));
+
+        // Divisors
         glVertexAttribDivisor(1, 1);
         glVertexAttribDivisor(2, 1);
         glVertexAttribDivisor(3, 1);
         glVertexAttribDivisor(4, 1);
         glVertexAttribDivisor(5, 1);
 
-        glBindVertexArray(0);
-    }
+        // Drawing
+        glDrawArraysInstanced(GL_LINES, 0, 2, m_Lines.size());
 
-    void DrawLines() {
-        GLuint buffer;
-        glGenBuffers(1, &buffer);
-        glBindBuffer(GL_ARRAY_BUFFER, buffer);
-        glBufferData(GL_ARRAY_BUFFER, m_Lines.size() * (sizeof(glm::vec3) + sizeof(glm::mat4)), &m_Lines[0], GL_STATIC_DRAW);
-
-        glBindVertexArray(m_Line.VAO());
-        glDrawElementsInstanced(GL_LINE, 2, GL_UNSIGNED_INT, 0, m_Lines.size());
+        // Cleanup
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
+        glDeleteBuffers(1, &instance_buffer);
         m_Lines.clear();
     }
 };

@@ -2,6 +2,7 @@
 
 #include <Zephyr3D/Engine.h>
 
+
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
@@ -31,11 +32,17 @@ void MainScene::CreateScene() {
                                                     0.1f, 
                                                     500.0f);
         camera->Connect(camera->Root().This, comp->TransformIn);
+
+        auto fpc = camera->CreateComponent<FirstPersonController>();
+        camera->Connect(camera->Root().This, fpc->TransformIn);
     }
     
     auto cube = CreateObject("Cube"); {
-        auto comp = cube->CreateComponent<Cube>(glm::vec3(1.0f, 0.0f, 0.0f));
-        cube->Connect(cube->Root().This, comp->TransformIn);
+        //auto comp = cube->CreateComponent<Cube>(glm::vec3(1.0f, 1.0f, 1.0f));
+        //cube->Connect(cube->Root().This, comp->TransformIn);
+
+        auto rb = cube->CreateComponent<RigidBody>(0, new btBoxShape(btVector3(1.0f, 1.0f, 1.0f)));
+        cube->Connect(cube->Root().This, rb->TransformIn);
     }
 
     auto gui = CreateObject("gui"); {

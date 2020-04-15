@@ -1,7 +1,7 @@
 #version 330
 layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aColor;
-layout (location = 2) in mat4 aModel;
+layout (location = 1) in mat4 aModel;
+layout (location = 5) in vec3 aColor;
 
 out vec3 color;
 
