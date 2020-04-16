@@ -23,8 +23,8 @@ void MainScene::CreateScene() {
     }
 
     auto camera = CreateObject("Camera"); {
-        camera->Root().Move(glm::vec3(-5.0f, 2.0f, -2.0f));
-        camera->Root().Rotate(glm::vec3(0.0f, 0.0f, glm::radians(-15.0f)));
+        camera->Root().Move(glm::vec3(-10.0f, 4.0f, -2.0f));
+        camera->Root().Rotate(glm::vec3(0.0f, 0.0f, glm::radians(-25.0f)));
         camera->Root().Rotate(glm::vec3(0.0f, glm::radians(-20.0f), 0.0f));
 
         auto comp = camera->CreateComponent<Camera>(glm::radians(45.0f), 
@@ -36,13 +36,32 @@ void MainScene::CreateScene() {
         auto fpc = camera->CreateComponent<FirstPersonController>();
         camera->Connect(camera->Root().This, fpc->TransformIn);
     }
-    
-    auto cube = CreateObject("Cube"); {
-        //auto comp = cube->CreateComponent<Cube>(glm::vec3(1.0f, 1.0f, 1.0f));
-        //cube->Connect(cube->Root().This, comp->TransformIn);
 
-        auto rb = cube->CreateComponent<RigidBody>(0, new btBoxShape(btVector3(1.0f, 1.0f, 1.0f)));
-        cube->Connect(cube->Root().This, rb->TransformIn);
+    for (auto i = 0; i < 3; i++) {
+        for (auto j = 0; j < 3; j++) {
+            for (auto k = 0; k < 3; k++) {
+                auto cube = CreateObject("Cube"); {
+                    cube->Root().Position(glm::vec3(i, j, k));
+
+                    auto comp = cube->CreateComponent<Cube>(glm::vec3((float)i / 5.0f, (float)j / 5.0f, (float)k / 5.0f));
+                    cube->Connect(cube->Root().This, comp->TransformIn);
+
+                    auto rb = cube->CreateComponent<RigidBody>(10.0f, new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
+                    cube->Connect(cube->Root().This, rb->TransformIn);
+                }
+            }
+        }
+    }
+
+    auto ground = CreateObject("Ground"); {
+        ground->Root().Position(glm::vec3(0.0f, -5.0f, 0.0f));
+        ground->Root().Scale(glm::vec3(20.0f, 1.0f, 20.0f));
+
+        auto cube = ground->CreateComponent<Cube>(glm::vec3(1.0f));
+        ground->Connect(ground->Root().This, cube->TransformIn);
+
+        auto rb = ground->CreateComponent<RigidBody>(0, new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
+        ground->Connect(ground->Root().This, rb->TransformIn);
     }
 
     auto gui = CreateObject("gui"); {
