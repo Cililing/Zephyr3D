@@ -93,22 +93,6 @@ void Scene::UnregisterGUIWidget(zephyr::rendering::IGUIWidget* widget) {
     //m_DrawManager.UnregisterGUIWidget(widget);
 }
 
-void Scene::DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color) {
-    m_DrawManager.DrawLine(start, end, color);
-}
-
-void Scene::DrawPlane(glm::mat4 model, glm::vec3 color) {
-    //m_DrawManager.DrawPlane(model, color);
-}
-
-void Scene::DrawCuboid(glm::mat4 model, glm::vec3 color) {
-    //m_DrawManager.DrawCuboid(model, color);
-}
-
-void Scene::DrawSphere(glm::mat4 model, glm::vec3 color) {
-    //TODO
-}
-
 void Scene::RegisterCamera(zephyr::rendering::ICamera* camera) {
     m_DrawManager.RegisterCamera(camera);
 }
@@ -119,6 +103,10 @@ zephyr::rendering::ICamera* Scene::MainCamera() const {
 
 void Scene::Skybox(const RawTexture& right, const RawTexture& left, const RawTexture& top, const RawTexture& bottom, const RawTexture& back, const RawTexture& front) {
     m_DrawManager.Skybox(right, left, top, bottom, back, front);
+}
+
+zephyr::rendering::ShaderProgram* Scene::Shader(const std::string& name) {
+    return m_DrawManager.Shader(name);
 }
 
 void Scene::Background(const glm::vec3& background) {

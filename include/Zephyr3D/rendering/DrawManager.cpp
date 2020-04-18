@@ -136,10 +136,13 @@ void zephyr::rendering::DrawManager::CallDraws() {
     glfwSwapBuffers(zephyr::Engine::Instance().GetWindow());
 }
 
-void zephyr::rendering::DrawManager::DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color) {
-    m_DebugShader.DrawLine(start, end, color);
-}
+zephyr::rendering::ShaderProgram* zephyr::rendering::DrawManager::Shader(const std::string& name) {
+    // Special case shaders
+    if (name == "Debug")
+        return &m_DebugShader;
+    if (name == "Shybox")
+        return &m_SkyboxShader;
 
-void zephyr::rendering::DrawManager::DrawCuboid(glm::mat4 transform, glm::vec3 color) {
-    m_DebugShader.DrawCuboid(transform, color);
+    assert(m_Shaders.find(name) != m_Shaders.end());
+    return m_Shaders.at(name).get();
 }

@@ -46,13 +46,10 @@ public:
     void UnregisterShaderProperty(const zephyr::rendering::IShaderProperty* property, const std::string& shader_name);
     void RegisterGUIWidget(zephyr::rendering::IGUIWidget* widget);
     void UnregisterGUIWidget(zephyr::rendering::IGUIWidget* widget);
-    void DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color);
-    void DrawPlane(glm::mat4 model, glm::vec3 color);
-    void DrawCuboid(glm::mat4 model, glm::vec3 color);
-    void DrawSphere(glm::mat4 model, glm::vec3 color);
     void RegisterCamera(zephyr::rendering::ICamera* camera);
     zephyr::rendering::ICamera* MainCamera() const;
     void Skybox(const RawTexture& right, const RawTexture& left, const RawTexture& top, const RawTexture& bottom, const RawTexture& back, const RawTexture& front);
+    zephyr::rendering::ShaderProgram* Shader(const std::string& name);
     void Background(const glm::vec3& background);
 
     // PhysicsManager functions

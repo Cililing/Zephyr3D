@@ -115,7 +115,7 @@ public:
         DrawCuboids();
     }
 
-    void DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color) {
+    void DrawLine(const glm::vec3& start, const glm::vec3& end, const glm::vec3& color) {
         // All calculation are made with assumption that prefab line define points <origin, (1, 0, 0)>
         const glm::vec3 prefab_end(1.0f, 0.0f, 0.0f);
 
@@ -139,7 +139,7 @@ public:
         m_Lines.emplace_back(model, color);
     }
 
-    void DrawCuboid(glm::mat4 transform, glm::vec3 color) {
+    void DrawCuboid(const glm::mat4& transform, const glm::vec3& color) {
         m_Cuboids.emplace_back(transform, color);
     }
 

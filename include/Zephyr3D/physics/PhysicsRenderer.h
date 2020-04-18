@@ -32,7 +32,7 @@ public:
 
 private:
     int m_DebugMode;
-    zephyr::rendering::DrawManager& m_DrawManager;
+    zephyr::rendering::Debug* m_DebugShader;
 };
 
 #endif
