@@ -48,6 +48,7 @@ public:
     void CallDraws();
 
     void DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color);
+    void DrawCuboid(glm::mat4 transform, glm::vec3 color);
 
 private:
     glm::vec3 m_Background{ 0.0f };

@@ -27,11 +27,13 @@ void PhysicsManager::Initialize() {
     if (m_DebugDrawer) {
         m_World->setDebugDrawer(m_DebugDrawer);
     }
+
+    m_World->getDebugDrawer()->setDebugMode(1);
 }
 
 void PhysicsManager::StepSimulation(float delta_time) {
-    m_World->stepSimulation(delta_time);
     m_World->debugDrawWorld();
+    m_World->stepSimulation(delta_time);
 
     // Callbacks
     btDispatcher* dispatcher = m_World->getDispatcher();

@@ -62,7 +62,7 @@ public:
              0.5f, -0.5f, 0.0f, // bottom right
             -0.5f, -0.5f, 0.0f, // bottom left
             -0.5f,  0.5f, 0.0f, // top left 
-             0.5f,  0.5f, 0.0f // top right
+             0.5f,  0.5f, 0.0f  // top right
         };
 
         glGenVertexArrays(1, &m_VAO);
@@ -138,7 +138,7 @@ public:
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
         // Position
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
 
         glBindVertexArray(0);

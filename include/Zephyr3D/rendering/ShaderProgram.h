@@ -72,14 +72,14 @@ protected:
     std::string ReadShaderFile(const std::string& path);
 
 private:
-    void LinkProgram();
-    unsigned int CompileShader(std::string code, GLenum shader);
-
     GLuint m_ID;
     ETrait m_Traits;
     std::string m_Name;
     std::vector<const IDrawable*> m_Drawables;
     std::vector<const IShaderProperty*> m_Properties;
+
+    void LinkProgram();
+    unsigned int CompileShader(std::string code, GLenum shader);
 };
 
 ENABLE_BITMASK_OPERATORS(ShaderProgram::ETrait);

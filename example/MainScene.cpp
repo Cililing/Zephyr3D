@@ -36,16 +36,16 @@ void MainScene::CreateScene() {
         camera->Connect(camera->Root().This, fpc->TransformIn);
     }
 
-    for (auto i = 0; i < 3; i++) {
-        for (auto j = 0; j < 3; j++) {
-            for (auto k = 0; k < 3; k++) {
+    for (auto i = 0; i < 1; i++) {
+        for (auto j = 0; j < 1; j++) {
+            for (auto k = 0; k < 1; k++) {
                 auto cube = CreateObject("Cube"); {
                     cube->Root().Position(glm::vec3(i, j, k));
 
                     auto comp = cube->CreateComponent<Cube>(glm::vec3((float)i / 3.0f, (float)j / 3.0f, (float)k / 3.0f));
                     cube->Connect(cube->Root().This, comp->TransformIn);
 
-                    auto rb = cube->CreateComponent<RigidBody>(10.0f, new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
+                    auto rb = cube->CreateComponent<RigidBody>(1.0f, new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
                     cube->Connect(cube->Root().This, rb->TransformIn);
                 }
             }

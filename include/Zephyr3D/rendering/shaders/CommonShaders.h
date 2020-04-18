@@ -92,6 +92,8 @@ public:
 };
 
 class Debug : public ShaderProgram {
+    using instance_data = std::vector<std::pair<glm::mat4 /*transform*/, glm::vec3 /*color*/>>;
+
 public:
     Debug()
         : ShaderProgram(
@@ -109,11 +111,8 @@ public:
     ~Debug() = default;
 
     void CallDraws() override {
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
         DrawLines();
-
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        DrawCuboids();
     }
 
     void DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color) {
@@ -140,36 +139,67 @@ public:
         m_Lines.emplace_back(model, color);
     }
 
+    void DrawCuboid(glm::mat4 transform, glm::vec3 color) {
+        m_Cuboids.emplace_back(transform, color);
+    }
+
 private:
+    const static GLsizei s_ElementSize = sizeof(instance_data::value_type);
+
     // Prefabs
-    Line m_Line;
-    std::vector<std::pair<glm::mat4, glm::vec3>> m_Lines;
+    Line m_LinePrefab;
+    Cuboid m_CuboidPrefab;
+
+    //
+    instance_data m_Lines;
+    instance_data m_Cuboids;
 
     void DrawLines() {
-        constexpr auto element_size = sizeof(m_Lines[0]);
+        GLuint buffer = PrepareBuffer(m_LinePrefab.VAO(), m_Lines);
 
-        // Bind vertex array
-        glBindVertexArray(m_Line.VAO());
+        glBindVertexArray(m_LinePrefab.VAO());
+        glDrawArraysInstanced(GL_LINES, 0, 2, m_Lines.size());
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+        glDeleteBuffers(1, &buffer);
+        m_Lines.clear();
+    }
+
+    void DrawCuboids() {
+        GLuint buffer = PrepareBuffer(m_CuboidPrefab.VAO(), m_Cuboids);
+
+        glBindVertexArray(m_CuboidPrefab.VAO());
+        glDrawArraysInstanced(GL_LINE_STRIP, 0, 17, m_Cuboids.size());
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+        glDeleteBuffers(1, &buffer);
+        m_Cuboids.clear();
+    }
+
+    GLuint PrepareBuffer(GLuint vao, const instance_data& data) {
+        glBindVertexArray(vao);
 
         // Prepare instance instance_buffer
         GLuint instance_buffer;
         glGenBuffers(1, &instance_buffer);
         glBindBuffer(GL_ARRAY_BUFFER, instance_buffer);
-        glBufferData(GL_ARRAY_BUFFER, element_size * m_Lines.size(), &m_Lines[0], GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, s_ElementSize * data.size(), &data[0], GL_STATIC_DRAW);
 
         // Add model
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, element_size, (void*)(0));
+        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, s_ElementSize, (void*)(0));
         glEnableVertexAttribArray(2);
-        glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, element_size, (void*)(1 * sizeof(glm::vec4)));
+        glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, s_ElementSize, (void*)(1 * sizeof(glm::vec4)));
         glEnableVertexAttribArray(3);
-        glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, element_size, (void*)(2 * sizeof(glm::vec4)));
+        glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, s_ElementSize, (void*)(2 * sizeof(glm::vec4)));
         glEnableVertexAttribArray(4);
-        glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, element_size, (void*)(3 * sizeof(glm::vec4)));
+        glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, s_ElementSize, (void*)(3 * sizeof(glm::vec4)));
 
         // Add color
         glEnableVertexAttribArray(5);
-        glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, element_size, (void*)(sizeof(glm::mat4)));
+        glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, s_ElementSize, (void*)(sizeof(glm::mat4)));
 
         // Divisors
         glVertexAttribDivisor(1, 1);
@@ -178,14 +208,10 @@ private:
         glVertexAttribDivisor(4, 1);
         glVertexAttribDivisor(5, 1);
 
-        // Drawing
-        glDrawArraysInstanced(GL_LINES, 0, 2, m_Lines.size());
-
-        // Cleanup
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
-        glDeleteBuffers(1, &instance_buffer);
-        m_Lines.clear();
+
+        return instance_buffer;
     }
 };
 

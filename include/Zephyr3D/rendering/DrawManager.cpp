@@ -139,3 +139,7 @@ void zephyr::rendering::DrawManager::CallDraws() {
 void zephyr::rendering::DrawManager::DrawLine(glm::vec3 start, glm::vec3 end, glm::vec3 color) {
     m_DebugShader.DrawLine(start, end, color);
 }
+
+void zephyr::rendering::DrawManager::DrawCuboid(glm::mat4 transform, glm::vec3 color) {
+    m_DebugShader.DrawCuboid(transform, color);
+}
