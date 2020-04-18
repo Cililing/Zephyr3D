@@ -8,6 +8,7 @@
 #include <Zephyr3D/cbs/components/TextRenderer.h>
 #include <Zephyr3D/cbs/components/RigidBody.h>
 #include <Zephyr3D/cbs/components/FirstPersonController.h>
+#include <Zephyr3D/cbs/components/Debuger.h>
 
 class MainScene : public Scene {
 public:

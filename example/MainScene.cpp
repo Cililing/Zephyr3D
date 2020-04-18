@@ -7,7 +7,6 @@
 #include <stb_image.h>
 
 void MainScene::CreateScene() {
-    FrameRateLimit(60);
     Skybox(LoadTexture("../../assets/skyboxes/basic_blue/right.png"),
            LoadTexture("../../assets/skyboxes/basic_blue/left.png"),
            LoadTexture("../../assets/skyboxes/basic_blue/top.png"),
@@ -43,7 +42,7 @@ void MainScene::CreateScene() {
                 auto cube = CreateObject("Cube"); {
                     cube->Root().Position(glm::vec3(i, j, k));
 
-                    auto comp = cube->CreateComponent<Cube>(glm::vec3((float)i / 5.0f, (float)j / 5.0f, (float)k / 5.0f));
+                    auto comp = cube->CreateComponent<Cube>(glm::vec3((float)i / 3.0f, (float)j / 3.0f, (float)k / 3.0f));
                     cube->Connect(cube->Root().This, comp->TransformIn);
 
                     auto rb = cube->CreateComponent<RigidBody>(10.0f, new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
@@ -57,7 +56,7 @@ void MainScene::CreateScene() {
         ground->Root().Position(glm::vec3(0.0f, -5.0f, 0.0f));
         ground->Root().Scale(glm::vec3(20.0f, 1.0f, 20.0f));
 
-        auto cube = ground->CreateComponent<Cube>(glm::vec3(1.0f));
+        auto cube = ground->CreateComponent<Cube>(glm::vec3(1.0f, 0.0f, 0.0f));
         ground->Connect(ground->Root().This, cube->TransformIn);
 
         auto rb = ground->CreateComponent<RigidBody>(0, new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
@@ -65,7 +64,9 @@ void MainScene::CreateScene() {
     }
 
     auto gui = CreateObject("gui"); {
-        auto title = gui->CreateComponent<TextRenderer>(zephyr::rendering::IGUIWidget::EAlign::CENTER, zephyr::rendering::IGUIWidget::EAlign::BEGIN, 0.0f);
-        title->Text("Zephyr3D Demo Scene");
+        auto debuger = gui->CreateComponent<Debuger>();
+        auto title = gui->CreateComponent<TextRenderer>(zephyr::rendering::IGUIWidget::EAlign::BEGIN, zephyr::rendering::IGUIWidget::EAlign::BEGIN, 0.0f);
+
+        gui->Connect(debuger->DebugInfo, title->TextIn);
     }
 }
