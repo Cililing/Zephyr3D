@@ -112,6 +112,7 @@ public:
 
     void CallDraws() override {
         DrawLines();
+        DrawPlanes();
         DrawCuboids();
     }
 
@@ -139,6 +140,18 @@ public:
         m_Lines.emplace_back(model, color);
     }
 
+    void DrawPlane(const glm::mat4& transform, const glm::vec3& color) {
+        m_Planes.emplace_back(transform, color);
+    }
+
+    void DrawPlane(const glm::vec3& position, const glm::vec3& normal, float constant, const glm::vec3& color) {
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+        transform = transform * glm::toMat4(glm::quat(normal, glm::vec3(0.0f, 0.0f, 1.0f)));
+        transform = glm::scale(transform, glm::vec3(constant));
+
+        m_Planes.emplace_back(transform, color);
+    }
+
     void DrawCuboid(const glm::mat4& transform, const glm::vec3& color) {
         m_Cuboids.emplace_back(transform, color);
     }
@@ -148,10 +161,12 @@ private:
 
     // Prefabs
     Line m_LinePrefab;
+    Plane m_PlanePrefab;
     Cuboid m_CuboidPrefab;
 
     //
     instance_data m_Lines;
+    instance_data m_Planes;
     instance_data m_Cuboids;
 
     void DrawLines() {
@@ -164,6 +179,18 @@ private:
         glBindVertexArray(0);
         glDeleteBuffers(1, &buffer);
         m_Lines.clear();
+    }
+
+    void DrawPlanes() {
+        GLuint buffer = PrepareBuffer(m_PlanePrefab.VAO(), m_Planes);
+
+        glBindVertexArray(m_PlanePrefab.VAO());
+        glDrawArraysInstanced(GL_LINE_STRIP, 0, 5, m_Planes.size());
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+        glDeleteBuffers(1, &buffer);
+        m_Planes.clear();
     }
 
     void DrawCuboids() {

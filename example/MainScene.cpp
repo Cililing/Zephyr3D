@@ -40,12 +40,12 @@ void MainScene::CreateScene() {
         for (auto j = 0; j < 1; j++) {
             for (auto k = 0; k < 1; k++) {
                 auto cube = CreateObject("Cube"); {
-                    cube->Root().Position(glm::vec3(i, j, k));
+                    cube->Root().Position(glm::vec3(5.0f, j, k));
 
                     auto comp = cube->CreateComponent<Cube>(glm::vec3((float)i / 3.0f, (float)j / 3.0f, (float)k / 3.0f));
                     cube->Connect(cube->Root().This, comp->TransformIn);
 
-                    auto rb = cube->CreateComponent<RigidBody>(1.0f, new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
+                    auto rb = cube->CreateComponent<RigidBody>(0.0f, new btStaticPlaneShape(btVector3(0.0f, 1.0f, 0.0f), 1.0f));
                     cube->Connect(cube->Root().This, rb->TransformIn);
                 }
             }
