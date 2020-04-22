@@ -32,8 +32,8 @@ void PhysicsManager::Initialize() {
 }
 
 void PhysicsManager::StepSimulation(float delta_time) {
-    m_World->debugDrawWorld();
     m_World->stepSimulation(delta_time);
+    m_World->debugDrawWorld();
 
     // Callbacks
     btDispatcher* dispatcher = m_World->getDispatcher();

@@ -42,9 +42,17 @@ public:
     GLuint VBO() const { return m_VBO; }
     GLuint VAO() const { return m_VAO; }
 
+    glm::vec3 End() const { return glm::vec3(1.0f, 0.0f, 0.0f); }
+
     void Draw() const {
         glBindVertexArray(m_VAO);
         glDrawArrays(GL_LINES, 0, 2);
+        glBindVertexArray(0);
+    }
+
+    void DrawInstances(GLuint instance_count) const {
+        glBindVertexArray(m_VAO);
+        glDrawArraysInstanced(GL_LINES, 0, 2, instance_count);
         glBindVertexArray(0);
     }
 
@@ -105,6 +113,12 @@ public:
         glBindVertexArray(0);
     }
 
+    void DrawInstances(GLuint instance_count) const {
+        glBindVertexArray(m_VAO);
+        glDrawArraysInstanced(GL_TRIANGLES, 0, 3, instance_count);
+        glBindVertexArray(0);
+    }
+
 private:
     GLuint m_VAO;
     GLuint m_VBO;
@@ -148,12 +162,20 @@ public:
     Plane(Plane&&) = delete;
     Plane& operator=(Plane&&) = delete;
 
+    glm::vec3 Normal() const { return glm::vec3(0.0f, 0.0f, 1.0f); }
+
     GLuint VBO() const { return m_VBO; }
     GLuint VAO() const { return m_VAO; }
 
     void Draw() const {
         glBindVertexArray(m_VAO);
         glDrawArrays(GL_LINE_STRIP, 0, 5);
+        glBindVertexArray(0);
+    }
+
+    void DrawInstances(GLuint instance_count) const {
+        glBindVertexArray(m_VAO);
+        glDrawArraysInstanced(GL_LINE_STRIP, 0, 5, instance_count);
         glBindVertexArray(0);
     }
 
@@ -218,6 +240,12 @@ public:
     void Draw() const {
         glBindVertexArray(m_VAO);
         glDrawArrays(GL_LINE_STRIP, 0, 17);
+        glBindVertexArray(0);
+    }
+
+    void DrawInstances(GLuint instance_count) const {
+        glBindVertexArray(m_VAO);
+        glDrawArraysInstanced(GL_LINE_STRIP, 0, 17, instance_count);
         glBindVertexArray(0);
     }
 

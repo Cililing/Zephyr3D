@@ -13,9 +13,11 @@ public:
     PhysicsRenderer(zephyr::rendering::DrawManager& draw_manager);
 
     void drawLine(const btVector3& from, const btVector3& to, const btVector3& color) override;
+    void drawTriangle(const btVector3& v0, const btVector3& v1, const btVector3& v2, const btVector3& /*n0*/, const btVector3& /*n1*/, const btVector3& /*n2*/, const btVector3& color, btScalar alpha) override;
+    void drawTriangle(const btVector3& v0, const btVector3& v1, const btVector3& v2, const btVector3& color, btScalar /*alpha*/) override;
+    void drawPlane(const btVector3& planeNormal, btScalar planeConst, const btTransform& trans, const btVector3& color) override;
     void drawBox(const btVector3& bbMin, const btVector3& bbMax, const btVector3& color) override;
     void drawBox(const btVector3& bbMin, const btVector3& bbMax, const btTransform& trans, const btVector3& color) override;
-    void drawPlane(const btVector3& planeNormal, btScalar planeConst, const btTransform& trans, const btVector3& color) override;
 
     void reportErrorWarning(const char* warningString) override;
     void drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime, const btVector3& color) override;

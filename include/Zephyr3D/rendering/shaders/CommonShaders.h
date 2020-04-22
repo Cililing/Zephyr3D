@@ -112,21 +112,19 @@ public:
 
     void CallDraws() override {
         DrawLines();
+        DrawTriangles();
         DrawPlanes();
         DrawCuboids();
     }
 
     void DrawLine(const glm::vec3& start, const glm::vec3& end, const glm::vec3& color) {
-        // All calculation are made with assumption that prefab line define points <origin, (1, 0, 0)>
-        const glm::vec3 prefab_end(1.0f, 0.0f, 0.0f);
-
         // Translation to move new line from it's position to origin
         glm::vec3 translation = -start;
 
         // Calculate angle matrix between prefab line and translated new line
         // Move line to the origin, no needs to create start_prime
         glm::vec3 end_prime = glm::normalize(end + translation);
-        glm::quat rot = glm::rotation(prefab_end, end_prime);
+        glm::quat rot = glm::rotation(m_LinePrefab.End(), end_prime);
         glm::mat4 rotation = glm::toMat4(rot);
 
         // Lengths ratio equals to new line magnitude because prefab line has legnth 1
@@ -134,19 +132,38 @@ public:
 
         // Create model matrix
         glm::mat4 model = glm::translate(glm::mat4(1.0f), -translation);
-        model = model * rotation;
+        model *= rotation;
         model = glm::scale(model, glm::vec3(length));
 
         m_Lines.emplace_back(model, color);
     }
 
-    void DrawPlane(const glm::mat4& transform, const glm::vec3& color) {
-        m_Planes.emplace_back(transform, color);
+    void DrawTriangle(const glm::vec3& upper, const glm::vec3& lower_left, const glm::vec3& lower_right, const glm::vec3& color) {
+        // T * X = X'  =>  T = X' * X^(-1)
+
+        glm::mat4 lhs(
+            upper.x, lower_left.x, lower_right.x, 0.0f,
+            upper.y, lower_left.y, lower_right.y, 0.0f,
+            upper.z, lower_left.z, lower_right.z, 0.0f,
+            0.0f,    0.0f,         0.0f,          0.0f
+        );
+
+        auto _upper = m_TrianglePrefab.UpperVertex();
+        auto _lower_left = m_TrianglePrefab.LowerLeftVertex();
+        auto _lower_right = m_TrianglePrefab.LowerRightVertex();
+        static const glm::mat4 rhs = glm::inverse(glm::mat4(
+            _upper.x,       _upper.y,       _upper.z,       0.0f,
+            _lower_left.x,  _lower_left.y,  _lower_left.z,  0.0f,
+            _lower_right.x, _lower_right.y, _lower_right.z, 0.0f,
+            0.0f,           0.0f,           0.0f,           0.0f
+        ));
+
+        m_Triangles.emplace_back(lhs * rhs, color);
     }
 
     void DrawPlane(const glm::vec3& position, const glm::vec3& normal, float constant, const glm::vec3& color) {
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
-        transform = transform * glm::toMat4(glm::quat(normal, glm::vec3(0.0f, 0.0f, 1.0f)));
+        transform = transform * glm::toMat4(glm::quat(normal, m_PlanePrefab.Normal()));
         transform = glm::scale(transform, glm::vec3(constant));
 
         m_Planes.emplace_back(transform, color);
@@ -161,19 +178,19 @@ private:
 
     // Prefabs
     Line m_LinePrefab;
+    Triangle m_TrianglePrefab;
     Plane m_PlanePrefab;
     Cuboid m_CuboidPrefab;
 
     //
     instance_data m_Lines;
+    instance_data m_Triangles;
     instance_data m_Planes;
     instance_data m_Cuboids;
 
     void DrawLines() {
         GLuint buffer = PrepareBuffer(m_LinePrefab.VAO(), m_Lines);
-
-        glBindVertexArray(m_LinePrefab.VAO());
-        glDrawArraysInstanced(GL_LINES, 0, 2, m_Lines.size());
+        m_LinePrefab.DrawInstances(m_Lines.size());
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
@@ -181,11 +198,19 @@ private:
         m_Lines.clear();
     }
 
+    void DrawTriangles() {
+        GLuint buffer = PrepareBuffer(m_TrianglePrefab.VAO(), m_Triangles);
+        m_TrianglePrefab.DrawInstances(m_Triangles.size());
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+        glDeleteBuffers(1, &buffer);
+        m_Triangles.clear();
+    }
+
     void DrawPlanes() {
         GLuint buffer = PrepareBuffer(m_PlanePrefab.VAO(), m_Planes);
-
-        glBindVertexArray(m_PlanePrefab.VAO());
-        glDrawArraysInstanced(GL_LINE_STRIP, 0, 5, m_Planes.size());
+        m_PlanePrefab.DrawInstances(m_Planes.size());
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
@@ -195,9 +220,7 @@ private:
 
     void DrawCuboids() {
         GLuint buffer = PrepareBuffer(m_CuboidPrefab.VAO(), m_Cuboids);
-
-        glBindVertexArray(m_CuboidPrefab.VAO());
-        glDrawArraysInstanced(GL_LINE_STRIP, 0, 17, m_Cuboids.size());
+        m_CuboidPrefab.DrawInstances(m_Cuboids.size());
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
