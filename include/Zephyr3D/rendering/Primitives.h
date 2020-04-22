@@ -54,6 +54,63 @@ private:
 };
 
 
+class Triangle {
+    const float X_VAL = std::sqrt(3) / 2;
+
+public:
+    // Creates isosceles triangle of which distances between vertices and origin are equal 1
+    Triangle() {
+        GLfloat vertices[] = {
+             0.0f,  1.0f,  0.0f,    // Upper
+            -X_VAL, -0.5f, 0.0f,    // Lower left
+             X_VAL, -0.5f, 0.0f     // Lower right
+        };
+
+        glGenVertexArrays(1, &m_VAO);
+        glGenBuffers(1, &m_VBO);
+
+        glBindVertexArray(m_VAO);
+
+        glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+        // Position
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+        glEnableVertexAttribArray(0);
+
+        glBindVertexArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+
+    ~Triangle() {
+        glDeleteVertexArrays(1, &m_VAO);
+        glDeleteBuffers(1, &m_VBO);
+    }
+
+    Triangle(const Triangle&) = delete;
+    Triangle& operator=(const Triangle&) = delete;
+    Triangle(Triangle&&) = delete;
+    Triangle& operator=(Triangle&&) = delete;
+
+    glm::vec3 UpperVertex() const { return glm::vec3(0.0f, 1.0f, 0.0f); }
+    glm::vec3 LowerLeftVertex() const { return glm::vec3(-X_VAL, -0.5f, 0.0f); }
+    glm::vec3 LowerRightVertex() const { return glm::vec3(X_VAL, -0.5f, 0.0f); }
+
+    GLuint VAO() const { return m_VAO; }
+    GLuint VBO() const { return m_VBO; }
+
+    void Draw() const {
+        glBindVertexArray(m_VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glBindVertexArray(0);
+    }
+
+private:
+    GLuint m_VAO;
+    GLuint m_VBO;
+};
+
+
 class Plane {
 public:
     Plane() {
@@ -78,7 +135,7 @@ public:
         glEnableVertexAttribArray(0);
 
         glBindVertexArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     ~Plane() {
