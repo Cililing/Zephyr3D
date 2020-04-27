@@ -53,10 +53,10 @@ private:
     glm::vec3 m_Background{ 0.0f };
     std::unique_ptr<Cubemap> m_Skybox{ nullptr };
 
+    Debug m_DebugShader;
+    class Skybox m_SkyboxShader;
     ICamera* m_Camera{ nullptr };
     std::map<std::string, std::unique_ptr<ShaderProgram>> m_Shaders;
-    class Skybox m_SkyboxShader;
-    Debug m_DebugShader;
     std::vector<IGUIWidget*> m_GUIWidgets;
 };
 

@@ -1,7 +1,7 @@
 #ifndef CommonShaders_h
 #define CommonShaders_h
 
-#include "../Primitives.h"
+#include "../Primitive.h"
 
 #pragma warning(push, 0)
 #define GLM_ENABLE_EXPERIMENTAL
@@ -101,7 +101,11 @@ public:
             ShaderProgram::ETrait::Position | ShaderProgram::ETrait::Color,
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/DebugVert.glsl"),
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/DebugFrag.glsl"),
-            "") {
+            "")
+        , m_LinePrefab(Primitive::Line())
+        , m_TrianglePrefab(Primitive::Triangle())
+        , m_PlanePrefab(Primitive::Plane())
+        , m_CubePrefab(Primitive::Cube()) {
     }
 
     Debug(const Debug&) = delete;
@@ -118,13 +122,15 @@ public:
     }
 
     void DrawLine(const glm::vec3& start, const glm::vec3& end, const glm::vec3& color) {
+        const glm::vec3 line_end = glm::vec3(1.0f, 0.0f, 0.0f);
+
         // Translation to move new line from it's position to origin
         glm::vec3 translation = -start;
 
         // Calculate angle matrix between prefab line and translated new line
         // Move line to the origin, no needs to create start_prime
         glm::vec3 end_prime = glm::normalize(end + translation);
-        glm::quat rot = glm::rotation(m_LinePrefab.End(), end_prime);
+        glm::quat rot = glm::rotation(line_end, end_prime);
         glm::mat4 rotation = glm::toMat4(rot);
 
         // Lengths ratio equals to new line magnitude because prefab line has legnth 1
@@ -139,18 +145,20 @@ public:
     }
 
     void DrawTriangle(const glm::vec3& upper, const glm::vec3& lower_left, const glm::vec3& lower_right, const glm::vec3& color) {
-        // T * X = X'  =>  T = X' * X^(-1)
+        static const float X_VAL = std::sqrt(3.0f) / 2.0f;
 
+        // T * X = X'  =>  T = X' * X^(-1)
+        
         glm::mat4 lhs(
             upper.x, lower_left.x, lower_right.x, 0.0f,
             upper.y, lower_left.y, lower_right.y, 0.0f,
             upper.z, lower_left.z, lower_right.z, 0.0f,
             0.0f,    0.0f,         0.0f,          0.0f
         );
-
-        auto _upper = m_TrianglePrefab.UpperVertex();
-        auto _lower_left = m_TrianglePrefab.LowerLeftVertex();
-        auto _lower_right = m_TrianglePrefab.LowerRightVertex();
+        
+        const auto _upper = glm::vec3(0.0f, 1.0f, 0.0f);
+        const auto _lower_left = glm::vec3(-X_VAL, -0.5f, 0.0f);
+        const auto _lower_right = glm::vec3(X_VAL, -0.5f, 0.0f);
         static const glm::mat4 rhs = glm::inverse(glm::mat4(
             _upper.x,       _upper.y,       _upper.z,       0.0f,
             _lower_left.x,  _lower_left.y,  _lower_left.z,  0.0f,
@@ -162,8 +170,10 @@ public:
     }
 
     void DrawPlane(const glm::vec3& position, const glm::vec3& normal, float constant, const glm::vec3& color) {
+        const glm::vec3 plane_normal(0.0f, 0.0f, 1.0f);
+
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
-        transform = transform * glm::toMat4(glm::quat(normal, m_PlanePrefab.Normal()));
+        transform = transform * glm::toMat4(glm::quat(normal, plane_normal));
         transform = glm::scale(transform, glm::vec3(constant));
 
         m_Planes.emplace_back(transform, color);
@@ -177,10 +187,10 @@ private:
     const static GLsizei s_ElementSize = sizeof(instance_data::value_type);
 
     // Prefabs
-    Line m_LinePrefab;
-    Triangle m_TrianglePrefab;
-    Plane m_PlanePrefab;
-    Cuboid m_CuboidPrefab;
+    Primitive m_LinePrefab;
+    Primitive m_TrianglePrefab;
+    Primitive m_PlanePrefab;
+    Primitive m_CubePrefab;
 
     //
     instance_data m_Lines;
@@ -190,7 +200,7 @@ private:
 
     void DrawLines() {
         GLuint buffer = PrepareBuffer(m_LinePrefab.VAO(), m_Lines);
-        m_LinePrefab.DrawInstances(m_Lines.size());
+        m_LinePrefab.DrawInstances(static_cast<GLsizei>(m_Lines.size()));
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
@@ -200,7 +210,7 @@ private:
 
     void DrawTriangles() {
         GLuint buffer = PrepareBuffer(m_TrianglePrefab.VAO(), m_Triangles);
-        m_TrianglePrefab.DrawInstances(m_Triangles.size());
+        m_TrianglePrefab.DrawInstances(static_cast<GLsizei>(m_Triangles.size()));
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
@@ -210,7 +220,7 @@ private:
 
     void DrawPlanes() {
         GLuint buffer = PrepareBuffer(m_PlanePrefab.VAO(), m_Planes);
-        m_PlanePrefab.DrawInstances(m_Planes.size());
+        m_PlanePrefab.DrawInstances(static_cast<GLsizei>(m_Planes.size()));
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
@@ -219,8 +229,8 @@ private:
     }
 
     void DrawCuboids() {
-        GLuint buffer = PrepareBuffer(m_CuboidPrefab.VAO(), m_Cuboids);
-        m_CuboidPrefab.DrawInstances(m_Cuboids.size());
+        GLuint buffer = PrepareBuffer(m_CubePrefab.VAO(), m_Cuboids);
+        m_CubePrefab.DrawInstances(static_cast<GLsizei>(m_Cuboids.size()));
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
