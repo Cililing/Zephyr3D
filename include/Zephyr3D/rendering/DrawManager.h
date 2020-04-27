@@ -1,13 +1,8 @@
 #ifndef DrawManager_h
 #define DrawManager_h
 
-#include "ShaderProgram.h"
-#include "ICamera.h"
-#include "IDrawable.h"
-#include "IShaderProperty.h"
-#include "IGUIWidget.h"
-#include "Cubemap.h"
 #include "shaders/CommonShaders.h"
+#include "Cubemap.h"
 
 #pragma warning(push, 0)
 #include <imgui.h>
@@ -24,7 +19,14 @@
 #include <map>
 #include <assert.h>
 
+class RawTexture;
+
 namespace zephyr::rendering {
+
+class ICamera;
+class IDrawable;
+class IShaderProperty;
+class IGUIWidget;
 
 class DrawManager {
 public:

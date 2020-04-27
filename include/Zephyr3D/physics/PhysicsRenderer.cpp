@@ -41,7 +41,7 @@ void PhysicsRenderer::drawBox(const btVector3& bbMin, const btVector3& bbMax, co
     glm::vec3 col(color.getX(), color.getY(), color.getZ());
     glm::mat4 transform = glm::scale(glm::mat4(1.0f), glm::vec3(bbMax.getX() - bbMin.getX(), bbMax.getY() - bbMin.getY(), bbMax.getZ() - bbMin.getZ()));
 
-    m_DebugShader->DrawCuboid(transform, col);
+    m_DebugShader->DrawCube(transform, col);
 }
 
 void PhysicsRenderer::drawBox(const btVector3& bbMin, const btVector3& bbMax, const btTransform& trans, const btVector3& color) {
@@ -52,7 +52,7 @@ void PhysicsRenderer::drawBox(const btVector3& bbMin, const btVector3& bbMax, co
     glm::mat4 transform = glm::make_mat4(tmp);
     transform = glm::scale(transform, glm::vec3(bbMax.getX() - bbMin.getX(), bbMax.getY() - bbMin.getY(), bbMax.getZ() - bbMin.getZ()));
 
-    m_DebugShader->DrawCuboid(transform, col);
+    m_DebugShader->DrawCube(transform, col);
 }
 
 void PhysicsRenderer::reportErrorWarning(const char* warningString) {

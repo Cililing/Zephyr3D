@@ -11,6 +11,9 @@
 #include "../utilities/Input.h"
 #include "../utilities/Window.h"
 
+class IGUIWidget;
+class ICamera;
+
 class Scene {
 public:
     Scene();

@@ -1,6 +1,7 @@
 #ifndef CommonShaders_h
 #define CommonShaders_h
 
+#include "../ShaderProgram.h"
 #include "../Primitive.h"
 
 #pragma warning(push, 0)
@@ -118,7 +119,7 @@ public:
         DrawLines();
         DrawTriangles();
         DrawPlanes();
-        DrawCuboids();
+        DrawCubes();
     }
 
     void DrawLine(const glm::vec3& start, const glm::vec3& end, const glm::vec3& color) {
@@ -179,7 +180,7 @@ public:
         m_Planes.emplace_back(transform, color);
     }
 
-    void DrawCuboid(const glm::mat4& transform, const glm::vec3& color) {
+    void DrawCube(const glm::mat4& transform, const glm::vec3& color) {
         m_Cuboids.emplace_back(transform, color);
     }
 
@@ -228,7 +229,7 @@ private:
         m_Planes.clear();
     }
 
-    void DrawCuboids() {
+    void DrawCubes() {
         GLuint buffer = PrepareBuffer(m_CubePrefab.VAO(), m_Cuboids);
         m_CubePrefab.DrawInstances(static_cast<GLsizei>(m_Cuboids.size()));
 

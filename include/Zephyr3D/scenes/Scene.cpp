@@ -1,5 +1,12 @@
 #include "Scene.h"
+#include "../rendering/ICamera.h"
+#include "../rendering/IDrawable.h"
+#include "../rendering/IShaderProperty.h"
+#include "../rendering/IGUIWidget.h"
+#include "../rendering/Cubemap.h"
+
 #include "../Engine.h"
+
 
 Scene::Scene() 
     : m_ObjectManager(*this)

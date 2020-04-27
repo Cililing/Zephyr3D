@@ -1,5 +1,6 @@
 #include "Texture.h"
 
+
 zephyr::rendering::Texture::Texture(const RawTexture& raw_texture, Texture::EType type)
     : m_Type(type) {
     const GLenum format = [&]() {

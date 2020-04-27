@@ -1,4 +1,9 @@
 #include "DrawManager.h"
+#include "ICamera.h"
+#include "IDrawable.h"
+#include "IShaderProperty.h"
+#include "IGUIWidget.h"
+#include "Cubemap.h"
 
 #include "../Engine.h"
 #include "../utilities/Window.h"

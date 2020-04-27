@@ -2,7 +2,6 @@
 #define Cubemap_h
 
 #include "IDrawable.h"
-#include "../resources/RawTexture.h"
 
 #pragma warning(push, 0)
 #include <stb_image.h>
@@ -10,6 +9,8 @@
 
 #include <iostream>
 #include <string>
+
+class RawTexture;
 
 namespace zephyr::rendering {
 
