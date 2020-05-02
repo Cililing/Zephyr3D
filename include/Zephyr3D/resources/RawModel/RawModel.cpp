@@ -23,7 +23,7 @@ void zephyr::resources::RawModel::Skin(const std::string& material_path) {
     assert(true);
 }
 
-void zephyr::resources::RawModel::Skin(const RawTexture* diffuse, const RawTexture* specular, float shininess) {
+void zephyr::resources::RawModel::Skin(const Image* diffuse, const Image* specular, float shininess) {
     for (auto it = m_RawMeshes.begin(); it != m_RawMeshes.end(); it++) {
         it->Diffuse(diffuse);
         it->Specular(specular);
@@ -44,8 +44,8 @@ void zephyr::resources::RawModel::LoadNode(const aiNode* node, const aiScene* sc
 void zephyr::resources::RawModel::LoadMesh(const aiMesh* mesh, const aiScene* scene, const std::string& directory, ResourcesManager& manager) {
     std::vector<RawMesh::Vertex> vertices;
     std::vector<unsigned int> indices;
-    RawTexture* diffuse = nullptr;
-    RawTexture* specular = nullptr;
+    Image* diffuse = nullptr;
+    Image* specular = nullptr;
     float shininess = 1.0f;
 
     // Load vertices

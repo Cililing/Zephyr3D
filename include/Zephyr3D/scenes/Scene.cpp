@@ -108,7 +108,7 @@ zephyr::rendering::ICamera* Scene::MainCamera() const {
     return m_DrawManager.MainCamera();
 }
 
-void Scene::Skybox(const zephyr::resources::RawTexture& right, const zephyr::resources::RawTexture& left, const zephyr::resources::RawTexture& top, const zephyr::resources::RawTexture& bottom, const zephyr::resources::RawTexture& back, const zephyr::resources::RawTexture& front) {
+void Scene::Skybox(const zephyr::resources::Image& right, const zephyr::resources::Image& left, const zephyr::resources::Image& top, const zephyr::resources::Image& bottom, const zephyr::resources::Image& back, const zephyr::resources::Image& front) {
     m_DrawManager.Skybox(right, left, top, bottom, back, front);
 }
 
@@ -187,7 +187,7 @@ void Scene::ListenerOrientation(float at_x, float at_y, float at_z, float up_x, 
 }
 
 
-zephyr::resources::RawTexture& Scene::LoadTexture(const std::string& path) {
+zephyr::resources::Image& Scene::LoadTexture(const std::string& path) {
     return m_ResourceManager.LoadTexture(path);
 }
 

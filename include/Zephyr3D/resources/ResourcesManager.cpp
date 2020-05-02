@@ -1,6 +1,6 @@
 #include "ResourcesManager.h"
 
-zephyr::resources::RawTexture& zephyr::resources::ResourcesManager::LoadTexture(std::string path) {
+zephyr::resources::Image& zephyr::resources::ResourcesManager::LoadTexture(std::string path) {
     if (m_Textures.find(path) == m_Textures.end()) {
         m_Textures.try_emplace(path, path);
     }

@@ -1,7 +1,7 @@
 #include "Texture.h"
 
 
-zephyr::rendering::Texture::Texture(const resources::RawTexture& raw_texture, Texture::EType type)
+zephyr::rendering::Texture::Texture(const resources::Image& raw_texture, Texture::EType type)
     : m_Type(type) {
     const GLenum format = [&]() {
         switch (raw_texture.Components()) {
@@ -32,7 +32,7 @@ zephyr::rendering::Texture::Texture(const resources::RawTexture& raw_texture, Te
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-zephyr::rendering::Texture::Texture(const resources::RawTexture& raw_texture, EType type, GLenum wrap_s, GLenum wrap_t, GLenum min_filter, GLenum mag_filter)
+zephyr::rendering::Texture::Texture(const resources::Image& raw_texture, EType type, GLenum wrap_s, GLenum wrap_t, GLenum min_filter, GLenum mag_filter)
     : m_Type(type) {
     const GLenum format = [&]() {
         switch (raw_texture.Components()) {
@@ -114,7 +114,7 @@ std::string zephyr::rendering::Texture::TypeName() const {
     case Texture::EType::Reflection:
         return "reflection";
 
-    default: // RawTexture::EType::Unknown
+    default: // Image::EType::Unknown
         return "unknown";
     }
 }

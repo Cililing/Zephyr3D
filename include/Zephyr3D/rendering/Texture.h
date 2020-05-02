@@ -1,7 +1,7 @@
 #ifndef Texture_h
 #define Texture_h
 
-#include "../resources/RawTexture.h"
+#include "../resources/Image.h"
 
 #pragma warning(push, 0)
 #include <glad/glad.h>
@@ -26,8 +26,8 @@ public:
         Unknown
     };
 
-    Texture(const resources::RawTexture& raw_texture, EType type);
-    Texture(const resources::RawTexture& raw_texture, EType type, GLenum wrap_s, GLenum wrap_t, GLenum min_filter, GLenum mag_filter);
+    Texture(const resources::Image& raw_texture, EType type);
+    Texture(const resources::Image& raw_texture, EType type, GLenum wrap_s, GLenum wrap_t, GLenum min_filter, GLenum mag_filter);
 
     Texture() = delete;
     Texture(const Texture&) = delete;

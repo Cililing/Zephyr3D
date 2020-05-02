@@ -36,7 +36,7 @@ zephyr::rendering::Model::Mesh::Mesh(const resources::RawMesh& raw_mesh)
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(resources::RawMesh::Vertex), (void*)offsetof(resources::RawMesh::Vertex, resources::RawMesh::Vertex::Normal));
     glEnableVertexAttribArray(1);
 
-    // RawTexture coords
+    // Image coords
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(resources::RawMesh::Vertex), (void*)offsetof(resources::RawMesh::Vertex, resources::RawMesh::Vertex::TexCoords));
     glEnableVertexAttribArray(2);
 

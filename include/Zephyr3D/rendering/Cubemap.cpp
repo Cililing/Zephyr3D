@@ -1,13 +1,13 @@
 #include "Cubemap.h"
 #include "DrawManager.h"
-#include "../resources/RawTexture.h"
+#include "../resources/Image.h"
 
 zephyr::rendering::Cubemap::Cubemap(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front) {
     m_Load(right, left, top, bottom, back, front);
     m_Initialize();
 }
 
-zephyr::rendering::Cubemap::Cubemap(const resources::RawTexture& right, const resources::RawTexture& left, const resources::RawTexture& top, const resources::RawTexture& bottom, const resources::RawTexture& back, const resources::RawTexture& front) {
+zephyr::rendering::Cubemap::Cubemap(const resources::Image& right, const resources::Image& left, const resources::Image& top, const resources::Image& bottom, const resources::Image& back, const resources::Image& front) {
     glGenTextures(1, &m_ID);
     glBindTexture(GL_TEXTURE_CUBE_MAP, m_ID);
 

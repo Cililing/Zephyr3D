@@ -1,5 +1,5 @@
-#ifndef RawTexture_h
-#define RawTexture_h
+#ifndef Image_h
+#define Image_h
 
 #include "../debuging/Logger.h"
 
@@ -12,16 +12,16 @@
 
 namespace zephyr::resources {
 
-class RawTexture {
+class Image {
 public:
-    explicit RawTexture(const std::string& path);
+    explicit Image(const std::string& path);
 
-    RawTexture() = delete;
-    RawTexture(const RawTexture&) = delete;
-    RawTexture& operator=(const RawTexture&) = delete;
-    RawTexture(RawTexture&&) = delete;
-    RawTexture& operator=(RawTexture&&) = delete;
-    ~RawTexture();
+    Image() = delete;
+    Image(const Image&) = delete;
+    Image& operator=(const Image&) = delete;
+    Image(Image&&) = delete;
+    Image& operator=(Image&&) = delete;
+    ~Image();
 
     unsigned char* Data() const { return m_Data; }
     int Width() const { return m_Width; }

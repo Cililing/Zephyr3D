@@ -30,7 +30,7 @@ public:
     const std::vector<RawMesh>& RawMeshes() const { return m_RawMeshes; }
 
     void Skin(const std::string& material_path);
-    void Skin(const RawTexture* diffuse, const RawTexture* specular, float shininess);
+    void Skin(const Image* diffuse, const Image* specular, float shininess);
 
 private:
     void LoadNode(const aiNode* node, const aiScene* scene, const std::string& directory, ResourcesManager& manager);

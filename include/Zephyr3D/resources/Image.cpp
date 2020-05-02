@@ -1,7 +1,7 @@
-#include "RawTexture.h"
+#include "Image.h"
 #include "ResourcesManager.h"
 
-zephyr::resources::RawTexture::RawTexture(const std::string& path)
+zephyr::resources::Image::Image(const std::string& path)
     : m_Path(path) {
     m_Data = stbi_load(path.c_str(), &m_Width, &m_Height, &m_Components, 0);
     if (!m_Data) {
@@ -10,6 +10,6 @@ zephyr::resources::RawTexture::RawTexture(const std::string& path)
     }
 }
 
-zephyr::resources::RawTexture::~RawTexture() {
+zephyr::resources::Image::~Image() {
     stbi_image_free(m_Data);
 }

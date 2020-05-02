@@ -13,7 +13,7 @@
 
 #include "../../../physics/IPhysicalObject.h"
 
-#include "../../../resources/RawTexture.h"
+#include "../../../resources/Image.h"
 
 #include <array>
 
@@ -28,7 +28,7 @@ class Chunk : public zephyr::rendering::IDrawable, public IPhysicalObject {
     using Grid_t = std::array<std::array<float, Length + 1>, Width + 1>;
 
 public:
-    Chunk(const glm::ivec2& chunk_index, const zephyr::resources::RawTexture& texture, float min_height, float max_height);
+    Chunk(const glm::ivec2& chunk_index, const zephyr::resources::Image& texture, float min_height, float max_height);
     ~Chunk();
 
     void Draw(const zephyr::rendering::ShaderProgram& shader) const override;
@@ -61,7 +61,7 @@ private:
 #endif
 
 template<unsigned int Width, unsigned int Length>
-inline Chunk<Width, Length>::Chunk(const glm::ivec2& chunk_index, const zephyr::resources::RawTexture& texture, float min_height, float max_height)
+inline Chunk<Width, Length>::Chunk(const glm::ivec2& chunk_index, const zephyr::resources::Image& texture, float min_height, float max_height)
     : m_Texture(std::make_unique<zephyr::rendering::Texture>(texture, zephyr::rendering::Texture::EType::Diffuse))
     , m_ChunkIndex(chunk_index)
     , m_IndicesCount(Width* Length * 6) {
@@ -119,7 +119,7 @@ inline void Chunk<Width, Length>::InitRendering(const Chunk::Grid_t& grid) {
             vertices[index++] = grid[row][col];
             vertices[index++] = col + z_offset;
 
-            // Texture coordinates
+            // Image coordinates
             vertices[index++] = static_cast<float>(row) / static_cast<float>(Width);
             vertices[index++] = static_cast<float>(col) / static_cast<float>(Length);
         }
@@ -154,7 +154,7 @@ inline void Chunk<Width, Length>::InitRendering(const Chunk::Grid_t& grid) {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GL_FLOAT), (void*)0);
     glEnableVertexAttribArray(0);
 
-    // Texture coordinates
+    // Image coordinates
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_TRUE, 5 * sizeof(GL_FLOAT), (void*)(3 * sizeof(GL_FLOAT)));
     glEnableVertexAttribArray(1);
 

@@ -1,7 +1,7 @@
 #ifndef RawMesh_h
 #define RawMesh_h
 
-#include "../RawTexture.h"
+#include "../Image.h"
 #include "../../rendering/ShaderProgram.h"
 
 #pragma warning(push, 0)
@@ -22,7 +22,7 @@ public:
         glm::vec2 TexCoords{ 0.0f };
     };
 
-    RawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const RawTexture* diffuse, const RawTexture* specular, float shininess);
+    RawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Image* diffuse, const Image* specular, float shininess);
 
     RawMesh() = delete;
     RawMesh(const RawMesh&) = default;
@@ -34,11 +34,11 @@ public:
     const std::vector<Vertex>& Vertices() const { return m_Vertices; }
     const std::vector<unsigned int>& Indices() const { return m_Indices; }
 
-    const RawTexture* Diffuse() const { return m_Diffuse; }
-    void Diffuse(const RawTexture* texture) { m_Diffuse = texture; }
+    const Image* Diffuse() const { return m_Diffuse; }
+    void Diffuse(const Image* texture) { m_Diffuse = texture; }
 
-    const RawTexture* Specular() const { return m_Specular; }
-    void Specular(const RawTexture* texture) { m_Specular = texture; }
+    const Image* Specular() const { return m_Specular; }
+    void Specular(const Image* texture) { m_Specular = texture; }
 
     float Shininess() const { return m_Shininess; }
     void Shininess(float shininess) { m_Shininess = shininess; }
@@ -46,8 +46,8 @@ public:
 private:
     std::vector<Vertex> m_Vertices;
     std::vector<unsigned int> m_Indices;
-    const RawTexture* m_Diffuse;
-    const RawTexture* m_Specular;
+    const Image* m_Diffuse;
+    const Image* m_Specular;
     float m_Shininess;
 };
 
