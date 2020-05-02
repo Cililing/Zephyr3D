@@ -1,6 +1,6 @@
 #include "Model.h"
 
-zephyr::rendering::Model::Model(const RawModel& raw_model) {
+zephyr::rendering::Model::Model(const resources::RawModel& raw_model) {
     m_Meshes.reserve(raw_model.RawMeshes().size());
 
     for (auto it = raw_model.RawMeshes().begin(); it != raw_model.RawMeshes().end(); it++) {
@@ -8,7 +8,7 @@ zephyr::rendering::Model::Model(const RawModel& raw_model) {
     }
 }
 
-zephyr::rendering::Model::Mesh::Mesh(const RawMesh& raw_mesh)
+zephyr::rendering::Model::Mesh::Mesh(const resources::RawMesh& raw_mesh)
     : m_IndicesCount(raw_mesh.Indices().size())
     , m_Shininess(static_cast<float>(raw_mesh.Shininess())) {
     if (raw_mesh.Diffuse()) {
@@ -26,18 +26,18 @@ zephyr::rendering::Model::Mesh::Mesh(const RawMesh& raw_mesh)
     glBindVertexArray(m_VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-    glBufferData(GL_ARRAY_BUFFER, raw_mesh.Vertices().size() * sizeof(RawMesh::Vertex), &raw_mesh.Vertices()[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, raw_mesh.Vertices().size() * sizeof(resources::RawMesh::Vertex), &raw_mesh.Vertices()[0], GL_STATIC_DRAW);
 
     // Position
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(RawMesh::Vertex), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(resources::RawMesh::Vertex), (void*)0);
     glEnableVertexAttribArray(0);
 
     // Normal vectors
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(RawMesh::Vertex), (void*)offsetof(RawMesh::Vertex, RawMesh::Vertex::Normal));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(resources::RawMesh::Vertex), (void*)offsetof(resources::RawMesh::Vertex, resources::RawMesh::Vertex::Normal));
     glEnableVertexAttribArray(1);
 
     // RawTexture coords
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(RawMesh::Vertex), (void*)offsetof(RawMesh::Vertex, RawMesh::Vertex::TexCoords));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(resources::RawMesh::Vertex), (void*)offsetof(resources::RawMesh::Vertex, resources::RawMesh::Vertex::TexCoords));
     glEnableVertexAttribArray(2);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);

@@ -13,7 +13,7 @@ class Model {
 public:
     class Mesh {
     public:
-        explicit Mesh(const RawMesh& raw_mesh);
+        explicit Mesh(const zephyr::resources::RawMesh& raw_mesh);
 
         Mesh() = delete;
         Mesh(const Mesh&) = delete;
@@ -40,7 +40,7 @@ public:
         float m_Shininess;
     };
 
-    explicit Model(const RawModel& raw_model);
+    explicit Model(const zephyr::resources::RawModel& raw_model);
 
     Model() = delete;
     Model(const Model&) = delete;

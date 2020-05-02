@@ -27,7 +27,7 @@ public:
     void Update() override;
     void Destroy() override;
 
-    PropertyOut<Sound*> Background{ this, nullptr };
+    PropertyOut<zephyr::resources::Sound*> Background{ this, nullptr };
 
 private:
     struct IVec2Key {

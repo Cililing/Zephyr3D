@@ -13,7 +13,7 @@
 class Transform;
 class MeshRenderer : public Component, public zephyr::rendering::IDrawable {
 public:
-    MeshRenderer(RawModel& model, const std::string& shader_name);
+    MeshRenderer(zephyr::resources::RawModel& model, const std::string& shader_name);
 
     void Initialize() override;
     void Destroy() override;

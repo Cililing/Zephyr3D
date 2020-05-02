@@ -51,7 +51,7 @@ public:
     void UnregisterGUIWidget(zephyr::rendering::IGUIWidget* widget);
     void RegisterCamera(zephyr::rendering::ICamera* camera);
     zephyr::rendering::ICamera* MainCamera() const;
-    void Skybox(const RawTexture& right, const RawTexture& left, const RawTexture& top, const RawTexture& bottom, const RawTexture& back, const RawTexture& front);
+    void Skybox(const zephyr::resources::RawTexture& right, const zephyr::resources::RawTexture& left, const zephyr::resources::RawTexture& top, const zephyr::resources::RawTexture& bottom, const zephyr::resources::RawTexture& back, const zephyr::resources::RawTexture& front);
     zephyr::rendering::ShaderProgram* Shader(const std::string& name);
     void Background(const glm::vec3& background);
 
@@ -76,16 +76,16 @@ public:
     void ListenerOrientation(float at_x, float at_y, float at_z, float up_x, float up_y, float up_z);
 
     // ResourceManager functions
-    RawTexture& LoadTexture(const std::string& path);
-    RawModel& LoadModel(const std::string& path);
-    Sound& LoadSound(const std::string& path);
+    zephyr::resources::RawTexture& LoadTexture(const std::string& path);
+    zephyr::resources::RawModel& LoadModel(const std::string& path);
+    zephyr::resources::Sound& LoadSound(const std::string& path);
 
 private:
     ObjectManager m_ObjectManager;
     zephyr::rendering::DrawManager m_DrawManager;
     PhysicsManager m_PhysicsManager;
     AudioManager m_AudioManager;
-    ResourcesManager m_ResourceManager;
+    zephyr::resources::ResourcesManager m_ResourceManager;
 
     bool m_Running{ false };
     float m_FrameRateLimit{ 0.0f };

@@ -1,7 +1,7 @@
 #include "Texture.h"
 
 
-zephyr::rendering::Texture::Texture(const RawTexture& raw_texture, Texture::EType type)
+zephyr::rendering::Texture::Texture(const resources::RawTexture& raw_texture, Texture::EType type)
     : m_Type(type) {
     const GLenum format = [&]() {
         switch (raw_texture.Components()) {
@@ -32,7 +32,7 @@ zephyr::rendering::Texture::Texture(const RawTexture& raw_texture, Texture::ETyp
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-zephyr::rendering::Texture::Texture(const RawTexture& raw_texture, EType type, GLenum wrap_s, GLenum wrap_t, GLenum min_filter, GLenum mag_filter)
+zephyr::rendering::Texture::Texture(const resources::RawTexture& raw_texture, EType type, GLenum wrap_s, GLenum wrap_t, GLenum min_filter, GLenum mag_filter)
     : m_Type(type) {
     const GLenum format = [&]() {
         switch (raw_texture.Components()) {

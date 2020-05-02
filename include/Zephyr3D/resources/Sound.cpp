@@ -1,6 +1,6 @@
 #include "Sound.h"
 
-Sound::Sound(const std::string& path) {
+zephyr::resources::Sound::Sound(const std::string& path) {
     // TODO: free alut
     m_ID = 0; //alutCreateBufferFromFile(path.c_str());
 
@@ -13,6 +13,6 @@ Sound::Sound(const std::string& path) {
     m_Length = length_in_samples / static_cast<ALfloat>(m_Frequency);
 }
 
-Sound::~Sound() {
+zephyr::resources::Sound::~Sound() {
     alDeleteBuffers(1, &m_ID);
 }

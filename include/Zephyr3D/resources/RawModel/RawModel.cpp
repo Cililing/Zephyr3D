@@ -2,7 +2,7 @@
 
 #include "../ResourcesManager.h"
 
-RawModel::RawModel(std::string path, ResourcesManager& manager)
+zephyr::resources::RawModel::RawModel(std::string path, zephyr::resources::ResourcesManager& manager)
     : m_Path(path) {
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -19,11 +19,11 @@ RawModel::RawModel(std::string path, ResourcesManager& manager)
 }
 
 // TODO
-void RawModel::Skin(const std::string& material_path) {
+void zephyr::resources::RawModel::Skin(const std::string& material_path) {
     assert(true);
 }
 
-void RawModel::Skin(const RawTexture* diffuse, const RawTexture* specular, float shininess) {
+void zephyr::resources::RawModel::Skin(const RawTexture* diffuse, const RawTexture* specular, float shininess) {
     for (auto it = m_RawMeshes.begin(); it != m_RawMeshes.end(); it++) {
         it->Diffuse(diffuse);
         it->Specular(specular);
@@ -31,7 +31,7 @@ void RawModel::Skin(const RawTexture* diffuse, const RawTexture* specular, float
     }
 }
 
-void RawModel::LoadNode(const aiNode* node, const aiScene* scene, const std::string& directory, ResourcesManager& manager) {
+void zephyr::resources::RawModel::LoadNode(const aiNode* node, const aiScene* scene, const std::string& directory, ResourcesManager& manager) {
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         LoadMesh(scene->mMeshes[node->mMeshes[i]], scene, directory, manager);
     }
@@ -41,7 +41,7 @@ void RawModel::LoadNode(const aiNode* node, const aiScene* scene, const std::str
     }
 }
 
-void RawModel::LoadMesh(const aiMesh* mesh, const aiScene* scene, const std::string& directory, ResourcesManager& manager) {
+void zephyr::resources::RawModel::LoadMesh(const aiMesh* mesh, const aiScene* scene, const std::string& directory, ResourcesManager& manager) {
     std::vector<RawMesh::Vertex> vertices;
     std::vector<unsigned int> indices;
     RawTexture* diffuse = nullptr;

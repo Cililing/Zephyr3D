@@ -26,8 +26,8 @@ public:
         Unknown
     };
 
-    Texture(const RawTexture& raw_texture, EType type);
-    Texture(const RawTexture& raw_texture, EType type, GLenum wrap_s, GLenum wrap_t, GLenum min_filter, GLenum mag_filter);
+    Texture(const resources::RawTexture& raw_texture, EType type);
+    Texture(const resources::RawTexture& raw_texture, EType type, GLenum wrap_s, GLenum wrap_t, GLenum min_filter, GLenum mag_filter);
 
     Texture() = delete;
     Texture(const Texture&) = delete;

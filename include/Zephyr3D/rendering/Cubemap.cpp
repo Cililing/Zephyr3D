@@ -7,7 +7,7 @@ zephyr::rendering::Cubemap::Cubemap(const std::string& right, const std::string&
     m_Initialize();
 }
 
-zephyr::rendering::Cubemap::Cubemap(const RawTexture& right, const RawTexture& left, const RawTexture& top, const RawTexture& bottom, const RawTexture& back, const RawTexture& front) {
+zephyr::rendering::Cubemap::Cubemap(const resources::RawTexture& right, const resources::RawTexture& left, const resources::RawTexture& top, const resources::RawTexture& bottom, const resources::RawTexture& back, const resources::RawTexture& front) {
     glGenTextures(1, &m_ID);
     glBindTexture(GL_TEXTURE_CUBE_MAP, m_ID);
 

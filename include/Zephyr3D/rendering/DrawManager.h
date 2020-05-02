@@ -2,6 +2,7 @@
 #define DrawManager_h
 
 #include "shaders/CommonShaders.h"
+#include "../resources/RawTexture.h"
 #include "Cubemap.h"
 
 #pragma warning(push, 0)
@@ -19,8 +20,6 @@
 #include <map>
 #include <assert.h>
 
-class RawTexture;
-
 namespace zephyr::rendering {
 
 class ICamera;
@@ -35,7 +34,7 @@ public:
     void RegisterCamera(ICamera* camera);
     ICamera* MainCamera() const;
 
-    void Skybox(const RawTexture& right, const RawTexture& left, const RawTexture& top, const RawTexture& bottom, const RawTexture& back, const RawTexture& front);
+    void Skybox(const resources::RawTexture& right, const resources::RawTexture& left, const resources::RawTexture& top, const resources::RawTexture& bottom, const resources::RawTexture& back, const resources::RawTexture& front);
     void Background(const glm::vec3& background);
 
     void RegisterDrawCall(const IDrawable* drawable, const std::string& shader_name);

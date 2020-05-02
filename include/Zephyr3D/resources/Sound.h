@@ -9,6 +9,8 @@
 #include <string>
 #pragma warning(pop)
 
+namespace zephyr::resources {
+
 class Sound {
 public:
     explicit Sound(const std::string& path);
@@ -36,5 +38,7 @@ private:
     ALint m_Frequency;
     ALfloat m_Length; // In seconds
 };
+
+}
 
 #endif

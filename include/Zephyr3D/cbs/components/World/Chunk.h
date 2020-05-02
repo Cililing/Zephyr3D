@@ -28,7 +28,7 @@ class Chunk : public zephyr::rendering::IDrawable, public IPhysicalObject {
     using Grid_t = std::array<std::array<float, Length + 1>, Width + 1>;
 
 public:
-    Chunk(const glm::ivec2& chunk_index, const RawTexture& texture, float min_height, float max_height);
+    Chunk(const glm::ivec2& chunk_index, const zephyr::resources::RawTexture& texture, float min_height, float max_height);
     ~Chunk();
 
     void Draw(const zephyr::rendering::ShaderProgram& shader) const override;
@@ -61,7 +61,7 @@ private:
 #endif
 
 template<unsigned int Width, unsigned int Length>
-inline Chunk<Width, Length>::Chunk(const glm::ivec2& chunk_index, const RawTexture& texture, float min_height, float max_height)
+inline Chunk<Width, Length>::Chunk(const glm::ivec2& chunk_index, const zephyr::resources::RawTexture& texture, float min_height, float max_height)
     : m_Texture(std::make_unique<zephyr::rendering::Texture>(texture, zephyr::rendering::Texture::EType::Diffuse))
     , m_ChunkIndex(chunk_index)
     , m_IndicesCount(Width* Length * 6) {

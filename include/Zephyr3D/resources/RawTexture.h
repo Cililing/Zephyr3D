@@ -10,6 +10,8 @@
 #include <string>
 #pragma warning(pop)
 
+namespace zephyr::resources {
+
 class RawTexture {
 public:
     explicit RawTexture(const std::string& path);
@@ -33,5 +35,7 @@ private:
     int m_Components;
     std::string m_Path;
 };
+
+}
 
 #endif

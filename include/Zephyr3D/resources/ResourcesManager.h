@@ -9,6 +9,8 @@
 #include <string>
 #include <unordered_map>
 
+namespace zephyr::resources {
+
 constexpr const char* ERROR_TEXTURE_PATH = "../../assets/textures/ErrorTexture.png";
 constexpr const char* ERROR_MODEL3D_PATH = "../../assets/models/ErrorMesh/ErrorMesh.obj";
 
@@ -23,5 +25,7 @@ private:
     std::unordered_map<std::string, RawModel> m_Models;
     std::unordered_map<std::string, Sound> m_Sounds;
 };
+
+}
 
 #endif 

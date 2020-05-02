@@ -11,6 +11,8 @@
 
 #include <vector>
 
+namespace zephyr::resources {
+
 class ResourcesManager;
 
 class RawModel {
@@ -37,5 +39,7 @@ private:
     std::string m_Path;
     std::vector<RawMesh> m_RawMeshes;
 };
+
+}
 
 #endif 

@@ -12,6 +12,8 @@
 #include <vector>
 #pragma warning(pop)
 
+namespace zephyr::resources {
+
 class RawMesh {
 public:
     struct Vertex {
@@ -48,5 +50,7 @@ private:
     const RawTexture* m_Specular;
     float m_Shininess;
 };
+
+}
 
 #endif

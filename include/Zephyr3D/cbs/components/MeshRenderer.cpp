@@ -1,7 +1,7 @@
 #include "MeshRenderer.h"
 #include "Transform.h"
 
-MeshRenderer::MeshRenderer(RawModel& raw_model, const std::string& shader_name)
+MeshRenderer::MeshRenderer(zephyr::resources::RawModel& raw_model, const std::string& shader_name)
     : m_Model(raw_model)
     , m_ShaderName(shader_name) {
 }
