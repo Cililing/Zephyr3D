@@ -2,7 +2,7 @@
 #define ResourcesManager_h
 
 #include "Image.h"
-#include "RawModel/RawModel.h"
+#include "Model.h"
 #include "Sound.h"
 #include "../debuging/Logger.h"
 
@@ -18,12 +18,12 @@ constexpr const char* RESOURCES_PATH_PREFIX = "../../assets/";
 class ResourcesManager {
 public:
     Image& LoadImage(std::string path);
-    RawModel& LoadModel(std::string path);
+    Model& LoadModel(std::string path);
     AudioClip& LoadAudioClip(std::string path);
 
 private:
     std::unordered_map<std::string, Image> m_Textures;
-    std::unordered_map<std::string, RawModel> m_Models;
+    std::unordered_map<std::string, Model> m_Models;
     std::unordered_map<std::string, AudioClip> m_Sounds;
 };
 

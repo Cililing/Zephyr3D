@@ -191,7 +191,7 @@ zephyr::resources::Image& Scene::LoadImage(const std::string& path) {
     return m_ResourceManager.LoadImage(path);
 }
 
-zephyr::resources::RawModel& Scene::LoadModel(const std::string& path) {
+zephyr::resources::Model& Scene::LoadModel(const std::string& path) {
     return m_ResourceManager.LoadModel(path);
 }
 

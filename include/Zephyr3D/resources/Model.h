@@ -1,7 +1,7 @@
-#ifndef RawModel_h
-#define RawModel_h
+#ifndef Model_h
+#define Model_h
 
-#include "RawMesh.h"
+#include "Mesh.h"
 
 #pragma warning(push, 0)
 #include <assimp/Importer.hpp>
@@ -9,27 +9,25 @@
 #include <assimp/postprocess.h>
 #pragma warning(pop)
 
-#include <vector>
-
 namespace zephyr::resources {
 
 class ResourcesManager;
+class Image;
 
-class RawModel {
+class Model {
 public:
-    RawModel(std::string path, ResourcesManager& manager);
+    Model(std::string path, ResourcesManager& manager);
 
-    RawModel() = delete;
-    RawModel(const RawModel&) = default;
-    RawModel& operator=(const RawModel&) = default;
-    RawModel(RawModel&&) = default;
-    RawModel& operator=(RawModel&&) = default;
-    ~RawModel() = default;
+    Model() = delete;
+    Model(const Model&) = default;
+    Model& operator=(const Model&) = default;
+    Model(Model&&) = default;
+    Model& operator=(Model&&) = default;
+    ~Model() = default;
 
     const std::string& Path() const { return m_Path; }
-    const std::vector<RawMesh>& RawMeshes() const { return m_RawMeshes; }
+    const std::vector<Mesh>& RawMeshes() const { return m_Meshes; }
 
-    void Skin(const std::string& material_path);
     void Skin(const Image* diffuse, const Image* specular, float shininess);
 
 private:
@@ -37,9 +35,9 @@ private:
     void LoadMesh(const aiMesh* mesh, const aiScene* scene, const std::string& directory, ResourcesManager& manager);
 
     std::string m_Path;
-    std::vector<RawMesh> m_RawMeshes;
+    std::vector<Mesh> m_Meshes;
 };
 
 }
 
-#endif 
+#endif

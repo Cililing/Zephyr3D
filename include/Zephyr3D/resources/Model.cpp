@@ -1,37 +1,31 @@
-#include "RawModel.h"
+#include "Model.h"
 
-#include "../ResourcesManager.h"
+#include "ResourcesManager.h"
 
-zephyr::resources::RawModel::RawModel(std::string path, zephyr::resources::ResourcesManager& manager)
+zephyr::resources::Model::Model(std::string path, zephyr::resources::ResourcesManager& manager)
     : m_Path(path) {
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
-        //ERROR_LOG(Logger::ESender::Resources, "Failed to load model %s:\n%s", path.c_str(), importer.GetErrorString());
         Logger::Instance().ErrorLog(Logger::ESender::Resources, __FILE__, __LINE__, "Failed to load model %s:\n%s", path.c_str(), importer.GetErrorString());
         scene = importer.ReadFile(ERROR_MODEL3D_PATH, aiProcess_Triangulate | aiProcess_FlipUVs);
     }
 
     std::string directory = path.substr(0, path.find_last_of('/'));
-    m_RawMeshes.reserve(scene->mNumMeshes);
+    m_Meshes.reserve(scene->mNumMeshes);
     LoadNode(scene->mRootNode, scene, directory, manager);
 }
 
-// TODO
-void zephyr::resources::RawModel::Skin(const std::string& material_path) {
-    assert(true);
-}
-
-void zephyr::resources::RawModel::Skin(const Image* diffuse, const Image* specular, float shininess) {
-    for (auto it = m_RawMeshes.begin(); it != m_RawMeshes.end(); it++) {
+void zephyr::resources::Model::Skin(const Image* diffuse, const Image* specular, float shininess) {
+    for (auto it = m_Meshes.begin(); it != m_Meshes.end(); it++) {
         it->Diffuse(diffuse);
         it->Specular(specular);
         it->Shininess(shininess);
     }
 }
 
-void zephyr::resources::RawModel::LoadNode(const aiNode* node, const aiScene* scene, const std::string& directory, ResourcesManager& manager) {
+void zephyr::resources::Model::LoadNode(const aiNode* node, const aiScene* scene, const std::string& directory, ResourcesManager& manager) {
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         LoadMesh(scene->mMeshes[node->mMeshes[i]], scene, directory, manager);
     }
@@ -41,8 +35,8 @@ void zephyr::resources::RawModel::LoadNode(const aiNode* node, const aiScene* sc
     }
 }
 
-void zephyr::resources::RawModel::LoadMesh(const aiMesh* mesh, const aiScene* scene, const std::string& directory, ResourcesManager& manager) {
-    std::vector<RawMesh::Vertex> vertices;
+void zephyr::resources::Model::LoadMesh(const aiMesh* mesh, const aiScene* scene, const std::string& directory, ResourcesManager& manager) {
+    std::vector<Mesh::Vertex> vertices;
     std::vector<unsigned int> indices;
     Image* diffuse = nullptr;
     Image* specular = nullptr;
@@ -50,7 +44,7 @@ void zephyr::resources::RawModel::LoadMesh(const aiMesh* mesh, const aiScene* sc
 
     // Load vertices
     for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
-        RawMesh::Vertex vertex;
+        Mesh::Vertex vertex;
 
         vertex.Position.x = mesh->mVertices[i].x;
         vertex.Position.y = mesh->mVertices[i].y;
@@ -86,7 +80,8 @@ void zephyr::resources::RawModel::LoadMesh(const aiMesh* mesh, const aiScene* sc
 
         if (auto texture = scene->GetEmbeddedTexture(texture_file.C_Str())) {
             // Load embedded texture
-        } else {
+        }
+        else {
             // Load regular files
 
             // Load diffuse texture
@@ -111,5 +106,5 @@ void zephyr::resources::RawModel::LoadMesh(const aiMesh* mesh, const aiScene* sc
         }
     }
 
-    m_RawMeshes.emplace_back(vertices, indices, diffuse, specular, shininess);
+    m_Meshes.emplace_back(vertices, indices, diffuse, specular, shininess);
 }

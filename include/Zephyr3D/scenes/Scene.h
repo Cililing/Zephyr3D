@@ -77,7 +77,7 @@ public:
 
     // ResourceManager functions
     zephyr::resources::Image& LoadImage(const std::string& path);
-    zephyr::resources::RawModel& LoadModel(const std::string& path);
+    zephyr::resources::Model& LoadModel(const std::string& path);
     zephyr::resources::AudioClip& LoadAudioClip(const std::string& path);
 
 private:

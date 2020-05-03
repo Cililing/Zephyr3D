@@ -1,8 +1,8 @@
-#ifndef RawMesh_h
-#define RawMesh_h
+#ifndef Mesh_h
+#define Mesh_h
 
-#include "../Image.h"
-#include "../../rendering/ShaderProgram.h"
+#include "Image.h"
+#include "../rendering/ShaderProgram.h"
 
 #pragma warning(push, 0)
 #include <glad/glad.h>
@@ -14,7 +14,7 @@
 
 namespace zephyr::resources {
 
-class RawMesh {
+class Mesh {
 public:
     struct Vertex {
         glm::vec3 Position{ 0.0f };
@@ -22,14 +22,14 @@ public:
         glm::vec2 TexCoords{ 0.0f };
     };
 
-    RawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Image* diffuse, const Image* specular, float shininess);
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Image* diffuse, const Image* specular, float shininess);
 
-    RawMesh() = delete;
-    RawMesh(const RawMesh&) = default;
-    RawMesh& operator=(const RawMesh&) = default;
-    RawMesh(RawMesh&& other) = default;
-    RawMesh& operator=(RawMesh&& other) = default;
-    ~RawMesh() = default;
+    Mesh() = delete;
+    Mesh(const Mesh&) = default;
+    Mesh& operator=(const Mesh&) = default;
+    Mesh(Mesh&& other) = default;
+    Mesh& operator=(Mesh&& other) = default;
+    ~Mesh() = default;
 
     const std::vector<Vertex>& Vertices() const { return m_Vertices; }
     const std::vector<unsigned int>& Indices() const { return m_Indices; }

@@ -1,7 +1,7 @@
 #include "MeshRenderer.h"
 #include "Transform.h"
 
-MeshRenderer::MeshRenderer(zephyr::resources::RawModel& raw_model, const std::string& shader_name)
+MeshRenderer::MeshRenderer(zephyr::resources::Model& raw_model, const std::string& shader_name)
     : m_Model(raw_model)
     , m_ShaderName(shader_name) {
 }
@@ -22,7 +22,7 @@ void MeshRenderer::Draw(const zephyr::rendering::ShaderProgram& shader) const {
     }
 }
 
-void MeshRenderer::DrawMesh(const zephyr::rendering::ShaderProgram& shader, const zephyr::rendering::Model::Mesh& mesh) const {
+void MeshRenderer::DrawMesh(const zephyr::rendering::ShaderProgram& shader, const zephyr::rendering::StaticModel::StaticMesh& mesh) const {
     if (mesh.Diffuse()) {
         glActiveTexture(GL_TEXTURE0);
         shader.Uniform("material.diffuse", 0);

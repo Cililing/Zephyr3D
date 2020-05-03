@@ -10,7 +10,7 @@ zephyr::resources::Image& zephyr::resources::ResourcesManager::LoadImage(std::st
     return m_Textures.at(path);
 }
 
-zephyr::resources::RawModel& zephyr::resources::ResourcesManager::LoadModel(std::string path) {
+zephyr::resources::Model& zephyr::resources::ResourcesManager::LoadModel(std::string path) {
     path = RESOURCES_PATH_PREFIX + path;
 
     if (m_Models.find(path) == m_Models.end()) {

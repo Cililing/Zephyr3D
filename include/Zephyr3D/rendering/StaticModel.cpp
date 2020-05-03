@@ -1,6 +1,6 @@
-#include "Model.h"
+#include "StaticModel.h"
 
-zephyr::rendering::Model::Model(const resources::RawModel& raw_model) {
+zephyr::rendering::StaticModel::StaticModel(const resources::Model& raw_model) {
     m_Meshes.reserve(raw_model.RawMeshes().size());
 
     for (auto it = raw_model.RawMeshes().begin(); it != raw_model.RawMeshes().end(); it++) {
@@ -8,7 +8,7 @@ zephyr::rendering::Model::Model(const resources::RawModel& raw_model) {
     }
 }
 
-zephyr::rendering::Model::Mesh::Mesh(const resources::RawMesh& raw_mesh)
+zephyr::rendering::StaticModel::StaticMesh::StaticMesh(const resources::Mesh& raw_mesh)
     : m_IndicesCount(raw_mesh.Indices().size())
     , m_Shininess(static_cast<float>(raw_mesh.Shininess())) {
     if (raw_mesh.Diffuse()) {
@@ -26,18 +26,18 @@ zephyr::rendering::Model::Mesh::Mesh(const resources::RawMesh& raw_mesh)
     glBindVertexArray(m_VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-    glBufferData(GL_ARRAY_BUFFER, raw_mesh.Vertices().size() * sizeof(resources::RawMesh::Vertex), &raw_mesh.Vertices()[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, raw_mesh.Vertices().size() * sizeof(resources::Mesh::Vertex), &raw_mesh.Vertices()[0], GL_STATIC_DRAW);
 
     // Position
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(resources::RawMesh::Vertex), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(resources::Mesh::Vertex), (void*)0);
     glEnableVertexAttribArray(0);
 
     // Normal vectors
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(resources::RawMesh::Vertex), (void*)offsetof(resources::RawMesh::Vertex, resources::RawMesh::Vertex::Normal));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(resources::Mesh::Vertex), (void*)offsetof(resources::Mesh::Vertex, resources::Mesh::Vertex::Normal));
     glEnableVertexAttribArray(1);
 
     // Image coords
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(resources::RawMesh::Vertex), (void*)offsetof(resources::RawMesh::Vertex, resources::RawMesh::Vertex::TexCoords));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(resources::Mesh::Vertex), (void*)offsetof(resources::Mesh::Vertex, resources::Mesh::Vertex::TexCoords));
     glEnableVertexAttribArray(2);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
@@ -48,13 +48,13 @@ zephyr::rendering::Model::Mesh::Mesh(const resources::RawMesh& raw_mesh)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-zephyr::rendering::Model::Mesh::~Mesh() {
+zephyr::rendering::StaticModel::StaticMesh::~StaticMesh() {
     glDeleteVertexArrays(1, &m_VAO);
     glDeleteBuffers(1, &m_VBO);
     glDeleteBuffers(1, &m_EBO);
 }
 
-zephyr::rendering::Model::Mesh::Mesh(Mesh&& other) noexcept
+zephyr::rendering::StaticModel::StaticMesh::StaticMesh(StaticMesh&& other) noexcept
     : m_VAO(std::exchange(other.m_VAO, 0))
     , m_VBO(std::exchange(other.m_VBO, 0))
     , m_EBO(std::exchange(other.m_EBO, 0))
@@ -64,7 +64,7 @@ zephyr::rendering::Model::Mesh::Mesh(Mesh&& other) noexcept
     m_Shininess = other.m_Shininess;
 }
 
-zephyr::rendering::Model::Mesh& zephyr::rendering::Model::Mesh::operator=(Mesh&& other) noexcept {
+zephyr::rendering::StaticModel::StaticMesh& zephyr::rendering::StaticModel::StaticMesh::operator=(StaticMesh&& other) noexcept {
     m_VAO = std::exchange(other.m_VAO, 0);
     m_VBO = std::exchange(other.m_VBO, 0);
     m_EBO = std::exchange(other.m_EBO, 0);
