@@ -93,14 +93,14 @@ void zephyr::resources::RawModel::LoadMesh(const aiMesh* mesh, const aiScene* sc
             if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
                 aiString path;
                 material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
-                diffuse = &manager.LoadTexture(directory + '/' + path.C_Str());
+                diffuse = &manager.LoadImage(directory + '/' + path.C_Str());
             }
 
             // Load specular texture
             if (material->GetTextureCount(aiTextureType_SPECULAR) > 0) {
                 aiString path;
                 material->GetTexture(aiTextureType_SPECULAR, 0, &path);
-                specular = &manager.LoadTexture(directory + '/' + path.C_Str());
+                specular = &manager.LoadImage(directory + '/' + path.C_Str());
             }
 
             // Load shininess

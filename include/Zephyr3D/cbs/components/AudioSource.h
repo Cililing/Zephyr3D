@@ -24,7 +24,7 @@ public:
     void Loop(bool loop);
 
     PropertyIn<Transform*> TransformIn{ this };
-    PropertyIn<zephyr::resources::Sound*> SoundIn{ this };
+    PropertyIn<zephyr::resources::AudioClip*> SoundIn{ this };
 
 private:
     ALuint m_ID;

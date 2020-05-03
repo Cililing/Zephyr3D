@@ -77,7 +77,7 @@ World::FixedChunk* World::GenerateChunk(glm::ivec2 origin) {
             std::forward_as_tuple(origin),
             std::forward_as_tuple(
                 origin,
-                Object().Scene().LoadTexture(GroundTexture),
+                Object().Scene().LoadImage(GroundTexture),
                 -1.0f,
                 1.0f
             )

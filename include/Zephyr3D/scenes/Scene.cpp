@@ -187,14 +187,14 @@ void Scene::ListenerOrientation(float at_x, float at_y, float at_z, float up_x, 
 }
 
 
-zephyr::resources::Image& Scene::LoadTexture(const std::string& path) {
-    return m_ResourceManager.LoadTexture(path);
+zephyr::resources::Image& Scene::LoadImage(const std::string& path) {
+    return m_ResourceManager.LoadImage(path);
 }
 
 zephyr::resources::RawModel& Scene::LoadModel(const std::string& path) {
     return m_ResourceManager.LoadModel(path);
 }
 
-zephyr::resources::Sound& Scene::LoadSound(const std::string& path) {
-    return m_ResourceManager.LoadSound(path);
+zephyr::resources::AudioClip& Scene::LoadAudioClip(const std::string& path) {
+    return m_ResourceManager.LoadAudioClip(path);
 }

@@ -11,16 +11,16 @@
 
 namespace zephyr::resources {
 
-class Sound {
+class AudioClip {
 public:
-    explicit Sound(const std::string& path);
+    explicit AudioClip(const std::string& path);
 
-    Sound() = delete;
-    Sound(const Sound&) = delete;
-    Sound& operator=(const Sound&) = delete;
-    Sound(Sound&&) = delete;
-    Sound& operator=(Sound&&) = delete;
-    ~Sound();
+    AudioClip() = delete;
+    AudioClip(const AudioClip&) = delete;
+    AudioClip& operator=(const AudioClip&) = delete;
+    AudioClip(AudioClip&&) = delete;
+    AudioClip& operator=(AudioClip&&) = delete;
+    ~AudioClip();
 
     ALuint ID() const { return m_ID; }
     ALint Size() const { return m_Size; }

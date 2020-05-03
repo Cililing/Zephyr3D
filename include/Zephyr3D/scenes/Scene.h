@@ -76,9 +76,9 @@ public:
     void ListenerOrientation(float at_x, float at_y, float at_z, float up_x, float up_y, float up_z);
 
     // ResourceManager functions
-    zephyr::resources::Image& LoadTexture(const std::string& path);
+    zephyr::resources::Image& LoadImage(const std::string& path);
     zephyr::resources::RawModel& LoadModel(const std::string& path);
-    zephyr::resources::Sound& LoadSound(const std::string& path);
+    zephyr::resources::AudioClip& LoadAudioClip(const std::string& path);
 
 private:
     ObjectManager m_ObjectManager;

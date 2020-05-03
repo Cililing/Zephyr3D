@@ -7,12 +7,12 @@
 #include <stb_image.h>
 
 void MainScene::CreateScene() {
-    Skybox(LoadTexture("../../assets/skyboxes/basic_blue/right.png"),
-           LoadTexture("../../assets/skyboxes/basic_blue/left.png"),
-           LoadTexture("../../assets/skyboxes/basic_blue/top.png"),
-           LoadTexture("../../assets/skyboxes/basic_blue/bottom.png"),
-           LoadTexture("../../assets/skyboxes/basic_blue/back.png"),
-           LoadTexture("../../assets/skyboxes/basic_blue/front.png"));
+    Skybox(LoadImage("skyboxes/basic_blue/right.png"),
+           LoadImage("skyboxes/basic_blue/left.png"),
+           LoadImage("skyboxes/basic_blue/top.png"),
+           LoadImage("skyboxes/basic_blue/bottom.png"),
+           LoadImage("skyboxes/basic_blue/back.png"),
+           LoadImage("skyboxes/basic_blue/front.png"));
 
     auto light = CreateObject("Light"); {
         light->CreateComponent<DirectionalLight>(glm::vec3(-1.0f, -0.5f, -0.5f),
