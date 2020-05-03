@@ -3,17 +3,19 @@
 
 #include "Image.h"
 #include "Model.h"
-#include "Sound.h"
+#include "AudioClip.h"
 #include "../debuging/Logger.h"
 
 #include <string>
 #include <unordered_map>
 
+#undef LoadImage
+
 namespace zephyr::resources {
 
-constexpr const char* ERROR_TEXTURE_PATH = "../../assets/textures/ErrorTexture.png";
-constexpr const char* ERROR_MODEL3D_PATH = "../../assets/models/ErrorMesh/ErrorMesh.obj";
-constexpr const char* RESOURCES_PATH_PREFIX = "../../assets/";
+constexpr const char* ERROR_TEXTURE_PATH = "textures/TextureError.png";
+constexpr const char* ERROR_MODEL3D_PATH = "models/MeshError/MeshError.obj";
+constexpr const char* ASSETS_PATH_PREFIX = "../../assets/";
 
 class ResourcesManager {
 public:

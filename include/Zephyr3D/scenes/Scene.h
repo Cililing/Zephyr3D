@@ -11,6 +11,8 @@
 #include "../utilities/Input.h"
 #include "../utilities/Window.h"
 
+#undef LoadImage
+
 class IGUIWidget;
 class ICamera;
 

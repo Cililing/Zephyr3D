@@ -4,7 +4,7 @@
 #include "Component.h"
 #include "../connections/PropertyIn.h"
 
-#include "../../resources/Sound.h"
+#include "../../resources/AudioClip.h"
 
 #pragma warning(push, 0)
 #include <al.h>

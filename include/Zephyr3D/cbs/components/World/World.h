@@ -5,7 +5,7 @@
 #include "../../Object.h"
 #include "../../../scenes/Scene.h"
 #include "../../connections/PropertyOut.h"
-#include "../../../resources/Sound.h"
+#include "../../../resources/AudioClip.h"
 
 #include "Chunk.h"
 

@@ -16,7 +16,7 @@ class Image;
 
 class Model {
 public:
-    Model(std::string path, ResourcesManager& manager);
+    Model(const std::string& path, ResourcesManager& manager);
 
     Model() = delete;
     Model(const Model&) = default;
@@ -31,11 +31,11 @@ public:
     void Skin(const Image* diffuse, const Image* specular, float shininess);
 
 private:
-    void LoadNode(const aiNode* node, const aiScene* scene, const std::string& directory, ResourcesManager& manager);
-    void LoadMesh(const aiMesh* mesh, const aiScene* scene, const std::string& directory, ResourcesManager& manager);
-
     std::string m_Path;
     std::vector<Mesh> m_Meshes;
+
+    void LoadNode(const aiNode* node, const aiScene* scene, const std::string& directory, ResourcesManager& manager);
+    void LoadMesh(const aiMesh* mesh, const aiScene* scene, const std::string& directory, ResourcesManager& manager);
 };
 
 }

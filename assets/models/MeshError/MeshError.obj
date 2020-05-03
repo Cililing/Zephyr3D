@@ -1,6 +1,6 @@
 # Blender v2.79 (sub 0) OBJ File: ''
 # www.blender.org
-mtllib ErrorMesh.mtl
+mtllib MeshError.mtl
 o Text_CUText
 v 1.015209 -0.435201 0.200000
 v 1.037391 -0.403172 0.200000

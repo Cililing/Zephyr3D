@@ -2,7 +2,6 @@
 
 #include <Zephyr3D/Engine.h>
 
-
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 

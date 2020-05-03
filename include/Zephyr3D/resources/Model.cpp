@@ -2,14 +2,14 @@
 
 #include "ResourcesManager.h"
 
-zephyr::resources::Model::Model(std::string path, zephyr::resources::ResourcesManager& manager)
-    : m_Path(path) {
+zephyr::resources::Model::Model(const std::string& path, zephyr::resources::ResourcesManager& manager)
+    : m_Path(ASSETS_PATH_PREFIX + path) {
     Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    const aiScene* scene = importer.ReadFile(m_Path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         Logger::Instance().ErrorLog(Logger::ESender::Resources, __FILE__, __LINE__, "Failed to load model %s:\n%s", path.c_str(), importer.GetErrorString());
-        scene = importer.ReadFile(ERROR_MODEL3D_PATH, aiProcess_Triangulate | aiProcess_FlipUVs);
+        scene = importer.ReadFile(std::string(ASSETS_PATH_PREFIX) + ERROR_MODEL3D_PATH, aiProcess_Triangulate | aiProcess_FlipUVs);
     }
 
     std::string directory = path.substr(0, path.find_last_of('/'));
