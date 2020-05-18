@@ -1,7 +1,7 @@
 #include "Window.h"
 #include "../Engine.h"
 
-void Window::Initialize(unsigned int width, unsigned int height, const std::string& title) {
+void zephyr::Window::Initialize(unsigned int width, unsigned int height, const std::string& title) {
     m_Width = width;
     m_Height = height;
     m_Title = title;
@@ -9,7 +9,7 @@ void Window::Initialize(unsigned int width, unsigned int height, const std::stri
     m_GLFWHandler = glfwCreateWindow(m_Width, m_Height, title.c_str(), nullptr, nullptr);
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+void zephyr::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     (void*)window;
 
     zephyr::Engine::Instance().GetWindow().m_Width = width;

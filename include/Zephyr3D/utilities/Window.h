@@ -8,6 +8,8 @@
 #include <string>
 #pragma warning(pop)
 
+namespace zephyr {
+
 class Window {
     friend void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -28,5 +30,7 @@ private:
 };
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
+}
 
 #endif

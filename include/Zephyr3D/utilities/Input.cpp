@@ -3,7 +3,7 @@
 #include "../Engine.h"
 
 #pragma warning(disable: 26495)
-Input::Input()
+zephyr::Input::Input()
     : m_AnyKeyPressed(false)
     , m_AnyKeyHold(false)
     , m_AnyKeyReleased(false)
@@ -20,7 +20,7 @@ Input::Input()
 }
 #pragma warning(default: 26495)
 
-void Input::Update(GLFWwindow *window) {
+void zephyr::Input::Update(GLFWwindow *window) {
     m_AnyKeyPressed = false;
     m_AnyKeyHold = false;
     m_AnyKeyReleased = false;
@@ -77,23 +77,23 @@ void Input::Update(GLFWwindow *window) {
     m_ScrollChanged = false;
 }
 
-bool Input::KeyPressed(int glfw_key_enum) const {
+bool zephyr::Input::KeyPressed(int glfw_key_enum) const {
     return m_Keys[glfw_key_enum] == EKeyState::PRESSED;
 }
 
-bool Input::KeyHold(int glfw_key_enum) const {
+bool zephyr::Input::KeyHold(int glfw_key_enum) const {
     return m_Keys[glfw_key_enum] == EKeyState::HOLD;
 }
 
-bool Input::KeyReleased(int glfw_key_enum) const {
+bool zephyr::Input::KeyReleased(int glfw_key_enum) const {
     return m_Keys[glfw_key_enum] == EKeyState::RELEASED;
 }
 
-Input::EKeyState Input::KeyState(int glfw_key_enum) const {
+zephyr::Input::EKeyState zephyr::Input::KeyState(int glfw_key_enum) const {
     return m_Keys[glfw_key_enum];
 }
 
-void mouse_callback(GLFWwindow* window, double x_pos, double y_pos) {
+void zephyr::mouse_callback(GLFWwindow* window, double x_pos, double y_pos) {
     (void*)window;
 
     zephyr::Engine::Instance().GetInput().m_MousePosition.x = static_cast<float>(x_pos);
@@ -106,7 +106,7 @@ void mouse_callback(GLFWwindow* window, double x_pos, double y_pos) {
     }
 }
 
-void scroll_callback(GLFWwindow* window, double x_offset, double y_offset) {
+void zephyr::scroll_callback(GLFWwindow* window, double x_offset, double y_offset) {
     (void*)window;
     (void)x_offset;
     zephyr::Engine::Instance().GetInput().m_ScrollOffset = static_cast<float>(y_offset);

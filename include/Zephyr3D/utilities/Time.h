@@ -6,6 +6,8 @@
 #include <GLFW/glfw3.h>
 #pragma warning(pop)
 
+namespace zephyr {
+
 constexpr auto FPS_LIMIT30 = (1.0f / 30.0f);
 constexpr auto FPS_LIMIT60 = (1.0f / 60.0f);
 constexpr auto FPS_LIMIT300 = (1.0f / 300.0f);
@@ -34,5 +36,7 @@ private:
     float m_LastFrame;
     unsigned int m_TimeMultiplier;
 };
+
+}
 
 #endif

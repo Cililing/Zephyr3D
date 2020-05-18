@@ -46,14 +46,14 @@ void zephyr::Engine::Destroy() {
     glfwTerminate();
 }
 
-Time& zephyr::Engine::GetTime() {
+zephyr::Time& zephyr::Engine::GetTime() {
     return m_Time;
 }
 
-Input& zephyr::Engine::GetInput() {
+zephyr::Input& zephyr::Engine::GetInput() {
     return m_Input;
 }
 
-Window& zephyr::Engine::GetWindow() {
+zephyr::Window& zephyr::Engine::GetWindow() {
     return m_Window;
 }

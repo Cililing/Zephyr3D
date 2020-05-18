@@ -8,6 +8,8 @@
 #include <glm/glm.hpp>
 #pragma warning(pop)
 
+namespace zephyr {
+
 class Input {
     friend void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);
     friend void scroll_callback(GLFWwindow* window, double x_offset, double y_offset);
@@ -53,5 +55,7 @@ private:
 
 void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);
 void scroll_callback(GLFWwindow* window, double x_pos, double y_pos);
+
+}
 
 #endif
