@@ -1,5 +1,6 @@
 #include "Model.h"
 
+#include "Image.h"
 #include "ResourcesManager.h"
 
 zephyr::resources::Model::Model(const std::string& path, zephyr::resources::ResourcesManager& manager)
