@@ -85,7 +85,7 @@ public:
 private:
     ObjectManager m_ObjectManager;
     zephyr::rendering::DrawManager m_DrawManager;
-    PhysicsManager m_PhysicsManager;
+    zephyr::physics::PhysicsManager m_PhysicsManager;
     AudioManager m_AudioManager;
     zephyr::resources::ResourcesManager m_ResourceManager;
 

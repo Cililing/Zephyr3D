@@ -16,6 +16,8 @@
 #include <vector>
 #pragma warning(pop)
 
+namespace zephyr::physics {
+
 class PhysicsManager {
 public:
     PhysicsManager(btIDebugDraw* debug_drawer);
@@ -54,5 +56,7 @@ private:
 
     btIDebugDraw* m_DebugDrawer;
 };
+
+}
 
 #endif

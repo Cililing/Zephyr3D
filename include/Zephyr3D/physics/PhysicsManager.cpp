@@ -1,15 +1,15 @@
 #include "PhysicsManager.h"
 
-PhysicsManager::PhysicsManager(btIDebugDraw* debug_drawer) 
+zephyr::physics::PhysicsManager::PhysicsManager(btIDebugDraw* debug_drawer) 
     : m_DebugDrawer(debug_drawer) {
 }
 
-PhysicsManager::~PhysicsManager() {
+zephyr::physics::PhysicsManager::~PhysicsManager() {
     //TODO maybe unique ptr
     delete m_DebugDrawer;
 }
 
-void PhysicsManager::Initialize() {
+void zephyr::physics::PhysicsManager::Initialize() {
     INFO_LOG(Logger::ESender::Physics, "Initializing physics manager");
 
     m_CollisionConfiguration = std::make_unique<btDefaultCollisionConfiguration>();
@@ -31,7 +31,7 @@ void PhysicsManager::Initialize() {
     m_World->getDebugDrawer()->setDebugMode(1);
 }
 
-void PhysicsManager::StepSimulation(float delta_time) {
+void zephyr::physics::PhysicsManager::StepSimulation(float delta_time) {
     m_World->stepSimulation(delta_time);
     m_World->debugDrawWorld();
 
@@ -60,7 +60,7 @@ void PhysicsManager::StepSimulation(float delta_time) {
     }
 }
 
-void PhysicsManager::ExitPhysics() {
+void zephyr::physics::PhysicsManager::ExitPhysics() {
     INFO_LOG(Logger::ESender::Physics, "Exiting physics");
 
     if (m_World) {
@@ -89,42 +89,42 @@ void PhysicsManager::ExitPhysics() {
     }
 }
 
-void PhysicsManager::AddCollisionObject(btCollisionObject* collision_object, int collision_filter_group, int collision_filter_mask) {
+void zephyr::physics::PhysicsManager::AddCollisionObject(btCollisionObject* collision_object, int collision_filter_group, int collision_filter_mask) {
     m_World->addCollisionObject(collision_object, collision_filter_group, collision_filter_mask);
 }
 
-void PhysicsManager::RemoveCollisionObject(btCollisionObject* collision_object) {
+void zephyr::physics::PhysicsManager::RemoveCollisionObject(btCollisionObject* collision_object) {
     m_World->removeCollisionObject(collision_object);
 }
 
-void PhysicsManager::AddRigidBody(btRigidBody* rigid_body) {
+void zephyr::physics::PhysicsManager::AddRigidBody(btRigidBody* rigid_body) {
     m_World->addRigidBody(rigid_body);
 }
 
-void PhysicsManager::AddRigidBody(btRigidBody* rigid_body, int group, int mask) {
+void zephyr::physics::PhysicsManager::AddRigidBody(btRigidBody* rigid_body, int group, int mask) {
     m_World->addRigidBody(rigid_body, group, mask);
 }
 
-void PhysicsManager::RemoveRigidBody(btRigidBody* rigid_body) {
+void zephyr::physics::PhysicsManager::RemoveRigidBody(btRigidBody* rigid_body) {
     m_World->removeRigidBody(rigid_body);
 }
 
-void PhysicsManager::AddConstraint(btTypedConstraint* constraint, bool disable_collisions_between_linked_bodies) {
+void zephyr::physics::PhysicsManager::AddConstraint(btTypedConstraint* constraint, bool disable_collisions_between_linked_bodies) {
     m_World->addConstraint(constraint, disable_collisions_between_linked_bodies);
 }
 
-void PhysicsManager::RemoveConstraint(btTypedConstraint* constraint) {
+void zephyr::physics::PhysicsManager::RemoveConstraint(btTypedConstraint* constraint) {
     m_World->removeConstraint(constraint);
 }
 
-void PhysicsManager::AddVehicle(btRaycastVehicle* vehicle) {
+void zephyr::physics::PhysicsManager::AddVehicle(btRaycastVehicle* vehicle) {
     m_World->addVehicle(vehicle);
 }
 
-void PhysicsManager::RemoveVehicle(btRaycastVehicle* vehicle) {
+void zephyr::physics::PhysicsManager::RemoveVehicle(btRaycastVehicle* vehicle) {
     m_World->removeVehicle(vehicle);
 }
 
-void PhysicsManager::Raycast(const btVector3& from, const btVector3& to, btCollisionWorld::RayResultCallback& result) {
+void zephyr::physics::PhysicsManager::Raycast(const btVector3& from, const btVector3& to, btCollisionWorld::RayResultCallback& result) {
     m_World->rayTest(from, to, result);
 }

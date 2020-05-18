@@ -24,7 +24,7 @@
 constexpr float NoiseIncrement = 0.1f;
 
 template <unsigned int Width, unsigned int Length>
-class Chunk : public zephyr::rendering::IDrawable, public IPhysicalObject {
+class Chunk : public zephyr::rendering::IDrawable, public zephyr::physics::IPhysicalObject {
     using Grid_t = std::array<std::array<float, Length + 1>, Width + 1>;
 
 public:

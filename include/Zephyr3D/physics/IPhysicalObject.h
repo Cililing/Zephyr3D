@@ -3,6 +3,8 @@
 
 #include "btBulletCollisionCommon.h"
 
+namespace zephyr::physics {
+
 class IPhysicalObject {
 public:
     IPhysicalObject() = default;
@@ -15,5 +17,7 @@ public:
     virtual void OnCollision(const btCollisionObject* collider) = 0;
     virtual void PhysicsUpdate() = 0;
 };
+
+}
 
 #endif

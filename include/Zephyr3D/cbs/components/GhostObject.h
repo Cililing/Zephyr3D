@@ -14,7 +14,7 @@
 #pragma warning(pop)
 
 
-class GhostObject : public Component, public IPhysicalObject {
+class GhostObject : public Component, public zephyr::physics::IPhysicalObject {
 public:
     GhostObject(btCollisionShape* shape, int group = 1, int mask = -1);
 

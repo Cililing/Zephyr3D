@@ -4,9 +4,13 @@
 #include "../rendering/DrawManager.h"
 #include "../debuging/Logger.h"
 
+#pragma warning(push, 0)
 #include <LinearMath/btIDebugDraw.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#pragma warning(pop)
+
+namespace zephyr::physics {
 
 class PhysicsRenderer : public btIDebugDraw {
 public:
@@ -30,5 +34,7 @@ private:
     int m_DebugMode;
     zephyr::rendering::Debug* m_DebugShader;
 };
+
+}
 
 #endif

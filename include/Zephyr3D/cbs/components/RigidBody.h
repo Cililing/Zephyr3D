@@ -10,7 +10,7 @@
 #include "../connections/MessageOut.h"
 
 
-class RigidBody : public Component, public IPhysicalObject {
+class RigidBody : public Component, public zephyr::physics::IPhysicalObject {
 public:
     RigidBody(btScalar mass, btCollisionShape* shape, int group = 1, int mask = -1);
 
