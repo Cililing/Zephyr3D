@@ -4,11 +4,6 @@ zephyr::physics::PhysicsManager::PhysicsManager(btIDebugDraw* debug_drawer)
     : m_DebugDrawer(debug_drawer) {
 }
 
-zephyr::physics::PhysicsManager::~PhysicsManager() {
-    //TODO maybe unique ptr
-    delete m_DebugDrawer;
-}
-
 void zephyr::physics::PhysicsManager::Initialize() {
     INFO_LOG(Logger::ESender::Physics, "Initializing physics manager");
 
@@ -24,10 +19,7 @@ void zephyr::physics::PhysicsManager::Initialize() {
 
     m_World->setGravity(btVector3(btScalar(0), btScalar(-10), btScalar(0)));
 
-    if (m_DebugDrawer) {
-        m_World->setDebugDrawer(m_DebugDrawer);
-    }
-
+    m_World->setDebugDrawer(m_DebugDrawer.get());
     m_World->getDebugDrawer()->setDebugMode(1);
 }
 
@@ -37,18 +29,18 @@ void zephyr::physics::PhysicsManager::StepSimulation(float delta_time) {
 
     // Callbacks
     btDispatcher* dispatcher = m_World->getDispatcher();
-    int num_manifold = dispatcher->getNumManifolds();
+    const int num_manifold = dispatcher->getNumManifolds();
     for (int i = 0; i < num_manifold; i++) {
         btPersistentManifold* contact = dispatcher->getManifoldByIndexInternal(i);
         const btCollisionObject* A = contact->getBody0();
         const btCollisionObject* B = contact->getBody1();
 
-        int num_contacts = contact->getNumContacts();
+        const int num_contacts = contact->getNumContacts();
         for (int j = 0; j < num_contacts; j++) {
             btManifoldPoint& point = contact->getContactPoint(j);
             if (point.getDistance() < 0.0f) {
-                ((IPhysicalObject*)A->getUserPointer())->OnCollision(B);
-                ((IPhysicalObject*)B->getUserPointer())->OnCollision(A);
+                static_cast<IPhysicalObject*>(A->getUserPointer())->OnCollision(B);
+                static_cast<IPhysicalObject*>(B->getUserPointer())->OnCollision(A);
             }
         }
     }
@@ -56,7 +48,7 @@ void zephyr::physics::PhysicsManager::StepSimulation(float delta_time) {
     btCollisionObjectArray objects = m_World->getCollisionObjectArray();
     int num_objects = objects.size();
     for (int i = 0; i < num_objects; i++) {
-        ((IPhysicalObject*)objects[i]->getUserPointer())->PhysicsUpdate();
+        static_cast<IPhysicalObject*>(objects[i]->getUserPointer())->PhysicsUpdate();
     }
 }
 
@@ -97,10 +89,6 @@ void zephyr::physics::PhysicsManager::RemoveCollisionObject(btCollisionObject* c
     m_World->removeCollisionObject(collision_object);
 }
 
-void zephyr::physics::PhysicsManager::AddRigidBody(btRigidBody* rigid_body) {
-    m_World->addRigidBody(rigid_body);
-}
-
 void zephyr::physics::PhysicsManager::AddRigidBody(btRigidBody* rigid_body, int group, int mask) {
     m_World->addRigidBody(rigid_body, group, mask);
 }
@@ -127,4 +115,16 @@ void zephyr::physics::PhysicsManager::RemoveVehicle(btRaycastVehicle* vehicle) {
 
 void zephyr::physics::PhysicsManager::Raycast(const btVector3& from, const btVector3& to, btCollisionWorld::RayResultCallback& result) {
     m_World->rayTest(from, to, result);
+}
+
+void zephyr::physics::PhysicsManager::Gravity(btVector3 gravity) {
+    m_World->setGravity(gravity);
+}
+
+btVector3 zephyr::physics::PhysicsManager::Gravity() const {
+    return m_World->getGravity();
+}
+
+btDynamicsWorld* zephyr::physics::PhysicsManager::DynamicsWorld() {
+    return m_World.get();
 }

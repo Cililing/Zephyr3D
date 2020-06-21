@@ -20,8 +20,13 @@ namespace zephyr::physics {
 
 class PhysicsManager {
 public:
-    PhysicsManager(btIDebugDraw* debug_drawer);
-    ~PhysicsManager();
+    explicit PhysicsManager(btIDebugDraw* debug_drawer);
+
+    PhysicsManager(const PhysicsManager&) = delete;
+    PhysicsManager& operator=(const PhysicsManager&) = delete;
+    PhysicsManager(PhysicsManager&&) = delete;
+    PhysicsManager& operator=(PhysicsManager&&) = delete;
+    ~PhysicsManager() = default;
 
     void Initialize();
     void StepSimulation(float delta_time);
@@ -30,8 +35,7 @@ public:
     void AddCollisionObject(btCollisionObject* collision_object, int collision_filter_group = 1, int collision_filter_mask = -1);
     void RemoveCollisionObject(btCollisionObject* collision_object);
 
-    void AddRigidBody(btRigidBody* rigid_body);
-    void AddRigidBody(btRigidBody* rigid_body, int group, int mask);
+    void AddRigidBody(btRigidBody* rigid_body, int group = 1, int mask = -1);
     void RemoveRigidBody(btRigidBody* rigid_body);
 
     void AddConstraint(btTypedConstraint* constraint, bool disable_collisions_between_linked_bodies = false);
@@ -42,19 +46,18 @@ public:
 
     void Raycast(const btVector3& from, const btVector3& to, btCollisionWorld::RayResultCallback& result);
 
-    void Gravity(btVector3 gravity) { m_World->setGravity(gravity); }
-    btVector3 Gravity() const { return m_World->getGravity(); }
+    void Gravity(btVector3 gravity);
+    btVector3 Gravity() const;
 
-    btDynamicsWorld* DynamicsWorld() { return m_World.get(); }
+    btDynamicsWorld* DynamicsWorld();
 
 private:
-    std::unique_ptr<btDynamicsWorld> m_World;
-    std::unique_ptr<btBroadphaseInterface> m_Broadphase;
+    std::unique_ptr<btCollisionConfiguration> m_CollisionConfiguration;
     std::unique_ptr<btCollisionDispatcher> m_Dispatcher;
+    std::unique_ptr<btBroadphaseInterface> m_Broadphase;
     std::unique_ptr<btConstraintSolver> m_Solver;
-    std::unique_ptr<btDefaultCollisionConfiguration> m_CollisionConfiguration;
-
-    btIDebugDraw* m_DebugDrawer;
+    std::unique_ptr<btDynamicsWorld> m_World;
+    std::unique_ptr<btIDebugDraw> m_DebugDrawer;
 };
 
 }
