@@ -1,7 +1,7 @@
 #include "PhysicsManager.h"
 
-zephyr::physics::PhysicsManager::PhysicsManager(btIDebugDraw* debug_drawer) 
-    : m_DebugDrawer(debug_drawer) {
+zephyr::physics::PhysicsManager::PhysicsManager(zephyr::rendering::DrawManager& draw_manager)
+    : m_PhysicsRenderer(draw_manager) {
 }
 
 void zephyr::physics::PhysicsManager::Initialize() {
@@ -19,7 +19,7 @@ void zephyr::physics::PhysicsManager::Initialize() {
 
     m_World->setGravity(btVector3(btScalar(0), btScalar(-10), btScalar(0)));
 
-    m_World->setDebugDrawer(m_DebugDrawer.get());
+    m_World->setDebugDrawer(&m_PhysicsRenderer);
     m_World->getDebugDrawer()->setDebugMode(1);
 }
 

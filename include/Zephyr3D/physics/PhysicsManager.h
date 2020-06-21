@@ -20,7 +20,7 @@ namespace zephyr::physics {
 
 class PhysicsManager {
 public:
-    explicit PhysicsManager(btIDebugDraw* debug_drawer);
+    explicit PhysicsManager(zephyr::rendering::DrawManager& draw_manager);
 
     PhysicsManager(const PhysicsManager&) = delete;
     PhysicsManager& operator=(const PhysicsManager&) = delete;
@@ -57,7 +57,8 @@ private:
     std::unique_ptr<btBroadphaseInterface> m_Broadphase;
     std::unique_ptr<btConstraintSolver> m_Solver;
     std::unique_ptr<btDynamicsWorld> m_World;
-    std::unique_ptr<btIDebugDraw> m_DebugDrawer;
+    
+    PhysicsRenderer m_PhysicsRenderer;
 };
 
 }

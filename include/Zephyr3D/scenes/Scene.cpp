@@ -7,10 +7,9 @@
 
 #include "../Engine.h"
 
-
 Scene::Scene() 
     : m_ObjectManager(*this)
-    , m_PhysicsManager(new zephyr::physics::PhysicsRenderer(m_DrawManager)) {
+    , m_PhysicsManager(m_DrawManager) {
 }
 
 void Scene::Initialize() {
