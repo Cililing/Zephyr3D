@@ -12,6 +12,8 @@
 #include <Zephyr3D/cbs/components/World/World.h>
 #include <Zephyr3D/cbs/components/MeshRenderer.h>
 
+#include "GravityGun.h"
+
 class MainScene : public Scene {
 public:
     void CreateScene() override;
