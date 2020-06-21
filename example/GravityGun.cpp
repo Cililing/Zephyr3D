@@ -1,7 +1,8 @@
 #include "GravityGun.h"
 
-GravityGun::GravityGun(float range)
-	: m_Range(range) {
+GravityGun::GravityGun(float range, float impulse_force)
+	: m_Range(range)
+	, m_ImpulsForce(impulse_force * range) {
 
 }
 
@@ -16,11 +17,66 @@ void GravityGun::Update() {
 	auto _to = _from + TransformIn.Value()->Front() * m_Range;
 	btVector3 to(_to.x, _to.y, _to.z);
 
-	btCollisionWorld::ClosestRayResultCallback result(from, to);
-	Object().Scene().Raycast(from, to, result);
+	if (zephyr::Engine::Instance().GetInput().KeyPressed(m_PickUpKey)) {
+		// Pick up rigidbody
 
-	if (result.hasHit() && zephyr::Engine::Instance().GetInput().KeyPressed(m_PushKey)) {
-		((btRigidBody*)result.m_collisionObject)->applyCentralImpulse(to);
-		((btRigidBody*)result.m_collisionObject)->activate();
+		btCollisionWorld::ClosestRayResultCallback result(from, to);
+		Object().Scene().Raycast(from, to, result);
+
+		if (!result.hasHit()) {
+			return;
+		}
+
+		m_Target = (btRigidBody*)btRigidBody::upcast(result.m_collisionObject);
+
+		if (m_Target->isStaticObject()) {
+			m_Target = nullptr;
+			return;
+		}
+
+		m_SavedState = m_Target->getActivationState();
+		btVector3 pick_position = result.m_hitPointWorld;
+		btVector3 local_pivot = m_Target->getCenterOfMassTransform().inverse() * pick_position;
+		m_Constraint = new btPoint2PointConstraint(*m_Target, local_pivot);
+		Object().Scene().AddConstraint(m_Constraint, true);
+		m_Constraint->m_setting.m_impulseClamp = 30.0f;
+		m_Constraint->m_setting.m_tau = 0.001f;
+		m_OldPickingDistance = (pick_position - from).length();
+
+	} else if (m_Target != nullptr && zephyr::Engine::Instance().GetInput().KeyHold(m_PickUpKey)) {
+		// Move picked body
+
+		btVector3 direction = (to - from).normalize() * m_OldPickingDistance;
+		btVector3 new_pivot = from + direction;
+		m_Constraint->setPivotB(new_pivot);
+
+	} else if (m_Target != nullptr && zephyr::Engine::Instance().GetInput().KeyReleased(m_PickUpKey)) {
+		// Let go
+
+		m_Target->forceActivationState(m_SavedState);
+		m_Target->activate();
+		Object().Scene().RemoveConstraint(m_Constraint);
+		delete m_Constraint;
+		m_Constraint = nullptr;
+		m_Target = nullptr;
+	} else if (zephyr::Engine::Instance().GetInput().KeyPressed(m_PushKey)) {
+		// Push
+
+		btCollisionWorld::ClosestRayResultCallback result(from, to);
+		Object().Scene().Raycast(from, to, result);
+
+		if (!result.hasHit()) {
+			return;
+		}
+
+		m_Target = (btRigidBody*)btRigidBody::upcast(result.m_collisionObject);
+
+		if (m_Target->isStaticObject()) {
+			m_Target = nullptr;
+			return;
+		}
+
+		m_Target->applyCentralImpulse(to * m_ImpulsForce);
+		m_Target->activate();
 	}
 }

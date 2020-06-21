@@ -34,7 +34,7 @@ void MainScene::CreateScene() {
         auto fpc = camera->CreateComponent<FirstPersonController>();
         camera->Connect(camera->Root().This, fpc->TransformIn);
 
-        auto gravity_gun = camera->CreateComponent<GravityGun>(50.0f);
+        auto gravity_gun = camera->CreateComponent<GravityGun>(10.0f, 5.0f);
         camera->Connect(camera->Root().This, gravity_gun->TransformIn);
     }
 

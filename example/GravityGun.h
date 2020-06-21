@@ -16,7 +16,7 @@
 
 class GravityGun : public Component {
 public:
-	GravityGun(float range);
+	GravityGun(float range, float impuls_force);
 
 	void Initialize() override;
 	void Update() override;
@@ -24,10 +24,17 @@ public:
 	PropertyIn<Transform*> TransformIn{ this };
 
 private:
-	float m_Range;
-
 	int m_PickUpKey{ GLFW_MOUSE_BUTTON_1 };
 	int m_PushKey{ GLFW_MOUSE_BUTTON_2 };
+
+	float m_Range;
+	float m_ImpulsForce;
+
+	btRigidBody* m_Target{ nullptr };
+	btPoint2PointConstraint* m_Constraint{ nullptr };
+	btScalar m_OldPickingDistance;
+	int m_SavedState;
+	
 };
 
 #endif
