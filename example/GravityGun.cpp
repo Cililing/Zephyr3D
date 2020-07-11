@@ -45,7 +45,8 @@ void GravityGun::Update() {
 
 	} else if (m_Target != nullptr && zephyr::Engine::Instance().GetInput().KeyHold(m_PickUpKey)) {
 		// Move picked body
-
+		
+		m_Target->activate();
 		btVector3 direction = (to - from).normalize() * m_OldPickingDistance;
 		btVector3 new_pivot = from + direction;
 		m_Constraint->setPivotB(new_pivot);
