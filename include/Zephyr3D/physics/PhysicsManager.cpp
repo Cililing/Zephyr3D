@@ -25,7 +25,6 @@ void zephyr::physics::PhysicsManager::Initialize() {
 
 void zephyr::physics::PhysicsManager::StepSimulation(float delta_time) {
     m_World->stepSimulation(delta_time);
-    m_World->debugDrawWorld();
 
     // Callbacks
     btDispatcher* dispatcher = m_World->getDispatcher();
@@ -45,11 +44,13 @@ void zephyr::physics::PhysicsManager::StepSimulation(float delta_time) {
         }
     }
 
-    btCollisionObjectArray objects = m_World->getCollisionObjectArray();
+    btCollisionObjectArray& objects = m_World->getCollisionObjectArray();
     int num_objects = objects.size();
     for (int i = 0; i < num_objects; i++) {
         static_cast<IPhysicalObject*>(objects[i]->getUserPointer())->PhysicsUpdate();
     }
+
+    m_World->debugDrawWorld();
 }
 
 void zephyr::physics::PhysicsManager::ExitPhysics() {
