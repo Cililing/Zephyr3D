@@ -14,8 +14,10 @@ void GravityGun::Update() {
 	auto _from = TransformIn.Value()->Position();
 	btVector3 from(_from.x, _from.y, _from.z);
 
-	auto _to = _from + TransformIn.Value()->Front() * m_Range;
-	btVector3 to(_to.x, _to.y, _to.z);
+	auto _direction = TransformIn.Value()->Front();
+	btVector3 direction(_direction.x, _direction.y, _direction.z);
+
+	btVector3 to = from + direction * m_Range;
 
 	if (zephyr::Engine::Instance().GetInput().KeyPressed(m_PickUpKey)) {
 		// Pick up rigidbody
@@ -77,7 +79,7 @@ void GravityGun::Update() {
 			return;
 		}
 
-		m_Target->applyCentralImpulse(to * m_ImpulsForce);
+		m_Target->applyCentralImpulse(direction * m_ImpulsForce);
 		m_Target->activate();
 	}
 }
