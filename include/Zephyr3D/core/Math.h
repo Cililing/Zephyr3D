@@ -3,25 +3,14 @@
 
 #pragma warning(push, 0)
 #include <glm/glm.hpp>
-
-#include <bullet/LinearMath/btVector3.h>
-
+#include <glm/gtc/quaternion.hpp>
+#include <bullet/btBulletCollisionCommon.h>
 #pragma warning(pop)
 
-glm::vec3 Vector3(const btVector3& vector) {
-    return glm::vec3(
-        vector.getX(),
-        vector.getY(),
-        vector.getZ()
-    );
-}
+glm::vec3 Vector3(const btVector3& vector);
+btVector3 Vector3(const glm::vec3& vector);
 
-btVector3 Vector3(const glm::vec3& vector) {
-    return btVector3(
-        vector.x,
-        vector.y,
-        vector.z
-    );
-}
+glm::quat Quaternion(const btQuaternion& quaternion);
+btQuaternion Quaternion(const glm::quat& quaternion);
 
 #endif

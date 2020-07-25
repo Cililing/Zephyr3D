@@ -8,6 +8,7 @@
 #include "../connections/PropertyIn.h"
 #include "../connections/PropertyOut.h"
 #include "../connections/MessageOut.h"
+#include "../../core/Math.h"
 
 class RigidBody : public Component, public zephyr::physics::CollisionObject {
 public:

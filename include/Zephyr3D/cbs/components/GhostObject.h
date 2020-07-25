@@ -7,6 +7,7 @@
 #include "../connections/MessageOut.h"
 #include "../Object.h"
 #include "../../scenes/Scene.h"
+#include "../../core/Math.h"
 
 #pragma warning(push, 0)
 #include "btBulletCollisionCommon.h"

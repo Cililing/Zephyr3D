@@ -11,17 +11,12 @@ void RigidBody::Initialize() {
     btTransform transform;
     transform.setIdentity();
 
-    auto pos = TransformIn.Value()->Position();
-    transform.setOrigin(btVector3(pos.x, pos.y, pos.z));
-
-    auto rot = TransformIn.Value()->Rotation();
-    transform.setRotation(btQuaternion(rot.x, rot.y, rot.z, rot.w));
-
-    btVector3 transform_scale = btVector3(TransformIn.Value()->Scale().x, TransformIn.Value()->Scale().y, TransformIn.Value()->Scale().z);
+    transform.setOrigin(Vector3(TransformIn.Value()->Position()));
+    transform.setRotation(Quaternion(TransformIn.Value()->Rotation()));
 
     m_BulletHandle->setWorldTransform(transform);
     static_cast<btRigidBody*>(m_BulletHandle)->getMotionState()->setWorldTransform(transform);
-    m_BulletHandle->getCollisionShape()->setLocalScaling(transform_scale);
+    m_BulletHandle->getCollisionShape()->setLocalScaling(Vector3(TransformIn.Value()->Scale()));
 
     Object().Scene().AddRigidBody(this, m_Group, m_Mask);
 }
@@ -40,14 +35,9 @@ void RigidBody::PhysicsUpdate() {
 
     rigid_body->getMotionState()->getWorldTransform(trans);
 
-    auto origin = trans.getOrigin();
-    TransformIn.Value()->Position(glm::vec3(origin.getX(), origin.getY(), origin.getZ()));
-
-    auto rot = trans.getRotation();
-    TransformIn.Value()->Rotation(glm::quat(rot.getW(), rot.getX(), rot.getY(), rot.getZ()));
-
-    auto scale = rigid_body->getCollisionShape()->getLocalScaling();
-    TransformIn.Value()->Scale(glm::vec3(scale.getX(), scale.getY(), scale.getZ()));
+    TransformIn.Value()->Position(Vector3(trans.getOrigin()));
+    TransformIn.Value()->Rotation(Quaternion(trans.getRotation()));
+    TransformIn.Value()->Scale(Vector3(rigid_body->getCollisionShape()->getLocalScaling()));
 }
 
 btRigidBody* RigidBody::CreateRigibBody(btScalar mass, btCollisionShape* shape) const {
