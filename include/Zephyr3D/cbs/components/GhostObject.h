@@ -2,7 +2,7 @@
 #define GhostObject_h
 
 #include "Component.h"
-#include "../../physics/IPhysicalObject.h"
+#include "../../physics/CollisionObject.h"
 #include "../connections/PropertyIn.h"
 #include "../connections/MessageOut.h"
 #include "../Object.h"
@@ -14,7 +14,7 @@
 #pragma warning(pop)
 
 
-class GhostObject : public Component, public zephyr::physics::IPhysicalObject {
+class GhostObject : public Component, public zephyr::physics::CollisionObject {
 public:
     GhostObject(btCollisionShape* shape, int group = 1, int mask = -1);
 
@@ -28,7 +28,6 @@ public:
     MessageOut<const btCollisionObject*> CollisionOut{ this };
 
 private:
-    btGhostObject* m_GhostObject;
     int m_Group;
     int m_Mask;
 };

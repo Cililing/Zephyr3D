@@ -120,19 +120,19 @@ void Scene::Background(const glm::vec3& background) {
 }
 
 
-void Scene::AddCollisionObject(btCollisionObject* collision_object, int collision_filter_group, int collision_filter_mask) {
+void Scene::AddCollisionObject(zephyr::physics::CollisionObject* collision_object, int collision_filter_group, int collision_filter_mask) {
     m_PhysicsManager.AddCollisionObject(collision_object, collision_filter_group, collision_filter_mask);
 }
 
-void Scene::RemoveCollisionObject(btCollisionObject* collision_object) {
+void Scene::RemoveCollisionObject(zephyr::physics::CollisionObject* collision_object) {
     m_PhysicsManager.RemoveCollisionObject(collision_object);
 }
 
-void Scene::AddRigidBody(btRigidBody* rigid_body, int group, int mask) {
+void Scene::AddRigidBody(zephyr::physics::CollisionObject* rigid_body, int group, int mask) {
     m_PhysicsManager.AddRigidBody(rigid_body, group, mask);
 }
 
-void Scene::RemoveRigidBody(btRigidBody* rigid_body) {
+void Scene::RemoveRigidBody(zephyr::physics::CollisionObject* rigid_body) {
     m_PhysicsManager.RemoveRigidBody(rigid_body);
 }
 

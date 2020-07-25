@@ -1,12 +1,11 @@
 #include "GhostObject.h"
 
 GhostObject::GhostObject(btCollisionShape* shape, int group, int mask)
-    : m_Group(group)
+    : CollisionObject(new btGhostObject)
+    , m_Group(group)
     , m_Mask(mask) {
-    m_GhostObject = new btGhostObject();
-    m_GhostObject->setCollisionShape(shape);
-    m_GhostObject->setUserPointer((IPhysicalObject*)this);
-    m_GhostObject->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
+    m_BulletHandle->setCollisionShape(shape);
+    m_BulletHandle->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
 }
 
 void GhostObject::Initialize() {
@@ -21,14 +20,14 @@ void GhostObject::Initialize() {
 
     auto scale = TransformIn.Value()->Scale();
 
-    m_GhostObject->setWorldTransform(transform);
-    m_GhostObject->getCollisionShape()->setLocalScaling(btVector3(scale.x, scale.y, scale.z));
+    m_BulletHandle->setWorldTransform(transform);
+    m_BulletHandle->getCollisionShape()->setLocalScaling(btVector3(scale.x, scale.y, scale.z));
 
-    Object().Scene().AddCollisionObject(m_GhostObject, m_Group, m_Mask);
+    Object().Scene().AddCollisionObject(this, m_Group, m_Mask);
 }
 
 void GhostObject::Destroy() {
-    Object().Scene().RemoveCollisionObject(m_GhostObject);
+    Object().Scene().RemoveCollisionObject(this);
 }
 
 void GhostObject::PhysicsUpdate() {
@@ -45,8 +44,8 @@ void GhostObject::PhysicsUpdate() {
     trans.setIdentity();
     trans.setOrigin(origin);
     trans.setRotation(rot);
-    m_GhostObject->setWorldTransform(trans);
-    m_GhostObject->getCollisionShape()->setLocalScaling(scale);
+    m_BulletHandle->setWorldTransform(trans);
+    m_BulletHandle->getCollisionShape()->setLocalScaling(scale);
 }
 
 void GhostObject::OnCollision(const btCollisionObject* collider) {

@@ -58,10 +58,10 @@ public:
     void Background(const glm::vec3& background);
 
     // PhysicsManager functions
-    void AddCollisionObject(btCollisionObject* collision_object, int collision_filter_group = 1, int collision_filter_mask = -1);
-    void RemoveCollisionObject(btCollisionObject* collision_object);
-    void AddRigidBody(btRigidBody* rigid_body, int group = 1, int mask = -1);
-    void RemoveRigidBody(btRigidBody* rigid_body);
+    void AddCollisionObject(zephyr::physics::CollisionObject* collision_object, int collision_filter_group = 1, int collision_filter_mask = -1);
+    void RemoveCollisionObject(zephyr::physics::CollisionObject* collision_object);
+    void AddRigidBody(zephyr::physics::CollisionObject* rigid_body, int group = 1, int mask = -1);
+    void RemoveRigidBody(zephyr::physics::CollisionObject* rigid_body);
     void AddConstraint(btTypedConstraint* constraint, bool disable_collisions_between_linked_bodies = false);
     void RemoveConstraint(btTypedConstraint* constraint);
     void AddVehicle(btRaycastVehicle* vehicle);

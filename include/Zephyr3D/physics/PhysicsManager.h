@@ -1,7 +1,7 @@
 #ifndef PhysicsManager_h
 #define PhysicsManager_h
 
-#include "IPhysicalObject.h"
+#include "CollisionObject.h"
 #include "PhysicsRenderer.h"
 #include "../debuging/Logger.h"
 
@@ -32,11 +32,11 @@ public:
     void StepSimulation(float delta_time);
     void ExitPhysics();
 
-    void AddCollisionObject(btCollisionObject* collision_object, int collision_filter_group = 1, int collision_filter_mask = -1);
-    void RemoveCollisionObject(btCollisionObject* collision_object);
+    void AddCollisionObject(CollisionObject* collision_object, int group = 1, int mask = -1);
+    void RemoveCollisionObject(CollisionObject* collision_object);
 
-    void AddRigidBody(btRigidBody* rigid_body, int group = 1, int mask = -1);
-    void RemoveRigidBody(btRigidBody* rigid_body);
+    void AddRigidBody(CollisionObject* rigid_body, int group = 1, int mask = -1);
+    void RemoveRigidBody(CollisionObject* rigid_body);
 
     void AddConstraint(btTypedConstraint* constraint, bool disable_collisions_between_linked_bodies = false);
     void RemoveConstraint(btTypedConstraint* constraint);

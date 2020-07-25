@@ -9,7 +9,6 @@
 #include <Zephyr3D/cbs/components/RigidBody.h>
 #include <Zephyr3D/cbs/components/FirstPersonController.h>
 #include <Zephyr3D/cbs/components/Debuger.h>
-#include <Zephyr3D/cbs/components/World/World.h>
 #include <Zephyr3D/cbs/components/MeshRenderer.h>
 
 #include "GravityGun.h"

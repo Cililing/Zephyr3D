@@ -38,8 +38,8 @@ void zephyr::physics::PhysicsManager::StepSimulation(float delta_time) {
         for (int j = 0; j < num_contacts; j++) {
             btManifoldPoint& point = contact->getContactPoint(j);
             if (point.getDistance() < 0.0f) {
-                static_cast<IPhysicalObject*>(A->getUserPointer())->OnCollision(B);
-                static_cast<IPhysicalObject*>(B->getUserPointer())->OnCollision(A);
+                static_cast<CollisionObject*>(A->getUserPointer())->OnCollision(B);
+                static_cast<CollisionObject*>(B->getUserPointer())->OnCollision(A);
             }
         }
     }
@@ -47,7 +47,7 @@ void zephyr::physics::PhysicsManager::StepSimulation(float delta_time) {
     btCollisionObjectArray& objects = m_World->getCollisionObjectArray();
     int num_objects = objects.size();
     for (int i = 0; i < num_objects; i++) {
-        static_cast<IPhysicalObject*>(objects[i]->getUserPointer())->PhysicsUpdate();
+        static_cast<CollisionObject*>(objects[i]->getUserPointer())->PhysicsUpdate();
     }
 
     m_World->debugDrawWorld();
@@ -82,20 +82,20 @@ void zephyr::physics::PhysicsManager::ExitPhysics() {
     }
 }
 
-void zephyr::physics::PhysicsManager::AddCollisionObject(btCollisionObject* collision_object, int collision_filter_group, int collision_filter_mask) {
-    m_World->addCollisionObject(collision_object, collision_filter_group, collision_filter_mask);
+void zephyr::physics::PhysicsManager::AddCollisionObject(CollisionObject* collision_object, int group, int mask) {
+    m_World->addCollisionObject(static_cast<btCollisionObject*>(collision_object->BulletHandle()), group, mask);
 }
 
-void zephyr::physics::PhysicsManager::RemoveCollisionObject(btCollisionObject* collision_object) {
-    m_World->removeCollisionObject(collision_object);
+void zephyr::physics::PhysicsManager::RemoveCollisionObject(CollisionObject* collision_object) {
+    m_World->removeCollisionObject(static_cast<btCollisionObject*>(collision_object->BulletHandle()));
 }
 
-void zephyr::physics::PhysicsManager::AddRigidBody(btRigidBody* rigid_body, int group, int mask) {
-    m_World->addRigidBody(rigid_body, group, mask);
+void zephyr::physics::PhysicsManager::AddRigidBody(CollisionObject* rigid_body, int group, int mask) {
+    m_World->addRigidBody(static_cast<btRigidBody*>(rigid_body->BulletHandle()), group, mask);
 }
 
-void zephyr::physics::PhysicsManager::RemoveRigidBody(btRigidBody* rigid_body) {
-    m_World->removeRigidBody(rigid_body);
+void zephyr::physics::PhysicsManager::RemoveRigidBody(CollisionObject* rigid_body) {
+    m_World->removeRigidBody(static_cast<btRigidBody*>(rigid_body->BulletHandle()));
 }
 
 void zephyr::physics::PhysicsManager::AddConstraint(btTypedConstraint* constraint, bool disable_collisions_between_linked_bodies) {
