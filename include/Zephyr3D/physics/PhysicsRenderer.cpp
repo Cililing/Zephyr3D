@@ -6,11 +6,7 @@ zephyr::physics::PhysicsRenderer::PhysicsRenderer(zephyr::rendering::DrawManager
 }
 
 void zephyr::physics::PhysicsRenderer::drawLine(const btVector3& from, const btVector3& to, const btVector3& color) {
-    glm::vec3 start(from.getX(), from.getY(), from.getZ());
-    glm::vec3 end(to.getX(), to.getY(), to.getZ());
-    glm::vec3 col(color.getX(), color.getY(), color.getZ());
-
-    m_DebugShader->DrawLine(start, end, col);
+    m_DebugShader->DrawLine(Vector3(from), Vector3(to), Vector3(color));
 }
 
 void zephyr::physics::PhysicsRenderer::drawTriangle(const btVector3& v0, const btVector3& v1, const btVector3& v2, const btVector3&, const btVector3&, const btVector3&, const btVector3& color, btScalar alpha) {
@@ -18,41 +14,27 @@ void zephyr::physics::PhysicsRenderer::drawTriangle(const btVector3& v0, const b
 }
 
 void zephyr::physics::PhysicsRenderer::drawTriangle(const btVector3& v0, const btVector3& v1, const btVector3& v2, const btVector3& color, btScalar) {
-    glm::vec3 col(color.getX(), color.getY(), color.getZ());
-    glm::vec3 upper(v0.getX(), v0.getY(), v0.getZ());
-    glm::vec3 lower_left(v1.getX(), v1.getY(), v1.getZ());
-    glm::vec3 lower_right(v2.getX(), v2.getY(), v2.getZ());
-
-    m_DebugShader->DrawTriangle(upper, lower_left, lower_right, col);
+    m_DebugShader->DrawTriangle(Vector3(v0), Vector3(v1), Vector3(v2), Vector3(color));
 }
 
 void zephyr::physics::PhysicsRenderer::drawPlane(const btVector3& planeNormal, btScalar planeConst, const btTransform& trans, const btVector3& color) {
-    glm::vec3 col(color.getX(), color.getY(), color.getZ());
-
-    auto bt_pos = trans.getOrigin();
-    glm::vec3 position(bt_pos.getX(), bt_pos.getY(), bt_pos.getZ());
-
-    glm::vec3 normal(planeNormal.getX(), planeNormal.getY(), planeNormal.getZ());
-
-    m_DebugShader->DrawPlane(position, normal, planeConst, col);
+    m_DebugShader->DrawPlane(Vector3(trans.getOrigin()), Vector3(planeNormal), planeConst, Vector3(color));
 }
 
 void zephyr::physics::PhysicsRenderer::drawBox(const btVector3& bbMin, const btVector3& bbMax, const btVector3& color) {
     glm::vec3 col(color.getX(), color.getY(), color.getZ());
-    glm::mat4 transform = glm::scale(glm::mat4(1.0f), glm::vec3(bbMax.getX() - bbMin.getX(), bbMax.getY() - bbMin.getY(), bbMax.getZ() - bbMin.getZ()));
+    glm::mat4 transform = glm::scale(glm::mat4(1.0f), Vector3(bbMax - bbMin));
 
-    m_DebugShader->DrawCube(transform, col);
+    m_DebugShader->DrawCube(transform, Vector3(color));
 }
 
 void zephyr::physics::PhysicsRenderer::drawBox(const btVector3& bbMin, const btVector3& bbMax, const btTransform& trans, const btVector3& color) {
-    glm::vec3 col(color.getX(), color.getY(), color.getZ());
-    
     float tmp[16];
     trans.getOpenGLMatrix(tmp);
     glm::mat4 transform = glm::make_mat4(tmp);
-    transform = glm::scale(transform, glm::vec3(bbMax.getX() - bbMin.getX(), bbMax.getY() - bbMin.getY(), bbMax.getZ() - bbMin.getZ()));
+    transform = glm::scale(transform, Vector3(bbMax - bbMin));
 
-    m_DebugShader->DrawCube(transform, col);
+    m_DebugShader->DrawCube(transform, Vector3(color));
 }
 
 void zephyr::physics::PhysicsRenderer::reportErrorWarning(const char* warningString) {
