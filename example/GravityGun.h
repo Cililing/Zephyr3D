@@ -32,8 +32,8 @@ private:
 
 	btRigidBody* m_Target{ nullptr };
 	btPoint2PointConstraint* m_Constraint{ nullptr };
-	btScalar m_OldPickingDistance;
-	int m_SavedState;
+	btScalar m_OldPickingDistance{ 0.0f };
+	int m_SavedState{ 0 };
 	
 };
 

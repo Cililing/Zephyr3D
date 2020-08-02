@@ -1,7 +1,9 @@
 #ifndef IPhysicalObject_h
 #define IPhysicalObject_h
 
+#pragma warning(push, 0)
 #include "btBulletCollisionCommon.h"
+#pragma warning(pop)
 
 namespace zephyr::physics {
 

@@ -14,7 +14,7 @@ void zephyr::physics::PhysicsManager::Initialize() {
 
     m_World = std::make_unique<btDiscreteDynamicsWorld>(m_Dispatcher.get(), m_Broadphase.get(), m_Solver.get(), m_CollisionConfiguration.get());
     m_World->getSolverInfo().m_minimumSolverBatchSize = 1;
-    m_World->getSolverInfo().m_globalCfm = 0.0001;
+    m_World->getSolverInfo().m_globalCfm = 0.0001f;
     m_World->getPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
 
     m_World->setGravity(btVector3(btScalar(0), btScalar(-10), btScalar(0)));
