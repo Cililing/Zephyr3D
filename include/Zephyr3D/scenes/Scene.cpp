@@ -47,6 +47,7 @@ void Scene::Run() {
 void Scene::Destroy() {
     m_ObjectManager.DestroyObjects();
     m_PhysicsManager.ExitPhysics();
+    m_AudioManager.Destroy();
 }
 
 void Scene::Exit() {

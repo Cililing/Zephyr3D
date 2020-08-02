@@ -2,6 +2,21 @@
 
 void AudioManager::Initialize() {
     INFO_LOG(Logger::ESender::Audio, "Initializing audio manager");
+
+    m_Device = alcOpenDevice(nullptr);
+
+    assert(m_Device);
+
+    m_Context = alcCreateContext(m_Device, nullptr);
+    alcMakeContextCurrent(m_Context);
+}
+
+void AudioManager::Destroy() {
+    INFO_LOG(Logger::ESender::Audio, "Exiting audio manager");
+
+    alcMakeContextCurrent(nullptr);
+    alcDestroyContext(m_Context);
+    alcCloseDevice(m_Device);
 }
 
 void AudioManager::ListenerPosition(float x, float y, float z) {
