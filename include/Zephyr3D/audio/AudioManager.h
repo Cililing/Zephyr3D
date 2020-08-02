@@ -10,6 +10,8 @@
 
 #include <assert.h>
 
+namespace zephyr::audio {
+
 class AudioManager {
 public:
     void Initialize();
@@ -24,5 +26,7 @@ private:
     ALCdevice* m_Device;
     ALCcontext* m_Context;
 };
+
+}
 
 #endif

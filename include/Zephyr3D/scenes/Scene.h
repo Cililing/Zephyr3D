@@ -86,7 +86,7 @@ private:
     ObjectManager m_ObjectManager;
     zephyr::rendering::DrawManager m_DrawManager;
     zephyr::physics::PhysicsManager m_PhysicsManager;
-    AudioManager m_AudioManager;
+    zephyr::audio::AudioManager m_AudioManager;
     zephyr::resources::ResourcesManager m_ResourceManager;
 
     bool m_Running{ false };
