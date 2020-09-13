@@ -5,7 +5,6 @@
 #include "../cbs/ObjectManager.h"
 #include "../rendering/DrawManager.h"
 #include "../resources/ResourcesManager.h"
-#include "../audio/AudioManager.h"
 
 #include "../utilities/Time.h"
 #include "../utilities/Input.h"
@@ -80,13 +79,11 @@ public:
     // ResourceManager functions
     zephyr::resources::Image& LoadImage(const std::string& path);
     zephyr::resources::Model& LoadModel(const std::string& path);
-    zephyr::resources::AudioClip& LoadAudioClip(const std::string& path);
 
 private:
     ObjectManager m_ObjectManager;
     zephyr::rendering::DrawManager m_DrawManager;
     zephyr::physics::PhysicsManager m_PhysicsManager;
-    zephyr::audio::AudioManager m_AudioManager;
     zephyr::resources::ResourcesManager m_ResourceManager;
 
     bool m_Running{ false };

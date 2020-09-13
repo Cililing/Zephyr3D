@@ -15,7 +15,6 @@ Scene::Scene()
 void Scene::Initialize() {
     m_DrawManager.Initialize();
     m_PhysicsManager.Initialize();
-    m_AudioManager.Initialize();
 }
 
 void Scene::Run() {
@@ -47,7 +46,6 @@ void Scene::Run() {
 void Scene::Destroy() {
     m_ObjectManager.DestroyObjects();
     m_PhysicsManager.ExitPhysics();
-    m_AudioManager.Destroy();
 }
 
 void Scene::Exit() {
@@ -170,23 +168,6 @@ btDynamicsWorld* Scene::DynamicsWorld() {
 }
 
 
-void Scene::ListenerPosition(float x, float y, float z) {
-    m_AudioManager.ListenerPosition(x, y, z);
-}
-
-void Scene::ListenerVelocity(float x, float y, float z) {
-    m_AudioManager.ListenerVelocity(x, y, z);
-}
-
-void Scene::ListenerGain(float gain) {
-    m_AudioManager.ListenerGain(gain);
-}
-
-void Scene::ListenerOrientation(float at_x, float at_y, float at_z, float up_x, float up_y, float up_z) {
-    m_AudioManager.ListenerOrientation(at_x, at_y, at_z, up_x, up_y, up_z);
-}
-
-
 zephyr::resources::Image& Scene::LoadImage(const std::string& path) {
     return m_ResourceManager.LoadImage(path);
 }
@@ -195,6 +176,3 @@ zephyr::resources::Model& Scene::LoadModel(const std::string& path) {
     return m_ResourceManager.LoadModel(path);
 }
 
-zephyr::resources::AudioClip& Scene::LoadAudioClip(const std::string& path) {
-    return m_ResourceManager.LoadAudioClip(path);
-}

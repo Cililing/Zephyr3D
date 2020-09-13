@@ -16,10 +16,3 @@ zephyr::resources::Model& zephyr::resources::ResourcesManager::LoadModel(std::st
     return m_Models.at(path);
 }
 
-zephyr::resources::AudioClip& zephyr::resources::ResourcesManager::LoadAudioClip(std::string path) {
-    if (m_Sounds.find(path) == m_Sounds.end()) {
-        m_Sounds.try_emplace(path, path);
-    }
-
-    return m_Sounds.at(path);
-}
