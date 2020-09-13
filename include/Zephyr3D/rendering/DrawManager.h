@@ -31,6 +31,7 @@ class IGUIWidget;
 class DrawManager {
 public:
     void Initialize();
+    void Destroy();
 
     void RegisterCamera(ICamera* camera);
     ICamera* MainCamera() const;

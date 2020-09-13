@@ -70,12 +70,6 @@ public:
     btVector3 Gravity() const;
     btDynamicsWorld* DynamicsWorld();
 
-    // AudioManager functions
-    void ListenerPosition(float x, float y, float z);
-    void ListenerVelocity(float x, float y, float z);
-    void ListenerGain(float gain);
-    void ListenerOrientation(float at_x, float at_y, float at_z, float up_x, float up_y, float up_z);
-
     // ResourceManager functions
     zephyr::resources::Image& LoadImage(const std::string& path);
     zephyr::resources::Model& LoadModel(const std::string& path);

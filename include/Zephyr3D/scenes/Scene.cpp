@@ -44,6 +44,7 @@ void Scene::Run() {
 }
 
 void Scene::Destroy() {
+    m_DrawManager.Destroy();
     m_ObjectManager.DestroyObjects();
     m_PhysicsManager.ExitPhysics();
 }

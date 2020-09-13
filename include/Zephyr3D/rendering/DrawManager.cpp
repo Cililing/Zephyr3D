@@ -42,6 +42,10 @@ void zephyr::rendering::DrawManager::Initialize() {
     glEnable(GL_MULTISAMPLE);
 }
 
+void zephyr::rendering::DrawManager::Destroy() {
+    INFO_LOG(Logger::ESender::Rendering, "Destroying draw manager");
+}
+
 void zephyr::rendering::DrawManager::RegisterCamera(ICamera *camera) {
     m_Camera = camera;
 }
