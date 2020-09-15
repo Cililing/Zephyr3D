@@ -9,7 +9,6 @@
     cmake .. -G
 
 ## TODO
-* physics rework
 * cbs rework
 * audio rework
 * scene rework
