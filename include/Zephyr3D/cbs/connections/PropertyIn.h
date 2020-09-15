@@ -25,6 +25,8 @@ public:
     const T& Value() const { return m_Source->Value(); }
     operator const T&() const { return m_Source->Value(); }
 
+    const T* operator->() const { return &m_Source->Value(); }
+
     bool Connected() const { return m_Source != nullptr; }
 
 private:
