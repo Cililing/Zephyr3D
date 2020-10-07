@@ -3,7 +3,26 @@
 
 #include "ConnectionsManager.h"
 
-class AbstractPropertyOut {
+class Connector {
+    friend class ConnectionsManager;
+
+public:
+    using ID_t = int;
+
+    Connector() = default;
+    Connector(const Connector&) = delete;
+    Connector& operator=(const Connector&) = delete;
+    Connector(Connector&&) = delete;
+    Connector& operator=(Connector&&) = delete;
+    virtual ~Connector() = default;
+
+    ID_t ID() const { return m_ID; }
+
+private:
+    ID_t m_ID = -1;
+};
+
+class AbstractPropertyOut : public Connector {
     friend class ConnectionsManager;
 
 public:
@@ -17,7 +36,7 @@ public:
     virtual Component* Owner() const = 0;
 };
 
-class AbstractPropertyIn {
+class AbstractPropertyIn : public Connector {
     friend class ConnectionsManager;
 
 public:
@@ -34,7 +53,7 @@ protected:
     virtual void RemoveSource() = 0;
 };
 
-class AbstractMessageOut {
+class AbstractMessageOut : public Connector {
     friend class ConnectionsManager;
 
 public:
@@ -48,7 +67,7 @@ public:
     virtual Component* Owner() const = 0;
 };
 
-class AbstractMessageIn {
+class AbstractMessageIn : public Connector {
     friend class ConnectionsManager;
 
 public:
@@ -65,7 +84,7 @@ protected:
     virtual void Receive(void* message) = 0;
 };
 
-class AbstractTriggerOut {
+class AbstractTriggerOut : public Connector {
     friend class ConnectionsManager;
 
 public:
@@ -80,7 +99,7 @@ public:
     virtual void Trigger() = 0;
 };
 
-class AbstractTriggerIn {
+class AbstractTriggerIn : public Connector {
     friend class ConnectionsManager;
 
 public:
