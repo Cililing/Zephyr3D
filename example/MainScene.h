@@ -12,7 +12,6 @@
 #include <Zephyr3D/cbs/components/MeshRenderer.h>
 
 #include "GravityGun.h"
-#include "TestComponent.h"
 
 class MainScene : public Scene {
 public:

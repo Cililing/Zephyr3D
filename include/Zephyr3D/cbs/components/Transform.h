@@ -16,6 +16,8 @@
 
 class Transform : public Component {
 public:
+    Transform(class Object& object, ID_t id);
+
     void Initialize() override;
 
     void Identity();

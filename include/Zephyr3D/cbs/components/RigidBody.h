@@ -12,7 +12,7 @@
 
 class RigidBody : public Component, public zephyr::physics::CollisionObject {
 public:
-    RigidBody(btScalar mass, btCollisionShape* shape, int group = 1, int mask = -1);
+    RigidBody(class Object& object, ID_t id, btScalar mass, btCollisionShape* shape, int group = 1, int mask = -1);
 
     void Initialize() override;
     void Destroy() override;

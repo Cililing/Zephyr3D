@@ -21,7 +21,7 @@ constexpr auto DEGREES_60 = (60.0f * 3.14f / 180.0f);
 
 class FirstPersonController : public Component {
 public:
-    FirstPersonController(float movement_speed_fast = 25.0f, float movement_speed_slow = 1.0f, float mouse_sensitivity = 0.1f);
+    FirstPersonController(class Object& object, ID_t id, float movement_speed_fast = 25.0f, float movement_speed_slow = 1.0f, float mouse_sensitivity = 0.1f);
 
     void Initialize() override;
     void Update() override;

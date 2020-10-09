@@ -1,9 +1,11 @@
 #include "MeshRenderer.h"
 #include "Transform.h"
 
-MeshRenderer::MeshRenderer(const zephyr::resources::Model& raw_model, const std::string& shader_name)
-    : m_Model(raw_model)
+MeshRenderer::MeshRenderer(class Object& object, ID_t id, const zephyr::resources::Model& raw_model, const std::string& shader_name)
+    : Component(object, id)
+    , m_Model(raw_model)
     , m_ShaderName(shader_name) {
+
 }
 
 void MeshRenderer::Initialize() {

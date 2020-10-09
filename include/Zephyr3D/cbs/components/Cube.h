@@ -9,7 +9,7 @@
 
 class Cube : public Component, public zephyr::rendering::IDrawable {
 public:
-    Cube(const glm::vec3& color);
+    Cube(class Object& object, ID_t id, const glm::vec3& color);
 
     void Draw(const zephyr::rendering::ShaderProgram& shader) const override;
 

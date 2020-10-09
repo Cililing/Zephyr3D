@@ -1,6 +1,7 @@
 #include "Cube.h"
 
-Cube::Cube(const glm::vec3& color) {
+Cube::Cube(class Object& object, ID_t id, const glm::vec3& color)
+    : Component(object, id) {
     float vertices[] = {
      -0.5f, -0.5f, -0.5f,color.x, color.y, color.z,
      0.5f, -0.5f, -0.5f, color.x, color.y, color.z,

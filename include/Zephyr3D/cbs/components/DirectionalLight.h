@@ -7,7 +7,7 @@
 
 class DirectionalLight : public Component, public zephyr::rendering::IShaderProperty {
 public:
-    DirectionalLight(glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
+    DirectionalLight(class Object& object, ID_t id, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
 
     void Initialize() override;
     void Destroy() override;

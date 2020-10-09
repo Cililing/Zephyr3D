@@ -16,7 +16,7 @@
 
 class GravityGun : public Component {
 public:
-	GravityGun(float range, float impuls_force);
+	GravityGun(class Object& object, ID_t id, float range, float impuls_force);
 
 	void Initialize() override;
 	void Update() override;

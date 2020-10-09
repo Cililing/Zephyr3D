@@ -1,7 +1,8 @@
 #include "ThirdPersonController.h"
 
-ThirdPersonController::ThirdPersonController(class Object* target, glm::vec3 front, glm::vec3 right, float radius, float mouse_sensitivity)
-    : m_Target(target)
+ThirdPersonController::ThirdPersonController(class Object& object, ID_t id, class Object& target, glm::vec3 front, glm::vec3 right, float radius, float mouse_sensitivity)
+    : Component(object, id)
+    , m_Target(target)
     , m_TargetTransform(nullptr)
     , m_Radius(radius)
     , m_MouseSensitivity(mouse_sensitivity)
@@ -12,7 +13,7 @@ ThirdPersonController::ThirdPersonController(class Object* target, glm::vec3 fro
 }
 
 void ThirdPersonController::Initialize() {
-    m_TargetTransform = &m_Target->Root();
+    m_TargetTransform = &m_Target.Root();
 
     RegisterUpdateCall();
 }

@@ -7,7 +7,6 @@
 #include <assert.h>
 
 class Object;
-class ConnectionsManager;
 
 /** \brief Base class for all components
  *
@@ -18,9 +17,11 @@ class Component {
     friend class Object;
 
 public:
-    using ID_t = std::uint8_t;
+    using ID_t = int;
 
-    Component() = default;
+    Component(class Object& object, ID_t id);
+
+    Component() = delete;
     Component(const Component&) = delete;
     Component& operator=(const Component&) = delete;
     Component(Component&&) = delete;
@@ -31,7 +32,7 @@ public:
     ID_t ID() const { return m_ID; }
 
     /// Returns component owner
-    Object& Object() const { return *m_Object; }
+    Object& Object() const { return m_Object; }
 
 protected:
     virtual void Initialize() {};
@@ -42,8 +43,8 @@ protected:
     void UnregisterUpdateCall() const;
 
 private:
-    class Object* m_Object{ nullptr };
-    ID_t m_ID{ 0 };
+    class Object& m_Object;
+    ID_t m_ID;
 };
 
 #endif

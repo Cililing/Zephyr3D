@@ -1,7 +1,8 @@
 #include "GravityGun.h"
 
-GravityGun::GravityGun(float range, float impulse_force)
-	: m_Range(range)
+GravityGun::GravityGun(class Object& object, ID_t id, float range, float impulse_force)
+	: Component(object, id)
+	, m_Range(range)
 	, m_ImpulsForce(impulse_force * range) {
 
 }

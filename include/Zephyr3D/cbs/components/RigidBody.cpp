@@ -1,7 +1,8 @@
 #include "RigidBody.h"
 
-RigidBody::RigidBody(btScalar mass, btCollisionShape* shape, int group, int mask)
-    : CollisionObject(CreateRigibBody(mass, shape))
+RigidBody::RigidBody(class Object& object, ID_t id, btScalar mass, btCollisionShape* shape, int group, int mask)
+    : Component(object, id)
+    , CollisionObject(CreateRigibBody(mass, shape))
     , m_Group(group)
     , m_Mask(mask) {
 

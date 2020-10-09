@@ -11,6 +11,8 @@
 
 class Debuger : public Component {
 public:
+    Debuger(class Object& object, ID_t id);
+
     void Initialize() override;
     void Update() override;
 

@@ -13,7 +13,7 @@
 
 class PointLight : public Component, public zephyr::rendering::IShaderProperty {
 public:
-    PointLight(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic);
+    PointLight(class Object& object, ID_t id, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic);
     
     void Initialize() override;
     void Destroy() override;

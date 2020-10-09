@@ -1,7 +1,8 @@
 #include "GhostObject.h"
 
-GhostObject::GhostObject(btCollisionShape* shape, int group, int mask)
-    : CollisionObject(new btGhostObject)
+GhostObject::GhostObject(class Object& object, ID_t id, btCollisionShape* shape, int group, int mask)
+    : Component(object, id)
+    , CollisionObject(new btGhostObject)
     , m_Group(group)
     , m_Mask(mask) {
     m_BulletHandle->setCollisionShape(shape);

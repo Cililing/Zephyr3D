@@ -18,7 +18,7 @@ constexpr auto ROTATION_LIMIT = (75.0f * 3.14f / 180.0f);
 
 class ThirdPersonController : public Component {
 public:
-    ThirdPersonController(class Object* target, glm::vec3 front, glm::vec3 right, float radius = 0.0f, float mouse_sensitivity = 0.1f);
+    ThirdPersonController(class Object& object, ID_t id, class Object& target, glm::vec3 front, glm::vec3 right, float radius = 0.0f, float mouse_sensitivity = 0.1f);
     
     void Initialize() override;
     void Update() override;
@@ -29,7 +29,7 @@ public:
     PropertyIn<Transform*> TransformIn{ this };
 
 private:
-    class Object* m_Target;
+    class Object& m_Target;
     Transform* m_TargetTransform;
     float m_Radius;
     float m_MouseSensitivity;

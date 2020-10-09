@@ -56,21 +56,16 @@ public:
     /** \brief Create component.
      *
      * Creates component of type T with arguments Args and returns pointer of type T.
-     * At the time of calling constructor new Component will not have access to it's Object-owner.
-     * Futhermore component receives it's own ID greater than 0. All Object 
-     * related function class e.g. Transform.Position() should happen inside Initialize function.
-     * By default Transform component is marked as Root and has ID of 1.
+     * By default first Transform component is marked as Root and has ID of 1.
      *
      * @param params All arguments to be forwarded to contstructor
      */
     template <class T, typename ...Args>
     T* CreateComponent(Args&&... params) {
-        auto& comp = m_Components.emplace_back(std::make_unique<T>(params...));
-
-        // 
-        comp->m_Object = this;
-        comp->m_ID = m_NextCompID++;
-        m_ToInitializeNextFrame += 1;
+        auto& comp = m_Components.emplace_back(std::make_unique<T>(*this, m_NextCompID, std::forward<Args>(params)...));
+        
+        m_NextCompID++;
+        m_ToInitializeNextFrame++;
 
         // Return pointer of T type
         return dynamic_cast<T*>(comp.get());

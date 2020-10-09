@@ -1,8 +1,9 @@
 #include "FirstPersonController.h"
 #include "Transform.h"
 
-FirstPersonController::FirstPersonController(float movement_speed_fast, float movement_speed_slow, float mouse_sensivity)
-    : m_CurrentMovementSpeed(0.0f)
+FirstPersonController::FirstPersonController(class Object& object, ID_t id, float movement_speed_fast, float movement_speed_slow, float mouse_sensivity)
+    : Component(object, id)
+    , m_CurrentMovementSpeed(0.0f)
     , m_MovementSpeedFast(movement_speed_fast)
     , m_MovementSpeedSlow(movement_speed_slow)
     , m_MouseSensitivity(mouse_sensivity)

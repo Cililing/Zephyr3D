@@ -14,7 +14,7 @@ constexpr char* TITLE_PREFIX = "__dummy";
 
 class TextRenderer : public Component, public zephyr::rendering::IGUIWidget {
 public:
-    TextRenderer(EAlign horizontal, EAlign vertical, float size, const std::string& font_path = "");
+    TextRenderer(class Object& object, ID_t id, EAlign horizontal, EAlign vertical, float size, const std::string& font_path = "");
 
     void Initialize() override;
     void Destroy() override;

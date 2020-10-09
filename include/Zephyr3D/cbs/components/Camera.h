@@ -24,7 +24,7 @@
 
 class Camera : public Component {
 public:
-    Camera(float fovy, float aspect, float near, float far);
+    Camera(class Object& object, ID_t id, float fovy, float aspect, float near, float far);
 
     void Initialize() override;
     void Update() override;

@@ -2,8 +2,9 @@
 
 unsigned int TextRenderer::s_Index = 1;
 
-TextRenderer::TextRenderer(EAlign horizontal, EAlign vertical, float size, const std::string& font_path)
-    : m_Horizontal(horizontal)
+TextRenderer::TextRenderer(class Object& object, ID_t id, EAlign horizontal, EAlign vertical, float size, const std::string& font_path)
+    : Component(object, id)
+    , m_Horizontal(horizontal)
     , m_Vertical(vertical)
     , m_Offset(0.0f)
     , m_Color(0.0f, 0.0f, 0.0f, 1.0f) {

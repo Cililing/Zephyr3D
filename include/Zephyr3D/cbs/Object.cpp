@@ -9,13 +9,11 @@ Object::Object(ObjectManager& owner, ID_t id, std::string name)
     , m_Owner(owner)
     , m_ConnectionsManager()
     , m_NextCompID(2)
+    , m_Root(*this, 1)
     , m_ToDestroy(0)
     , m_ToUpdate(0) 
     , m_ToInitializeNextFrame(0)
     , m_Iterator(0) {
-    // Initialize Root component
-    m_Root.m_Object = this;
-    m_Root.m_ID = 1;
     m_Root.Identity();
     m_Root.Initialize();
 }

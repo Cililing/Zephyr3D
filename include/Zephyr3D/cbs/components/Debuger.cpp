@@ -1,5 +1,10 @@
 #include "Debuger.h"
 
+Debuger::Debuger(class Object& object, ID_t id)
+    : Component(object, id) {
+
+}
+
 void Debuger::Initialize() {
     RegisterUpdateCall();
 }

@@ -2,6 +2,11 @@
 
 #include "../Object.h"
 
+Transform::Transform(class Object& object, ID_t id)
+    : Component(object, id) {
+
+}
+
 void Transform::Initialize() {
     UpdateModel();
 }

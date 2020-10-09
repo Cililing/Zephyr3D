@@ -1,7 +1,6 @@
 #include "MainScene.h"
 
 #include <Zephyr3D/Engine.h>
-#include "TestComponent.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -13,12 +12,6 @@ void MainScene::CreateScene() {
            LoadImage("skyboxes/basic_blue/bottom.png"),
            LoadImage("skyboxes/basic_blue/back.png"),
            LoadImage("skyboxes/basic_blue/front.png"));
-
-    auto test = CreateObject("Test"); {
-        auto comp = test->CreateComponent<TestComponent>();
-        test->Connect(comp->out, comp->in);
-        //test->Connect(comp->p_out, comp->p_in);
-    }
 
     auto light = CreateObject("Light"); {
         light->CreateComponent<DirectionalLight>(glm::vec3(-1.0f, -0.5f, -0.5f),

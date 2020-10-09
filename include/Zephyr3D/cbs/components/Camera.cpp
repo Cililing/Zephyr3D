@@ -1,7 +1,8 @@
 #include "Camera.h"
 
-Camera::Camera(float fovy, float aspect, float near, float far) 
-    : m_Camera(fovy, aspect, near, far) {
+Camera::Camera(class Object& object, ID_t id, float fovy, float aspect, float near, float far)
+    : Component(object, id)
+    , m_Camera(fovy, aspect, near, far) {
 
 }
 
