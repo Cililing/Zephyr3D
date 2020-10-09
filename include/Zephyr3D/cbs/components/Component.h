@@ -14,8 +14,6 @@ class Object;
  * all neccesary functions. Each component has unique ID of type ID_t. 
  */
 class Component {
-    friend class Object;
-
 public:
     using ID_t = int;
 
@@ -34,11 +32,11 @@ public:
     /// Returns component owner
     Object& Object() const { return m_Object; }
 
-protected:
     virtual void Initialize() {};
     virtual void Update() {};
     virtual void Destroy() {};
 
+protected:
     void RegisterUpdateCall() const;
     void UnregisterUpdateCall() const;
 
