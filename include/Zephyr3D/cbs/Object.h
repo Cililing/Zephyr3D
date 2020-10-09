@@ -65,16 +65,15 @@ public:
      */
     template <class T, typename ...Args>
     T* CreateComponent(Args&&... params) {
-        m_Components.emplace_back(std::make_unique<T>(params...));
+        auto& comp = m_Components.emplace_back(std::make_unique<T>(params...));
 
         // 
-        auto& comp = m_Components.back();
         comp->m_Object = this;
         comp->m_ID = m_NextCompID++;
+        m_ToInitializeNextFrame += 1;
 
         // Return pointer of T type
-        m_ToInitializeNextFrame += 1;
-        return dynamic_cast<T*>(m_Components.back().get());
+        return dynamic_cast<T*>(comp.get());
     }
 
     /** \brief Remove components.
