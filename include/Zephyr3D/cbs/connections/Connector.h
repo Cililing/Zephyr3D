@@ -3,6 +3,7 @@
 
 #include "../components/Component.h"
 
+class ConnectionsManager;
 
 class Connector {
     friend class ConnectionsManager;
@@ -24,9 +25,10 @@ public:
 
 protected:
     Component* m_Owner;
+    ConnectionsManager* m_ConnectionsManager{ nullptr };
 
 private:
-    ID_t m_ID = -1;
+    ID_t m_ID{-1};
 };
 
 #endif

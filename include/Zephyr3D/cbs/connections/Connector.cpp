@@ -4,5 +4,5 @@
 
 Connector::Connector(Component* owner)
     : m_Owner(owner) {
-    //m_Owner->Object().ConnectionsManager().RegisterConnector(this);
+    m_Owner->Object().RegisterConnector(this);
 }

@@ -48,6 +48,7 @@ void Object::ProcessFrame() {
 }
 
 void Object::DestroyComponents() {
+    m_Root.Destroy();
     for (auto& comp : m_Components) {
         comp->Destroy();
     }
@@ -86,6 +87,10 @@ void Object::UnregisterUpdateCall(const Component* component) {
 
 Scene& Object::Scene() const {
     return m_Owner.Scene();
+}
+
+void Object::RegisterConnector(Connector* connector) {
+    m_ConnectionsManager.RegisterConnector(connector);
 }
 
 void Object::MarkToDestroy(Components_t::iterator it) {

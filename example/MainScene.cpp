@@ -13,12 +13,12 @@ void MainScene::CreateScene() {
            LoadImage("skyboxes/basic_blue/back.png"),
            LoadImage("skyboxes/basic_blue/front.png"));
 
-    auto light = CreateObject("Light"); {
+    /*auto light = CreateObject("Light"); {
         light->CreateComponent<DirectionalLight>(glm::vec3(-1.0f, -0.5f, -0.5f),
                                                  glm::vec3(0.05f),
                                                  glm::vec3(0.7f, 0.68f, 0.68f),
                                                  glm::vec3(0.8f, 0.78f, 0.78f));
-    }
+    }*/
 
     auto camera = CreateObject("Camera"); {
         camera->Root().Move(glm::vec3(-10.0f, 4.0f, -2.0f));

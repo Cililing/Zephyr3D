@@ -3,15 +3,13 @@
 
 #include "AbstractConnectors.h"
 
-class ConnectionsManager;
-
 template <class M, class O, void(O::*F)(M)>
 class MessageIn final : public AbstractMessageIn {
-    friend class ConnectionsManager;
-
 public:
     MessageIn(O* owner)
-        : AbstractMessageIn(owner) {}
+        : AbstractMessageIn(owner) {
+
+    }
 
     MessageIn() = delete;
     MessageIn(const MessageIn&) = delete;
@@ -20,7 +18,7 @@ public:
     MessageIn& operator=(MessageIn&&) = delete;
     ~MessageIn() = default;
 
-    void Receive(void* message) override { ( dynamic_cast<O*>(m_Owner)->*F)(*static_cast<M*>(message)); }
+    void Receive(void* message) override { (dynamic_cast<O*>(m_Owner)->*F)(*static_cast<M*>(message)); }
 };
 
 #endif

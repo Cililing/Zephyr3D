@@ -3,12 +3,8 @@
 
 #include "AbstractConnectors.h"
 
-class ConnectionsManager;
-
 template <class O, void(O::* F)()>
 class TriggerIn final : public AbstractTriggerIn {
-    friend class ConnectionsManager;
-
 public:
     TriggerIn(O* owner)
         : AbstractTriggerIn(owner) {}

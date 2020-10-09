@@ -4,16 +4,14 @@
 #include "AbstractConnectors.h"
 #include "PropertyOut.h"
 
-class ConnectionsManager;
-
 template <class T>
 class PropertyIn final : public AbstractPropertyIn {
-    friend class ConnectionsManager;
-
 public:
     PropertyIn(Component* owner)
         : AbstractPropertyIn(owner)
-        , m_Source(nullptr) {}
+        , m_Source(nullptr) {
+
+    }
 
     PropertyIn() = delete;
     PropertyIn(const PropertyIn&) = delete;
@@ -22,16 +20,17 @@ public:
     PropertyIn& operator=(PropertyIn&&) = delete;
     ~PropertyIn() = default;
 
+    void RemoveSource() override { m_Source = nullptr; }
+
     const T& Value() const { return m_Source->Value(); }
     operator const T&() const { return m_Source->Value(); }
-
     const T* operator->() const { return &m_Source->Value(); }
 
     bool Connected() const { return m_Source != nullptr; }
 
-private:
-    void RemoveSource() override { m_Source = nullptr; }
+    void Connect(PropertyOut<T>* source) { m_Source = source; }
 
+private:
     PropertyOut<T>* m_Source;
 };
 

@@ -3,11 +3,7 @@
 
 #include "Connector.h"
 
-class ConnectionsManager;
-
 class AbstractPropertyOut : public Connector {
-    friend class ConnectionsManager;
-
 public:
     AbstractPropertyOut(Component* owner)
         : Connector(owner) {}
@@ -20,8 +16,6 @@ public:
 };
 
 class AbstractPropertyIn : public Connector {
-    friend class ConnectionsManager;
-
 public:
     AbstractPropertyIn(Component* owner)
         : Connector(owner) {}
@@ -32,13 +26,10 @@ public:
     AbstractPropertyIn& operator=(AbstractPropertyIn&&) = delete;
     virtual ~AbstractPropertyIn() = default;
 
-protected:
     virtual void RemoveSource() = 0;
 };
 
 class AbstractMessageOut : public Connector {
-    friend class ConnectionsManager;
-
 public:
     AbstractMessageOut(Component* owner)
         : Connector(owner) {}
@@ -51,8 +42,6 @@ public:
 };
 
 class AbstractMessageIn : public Connector {
-    friend class ConnectionsManager;
-
 public:
     AbstractMessageIn(Component* owner)
         : Connector(owner) {}
@@ -63,13 +52,10 @@ public:
     AbstractMessageIn& operator=(AbstractMessageIn&&) = delete;
     virtual ~AbstractMessageIn() = default;
 
-protected:
     virtual void Receive(void* message) = 0;
 };
 
 class AbstractTriggerOut : public Connector {
-    friend class ConnectionsManager;
-
 public:
     AbstractTriggerOut(Component* owner)
         : Connector(owner) {}
@@ -84,8 +70,6 @@ public:
 };
 
 class AbstractTriggerIn : public Connector {
-    friend class ConnectionsManager;
-
 public:
     AbstractTriggerIn(Component* owner)
         : Connector(owner) {}
@@ -96,7 +80,6 @@ public:
     AbstractTriggerIn& operator=(AbstractTriggerIn&&) = delete;
     virtual ~AbstractTriggerIn() = default;
 
-protected:
     virtual void Receive() = 0;
 };
 

@@ -62,7 +62,7 @@ public:
      */
     template <class T, typename ...Args>
     T* CreateComponent(Args&&... params) {
-        auto& comp = m_Components.emplace_back(std::make_unique<T>(*this, m_NextCompID, std::forward<Args>(params)...));
+        auto& comp = m_Components.emplace_back(std::make_unique<T>(*this, m_NextCompID, params...));
         
         m_NextCompID++;
         m_ToInitializeNextFrame++;
@@ -116,7 +116,6 @@ public:
         }
     }
 
-
     /** \brief Get components.
      *
      * Attempts to find components by type.
@@ -125,13 +124,9 @@ public:
     template <class T>
     std::vector<T*> GetComponents() {
         std::vector<T*> comps;
-        T* comp = nullptr;
 
         for (auto it = m_Components.begin(); it != m_Components.end(); it++) {
-            Component* to_cast = it->get();
-            comp = dynamic_cast<T*>(to_cast);
-
-            if (comp != nullptr) {
+            if (auto comp = dynamic_cast<T*>(it->get())) {
                 comps.push_back(comp);
             }
         }
@@ -159,6 +154,8 @@ public:
         }
     }
 
+    void RegisterConnector(Connector* connector);
+
     template <class T>
     void Connect(PropertyOut<T>& subject, PropertyIn<T>& observer) {
         assert(subject.Owner()->Object().ID() == m_ID && observer.Owner()->Object().ID() == m_ID);
@@ -178,9 +175,9 @@ public:
     }
 
     template <class T>
-    void Disconnect(PropertyOut<T>& subject, PropertyIn<T>& observer) {
-        assert(subject.Owner()->Object().ID() == m_ID && observer.Owner()->Object().ID() == m_ID);
-        m_ConnectionsManager.Disconnect(subject, observer);
+    void Disconnect(PropertyIn<T>& observer) {
+        assert(observer.Owner()->Object().ID() == m_ID);
+        m_ConnectionsManager.Disconnect(observer);
     }
 
     template <class M, class O, void (O::*F)(M)>
@@ -195,16 +192,13 @@ public:
         m_ConnectionsManager.Disconnect(sender, receiver);
     }
 
-    ConnectionsManager& ConnectionsManager() { return m_ConnectionsManager; }
-
 private:
     void MarkToDestroy(Components_t::iterator it);
 
     ID_t m_ID;
     std::string m_Name;
-
     ObjectManager& m_Owner;
-    class ConnectionsManager m_ConnectionsManager;
+    ConnectionsManager m_ConnectionsManager;
 
     Component::ID_t m_NextCompID;
 

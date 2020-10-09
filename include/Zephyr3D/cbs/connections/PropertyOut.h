@@ -3,12 +3,8 @@
 
 #include "AbstractConnectors.h"
 
-class ConnectionsManager;
-
 template <class T>
 class PropertyOut final : public AbstractPropertyOut {
-    friend class ConnectionsManager;
-
 public:
     PropertyOut(Component* owner)
         : AbstractPropertyOut(owner) {

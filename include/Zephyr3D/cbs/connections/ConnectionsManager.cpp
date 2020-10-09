@@ -4,43 +4,44 @@
 
 void ConnectionsManager::RegisterConnector(Connector* connector) {
     connector->m_ID = m_NextConnectorID;
-    m_Connectors[m_NextConnectorID] = connector;
-
+    connector->m_ConnectionsManager = this;
     m_NextConnectorID++;
 }
 
-void ConnectionsManager::ForwardMessage(AbstractMessageOut* sender, void* message) {
-    for (auto it = m_MessageConnections[sender].begin(); it != m_MessageConnections[sender].end(); it++) {
-        (*it)->Receive(message);
+void ConnectionsManager::ForwardMessage(AbstractMessageOut& sender, void* message) {
+    for (auto it : m_MessageConnections[&sender]) {
+      it->Receive(message);
     }
 }
 
-void ConnectionsManager::ForwardTrigger(AbstractTriggerOut* sender) {
-    for (auto it = m_TriggerConnections[sender].begin(); it != m_TriggerConnections[sender].end(); it++) {
-        (*it)->Receive();
+void ConnectionsManager::ForwadTrigger(AbstractTriggerOut& sender) {
+    for (auto it : m_TriggerConnections[&sender]) {
+        it->Receive();
     }
 }
 
-// TODO docs
 void ConnectionsManager::RemoveConnections(Component* component) {
-    std::uint8_t comp_id = component->ID();
+    auto comp_id = component->ID();
 
+    //
     m_PropertyConnections.erase(std::remove_if(m_PropertyConnections.begin(),
                                                m_PropertyConnections.end(),
-                                               [=](std::pair<AbstractPropertyOut*, AbstractPropertyIn*>& conn) {
-                                                   if (conn.second->Owner()->ID() == comp_id) {
-                                                       return true;
-                                                   } else if (conn.first->Owner()->ID() == comp_id) {
-                                                       conn.second->RemoveSource();
-                                                       return true;
-                                                   }
-                                                   return false; }),
+                                               [=](auto conn) {
+                                                    if (conn.first->Owner()->ID() == comp_id) {
+                                                        conn.second->RemoveSource();
+                                                        return true;
+                                                    }
+
+                                                    return conn.second->Owner()->ID() == comp_id;
+                                               }),
                                 m_PropertyConnections.end());
 
+    //
     for (auto it = m_MessageConnections.begin(); it != m_MessageConnections.end(); ) {
         if (it->first->Owner()->ID() == comp_id) {
             m_MessageConnections.erase(it++);
-        } else {
+        }
+        else {
             it->second.erase(std::remove_if(it->second.begin(),
                                             it->second.end(),
                                             [=](auto receiver) { return receiver->Owner()->ID() == comp_id; }),
@@ -49,10 +50,12 @@ void ConnectionsManager::RemoveConnections(Component* component) {
         }
     }
 
+    //
     for (auto it = m_TriggerConnections.begin(); it != m_TriggerConnections.end(); ) {
         if (it->first->Owner()->ID() == comp_id) {
             m_TriggerConnections.erase(it++);
-        } else {
+        }
+        else {
             it->second.erase(std::remove_if(it->second.begin(),
                                             it->second.end(),
                                             [=](auto receiver) { return receiver->Owner()->ID() == comp_id; }),

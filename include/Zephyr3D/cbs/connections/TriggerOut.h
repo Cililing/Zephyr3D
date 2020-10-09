@@ -3,15 +3,12 @@
 
 #include "AbstractConnectors.h"
 
-class ConnectionsManager;
-
 class TriggerOut final : public AbstractTriggerOut {
-    friend class ConnectionsManager;
-
 public:
     TriggerOut(Component* owner)
-        : AbstractTriggerOut(owner)
-        , m_ConnectionsManager(nullptr) {}
+        : AbstractTriggerOut(owner) {
+
+    }
 
     TriggerOut(const TriggerOut&) = delete;
     TriggerOut& operator=(const TriggerOut& other) = delete;
@@ -20,9 +17,6 @@ public:
     ~TriggerOut() = default;
 
     void Trigger() override;
-
-private:
-    ConnectionsManager* m_ConnectionsManager;
 };
 
 #endif
