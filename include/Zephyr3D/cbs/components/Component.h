@@ -7,7 +7,6 @@
 #include <assert.h>
 
 class Object;
-class ConnectionPipe;
 class ConnectionsManager;
 
 /** \brief Base class for all components

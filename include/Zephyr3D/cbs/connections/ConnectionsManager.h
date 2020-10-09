@@ -1,13 +1,22 @@
 #ifndef ConnectionsManager_h
 #define ConnectionsManager_h
 
+#include "Connector.h"
+#include "MessageIn.h"
+#include "MessageOut.h"
+#include "PropertyIn.h"
+#include "PropertyOut.h"
+#include "TriggerIn.h"
+#include "TriggerOut.h"
+
 #include <algorithm>
 #include <vector>
 #include <unordered_map>
 
-class Component;
-
+/*
 #pragma region ForwardDeclarations
+
+class Component;
 
 class AbstractPropertyOut;
 template <class T>
@@ -35,6 +44,7 @@ template <class O, void(O::*F)()>
 class TriggerIn;
 
 #pragma endregion
+*/
 
 /** \brief Manages all connection beetwen components inside one object
  *
@@ -45,6 +55,8 @@ class ConnectionsManager {
     using TriggerConnections_t = std::unordered_map<AbstractTriggerOut*, std::vector<AbstractTriggerIn*>>;
 
 public:
+    void RegisterConnector(Connector* connector);
+
     template <class T>
     void Connect(PropertyOut<T>& subject, PropertyIn<T>& observer);
 
@@ -69,14 +81,13 @@ public:
     void RemoveConnections(Component* component);
 
 private:
+    std::unordered_map<Connector::ID_t, Connector*> m_Connectors;
+    Connector::ID_t m_NextConnectorID = 0;
+
     PropertyConnections_t m_PropertyConnections;
     MessageConnections_t m_MessageConnections;
     TriggerConnections_t m_TriggerConnections;
 };
-
-
-#include "ConnectionInterfaces.h"
-#include "TriggerOut.h"
 
 template <class T>
 void ConnectionsManager::Connect(PropertyOut<T>& subject, PropertyIn<T>& observer) {

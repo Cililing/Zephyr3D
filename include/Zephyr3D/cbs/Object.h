@@ -2,6 +2,13 @@
 #define Object_h
 
 #include "connections/ConnectionsManager.h"
+#include "connections/MessageIn.h"
+#include "connections/MessageOut.h"
+#include "connections/PropertyIn.h"
+#include "connections/PropertyOut.h"
+#include "connections/TriggerIn.h"
+#include "connections/TriggerOut.h"
+
 #include "components/Component.h"
 #include "components/Transform.h"
 
@@ -194,6 +201,8 @@ public:
         m_ConnectionsManager.Disconnect(sender, receiver);
     }
 
+    ConnectionsManager& ConnectionsManager() { return m_ConnectionsManager; }
+
 private:
     void MarkToDestroy(Components_t::iterator it);
 
@@ -201,7 +210,7 @@ private:
     std::string m_Name;
 
     ObjectManager& m_Owner;
-    ConnectionsManager m_ConnectionsManager;
+    class ConnectionsManager m_ConnectionsManager;
 
     Component::ID_t m_NextCompID;
 

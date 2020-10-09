@@ -1,7 +1,9 @@
 #ifndef MessageIn_h
 #define MessageIn_h
 
-#include "ConnectionsManager.h"
+#include "AbstractConnectors.h"
+
+class ConnectionsManager;
 
 template <class M, class O, void(O::*F)(M)>
 class MessageIn final : public AbstractMessageIn {
@@ -9,7 +11,7 @@ class MessageIn final : public AbstractMessageIn {
 
 public:
     MessageIn(O* owner)
-        : m_Owner(owner) {}
+        : AbstractMessageIn(owner) {}
 
     MessageIn() = delete;
     MessageIn(const MessageIn&) = delete;
@@ -18,12 +20,7 @@ public:
     MessageIn& operator=(MessageIn&&) = delete;
     ~MessageIn() = default;
 
-    Component* Owner() const override { return m_Owner; }
-
-    void Receive(void* message) override { (m_Owner->*F)(*static_cast<M*>(message)); }
-
-private:
-    O* m_Owner;
+    void Receive(void* message) override { ( dynamic_cast<O*>(m_Owner)->*F)(*static_cast<M*>(message)); }
 };
 
 #endif

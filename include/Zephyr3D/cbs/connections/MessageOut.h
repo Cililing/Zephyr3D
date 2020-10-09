@@ -1,7 +1,9 @@
 #ifndef MessageOut_h
 #define MessageOut_h
 
-#include "ConnectionsManager.h"
+#include "AbstractConnectors.h"
+
+class ConnectionsManager;
 
 template <class M>
 class MessageOut final : public AbstractMessageOut {
@@ -9,7 +11,7 @@ class MessageOut final : public AbstractMessageOut {
 
 public:
     MessageOut(Component* owner)
-        : m_Owner(owner)
+        : AbstractMessageOut(owner)
         , m_ConnectionsManager(nullptr) {}
 
     MessageOut() = delete;
@@ -19,17 +21,19 @@ public:
     MessageOut& operator=(MessageOut&&) = delete;
     ~MessageOut() = default;
 
-    Component* Owner() const override { return m_Owner; }
-
-    void Send(M& message) { 
-        if (m_ConnectionsManager) {
-            m_ConnectionsManager->ForwardMessage(this, &message);
-        }
-    }
+    void Send(M& message);
 
 private:
-    Component* m_Owner;
     ConnectionsManager* m_ConnectionsManager;
 };
+
+#include "ConnectionsManager.h"
+
+template <class M>
+void MessageOut<M>::Send(M& message) {
+    if (m_ConnectionsManager) {
+        m_ConnectionsManager->ForwardMessage(this, &message);
+    }
+}
 
 #endif

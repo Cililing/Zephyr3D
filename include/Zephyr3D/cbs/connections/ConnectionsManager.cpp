@@ -2,6 +2,13 @@
 
 #include "../components/Component.h"
 
+void ConnectionsManager::RegisterConnector(Connector* connector) {
+    connector->m_ID = m_NextConnectorID;
+    m_Connectors[m_NextConnectorID] = connector;
+
+    m_NextConnectorID++;
+}
+
 void ConnectionsManager::ForwardMessage(AbstractMessageOut* sender, void* message) {
     for (auto it = m_MessageConnections[sender].begin(); it != m_MessageConnections[sender].end(); it++) {
         (*it)->Receive(message);

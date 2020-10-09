@@ -1,8 +1,10 @@
 #ifndef PropertyIn_h
 #define PropertyIn_h
 
-#include "ConnectionsManager.h"
+#include "AbstractConnectors.h"
 #include "PropertyOut.h"
+
+class ConnectionsManager;
 
 template <class T>
 class PropertyIn final : public AbstractPropertyIn {
@@ -10,7 +12,7 @@ class PropertyIn final : public AbstractPropertyIn {
 
 public:
     PropertyIn(Component* owner)
-        : m_Owner(owner)
+        : AbstractPropertyIn(owner)
         , m_Source(nullptr) {}
 
     PropertyIn() = delete;
@@ -19,8 +21,6 @@ public:
     PropertyIn(PropertyIn&&) = delete;
     PropertyIn& operator=(PropertyIn&&) = delete;
     ~PropertyIn() = default;
-
-    Component* Owner() const override { return m_Owner; }
 
     const T& Value() const { return m_Source->Value(); }
     operator const T&() const { return m_Source->Value(); }
@@ -32,13 +32,8 @@ public:
 private:
     void RemoveSource() override { m_Source = nullptr; }
 
-    Component* m_Owner;
     PropertyOut<T>* m_Source;
 };
 
-template <class T, size_t N>
-class PropertyIn<T[N]> final : public AbstractPropertyIn {
-
-};
 
 #endif
