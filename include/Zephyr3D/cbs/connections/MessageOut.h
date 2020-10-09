@@ -3,7 +3,7 @@
 
 #include "AbstractConnectors.h"
 
-template <class M>
+template <typename M>
 class MessageOut final : public AbstractMessageOut {
 public:
     MessageOut(Component* owner)
@@ -18,14 +18,22 @@ public:
     MessageOut& operator=(MessageOut&&) = delete;
     ~MessageOut() = default;
 
-    void Send(M& message);
+    template <
+        typename T,
+        typename CHECK = std::enable_if_t<std::is_same<M, typename std::decay_t<T>>::value>
+    >
+    void Send(T&& message);
 };
 
 #include "ConnectionsManager.h"
 
-template <class M>
-void MessageOut<M>::Send(M& message) {
-    m_ConnectionsManager->ForwardMessage(*this, &message);
+template <typename M>
+template <
+    typename T,
+    typename CHECK
+>
+void MessageOut<M>::Send(T&& message) {
+    m_ConnectionsManager->ForwardMessage(*this, std::forward<T>(message));
 }
 
 #endif

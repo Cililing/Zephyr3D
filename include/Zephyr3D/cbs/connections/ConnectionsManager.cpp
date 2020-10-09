@@ -8,12 +8,6 @@ void ConnectionsManager::RegisterConnector(Connector* connector) {
     m_NextConnectorID++;
 }
 
-void ConnectionsManager::ForwardMessage(AbstractMessageOut& sender, void* message) {
-    for (auto it : m_MessageConnections[&sender]) {
-      it->Receive(message);
-    }
-}
-
 void ConnectionsManager::ForwadTrigger(AbstractTriggerOut& sender) {
     for (auto it : m_TriggerConnections[&sender]) {
         it->Receive();

@@ -62,7 +62,8 @@ public:
                                     receiver));
     }
 
-    void ForwardMessage(AbstractMessageOut& sender, void* message);
+    template <class T>
+    void ForwardMessage(AbstractMessageOut& sender, T&& message);
     void ForwadTrigger(AbstractTriggerOut& sender);
 
     void RemoveConnections(Component* component);
@@ -73,5 +74,12 @@ private:
     TriggerConnections_t m_TriggerConnections;
     Connector::ID_t m_NextConnectorID = 0;
 };
+
+template <class T>
+void ConnectionsManager::ForwardMessage(AbstractMessageOut& sender, T&& message) {
+    for (auto it : m_MessageConnections[&sender]) {
+        it->Receive(&message);
+    }
+}
 
 #endif
