@@ -4,43 +4,32 @@
 
 ObjectManager::ObjectManager(class Scene& owner)
     : m_Scene(owner)
+    , m_NextObjectID(0)
     , m_ToDestroy(0)
-    , m_ToInitializeNextFrame(0)
-    , m_Iterator(0) {
+    , m_ToInitializeNextFrame(0) {
 }
 
 void ObjectManager::ProcessFrame() {
-    // 
-    Objects_t::size_type to_initialize = m_ToInitializeNextFrame;
-    m_ToInitializeNextFrame = 0;
-
-    // Update components
-    m_Iterator = m_ToDestroy;
-    for (; m_Iterator < m_Objects.size() - to_initialize; m_Iterator++) {
-        m_Objects[m_Iterator]->ProcessFrame();
+    Objects_t::size_type iterator = m_ToDestroy;
+    for (; iterator < m_Objects.size() - m_ToInitializeNextFrame; iterator++) {
+        m_Objects[iterator]->ProcessFrame();
     }
+    m_ToInitializeNextFrame = 0;
 
     // Destroy components
     if (m_ToDestroy > 0) {
-        m_Iterator = 0;
-        for (; m_Iterator < m_ToDestroy; m_Iterator++) {
-            m_Objects[m_Iterator]->DestroyComponents();
-        }
         m_Objects.erase(m_Objects.begin(), m_Objects.begin() + m_ToDestroy);
         m_ToDestroy = 0;
     }
 }
 
 void ObjectManager::DestroyObjects() {
-    for (auto& object : m_Objects) {
-        object->DestroyComponents();
-    }
     m_Objects.clear();
 }
 
 Object* ObjectManager::CreateObject(const std::string& name) {
-    m_Objects.emplace_back(std::make_unique<Object>(*this, m_NextObjectID++, name));
-    return m_Objects.back().get();
+    auto& obj = m_Objects.emplace_back(std::make_unique<Object>(*this, m_NextObjectID++, name));
+    return obj.get();
 }
 
 void ObjectManager::DestroyObject(Object::ID_t id) {

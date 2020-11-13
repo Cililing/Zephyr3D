@@ -14,6 +14,12 @@ void ConnectionsManager::ForwadTrigger(AbstractTriggerOut& sender) {
     }
 }
 
+void ConnectionsManager::RemoveConnections() {
+    m_PropertyConnections.clear();
+    m_MessageConnections.clear();
+    m_TriggerConnections.clear();
+}
+
 void ConnectionsManager::RemoveConnections(Component* component) {
     auto comp_id = component->ID();
 

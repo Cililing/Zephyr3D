@@ -26,10 +26,7 @@ public:
     Component& operator=(Component&&) = delete;
     virtual ~Component() = default;
 
-    /// Returns component ID
     ID_t ID() const { return m_ID; }
-
-    /// Returns component owner
     Object& Object() const { return m_Object; }
 
     virtual void Initialize() {};

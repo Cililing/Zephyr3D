@@ -22,6 +22,7 @@
 #include <assert.h>
 #include <string>
 #include <vector>
+#include <set>
 #include <algorithm>
 
 class ObjectManager;
@@ -40,8 +41,9 @@ public:
     Object& operator=(const Object&) = delete;
     Object(Object&&) = delete;
     Object& operator=(Object&&) = delete;
-    ~Object() = default;
+    ~Object();
 
+    void InitializeComponents();
     void ProcessFrame();
     void DestroyComponents();
 
@@ -53,74 +55,42 @@ public:
     Transform& Root() { return m_Root; }
     Scene& Scene() const;
 
-    /** \brief Create component.
-     *
-     * Creates component of type T with arguments Args and returns pointer of type T.
-     * By default first Transform component is marked as Root and has ID of 1.
-     *
-     * @param params All arguments to be forwarded to contstructor
-     */
     template <class T, typename ...Args>
     T* CreateComponent(Args&&... params) {
         auto& comp = m_Components.emplace_back(std::make_unique<T>(*this, m_NextCompID, params...));
-        
+
         m_NextCompID++;
         m_ToInitializeNextFrame++;
 
-        // Return pointer of T type
         return dynamic_cast<T*>(comp.get());
     }
 
-    /** \brief Remove components.
-     *
-     * Mark component as to destroy and guarantees thier's Destory functions
-     * will be called at the end of current frame. Destruction of object will
-     * happen naturally after that.
-     * Components to destory is specified by type and all components of this type will be destroyed.
-     * Destroying component also removes all connections from and to this component.
-     * Transform component by default cannot to be destroyed manually as it's
-     * lifetime is bounded to Object lifetime.
-     * Attempt to destroy non existing component will not have effect.
-     */
     template <class T>
     void RemoveComponents() {
         for (auto& comp : m_Components) {
             if (dynamic_cast<T*>(comp->get()) != nullptr) {
-                MarkToDestroy(comp);
+                auto result = m_MarkedToDestroy.insert(comp->ID());
+                assert(result.second);
+                UnregisterUpdateCall(comp->get());
             }
         }
     }
 
-    /** \brief Remove component.
-     *
-     * Mark component as to destroy and guarantees thiers Destory functions
-     * will be called at the end of current frame. Destruction of object will
-     * happen naturally after that.
-     * Components to destory can be specified either by ID. If type.
-     * Destroying component also removes all connections from and to this component.
-     * Transform component by default cannot to be destroyed manually as it's
-     * lifetime is bounded to Object lifetime.
-     * Attempt to destroy non existing component will not have effect.
-     *
-     * @param id ID of component to be destroyed
-     */
     void RemoveComponent(Component::ID_t id) {
         assert(id > 1);
-        
+
         auto comp = std::find_if(m_Components.begin(),
                                  m_Components.end(),
                                  [=](std::unique_ptr<Component>& comp) { return comp->ID() == id; });
 
+        // Mark to destroy
         if (comp != m_Components.end()) {
-            MarkToDestroy(comp);
+            auto result = m_MarkedToDestroy.insert(id);
+            assert(result.second);
+            UnregisterUpdateCall(comp->get());
         }
     }
 
-    /** \brief Get components.
-     *
-     * Attempts to find components by type.
-     * Returns vector of pointers of given type T. If no components found return vector of size 0.
-     */
     template <class T>
     std::vector<T*> GetComponents() {
         std::vector<T*> comps;
@@ -134,13 +104,6 @@ public:
         return comps;
     }
 
-    /** \brief Get component.
-     *
-     * Attempts to find components by ID.
-     * Returns pointer of given type T. If no components found returns null pointer.
-     *
-     * @param id ID of component to be destroyed.
-     */
     template <class T>
     T* GetComponent(Component::ID_t id) {
         Components_t::iterator it = std::find_if(m_Components.begin(),
@@ -193,23 +156,18 @@ public:
     }
 
 private:
-    void MarkToDestroy(Components_t::iterator it);
-
     ID_t m_ID;
     std::string m_Name;
     ObjectManager& m_Owner;
     ConnectionsManager m_ConnectionsManager;
 
-    Component::ID_t m_NextCompID;
-
-    // All components owned by Object
     Transform m_Root;
     Components_t m_Components;
-    Components_t::size_type m_ToDestroy;
     Components_t::size_type m_ToUpdate;
     Components_t::size_type m_ToInitializeNextFrame;
+    std::set<Component::ID_t> m_MarkedToDestroy;
 
-    Components_t::size_type m_Iterator;  // Process frame iterator
+    Component::ID_t m_NextCompID;
 };
 
 #endif

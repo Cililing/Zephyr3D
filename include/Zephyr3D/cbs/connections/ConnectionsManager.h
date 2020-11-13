@@ -66,6 +66,7 @@ public:
     void ForwardMessage(AbstractMessageOut& sender, T&& message);
     void ForwadTrigger(AbstractTriggerOut& sender);
 
+    void RemoveConnections();
     void RemoveConnections(Component* component);
 
 private:

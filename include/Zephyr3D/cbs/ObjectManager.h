@@ -30,8 +30,6 @@ private:
     Objects_t m_Objects;
     Objects_t::size_type m_ToDestroy;
     Objects_t::size_type m_ToInitializeNextFrame;
-
-    Objects_t::size_type m_Iterator;
 };
 
 #endif
