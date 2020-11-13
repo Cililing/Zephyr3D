@@ -9,7 +9,7 @@ ObjectManager::ObjectManager(class Scene& owner)
 }
 
 Object* ObjectManager::CreateObject(const std::string& name) {
-    auto& obj = m_Objects.emplace_back(std::make_unique<Object>(*this, m_NextObjectID, name));
+    auto& obj = m_Objects.emplace_back(std::make_unique<class Object>(*this, m_NextObjectID, name));
 
     m_NextObjectID++;
     m_ToInitializeNextFrame++;
@@ -68,5 +68,14 @@ void ObjectManager::DestroyObjects() {
         m_Objects[i]->DestroyComponents();
     }
     m_Objects.clear();
+}
+
+Object* ObjectManager::Object(Object::ID_t id) const {
+    auto res = std::find_if(m_Objects.begin(),
+                            m_Objects.end(),
+                            [=](auto& obj) { return obj->ID() == id; });
+
+    assert(m_MarkedToDestroy.find((*res)->ID()) != m_MarkedToDestroy.end());
+    return res->get();
 }
 

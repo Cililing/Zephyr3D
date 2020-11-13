@@ -3,7 +3,6 @@
 #include <Zephyr3D/Engine.h>
 #include <Zephyr3D/cbs/Object.h>
 #include <Zephyr3D/scenes/Scene.h>
-#include <Zephyr3D/cbs/components/Dummy.h>
 
 CubeSpawner::CubeSpawner(class Object& object, ID_t id, float offset)
     : Component(object, id)

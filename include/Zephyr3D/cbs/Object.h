@@ -77,18 +77,17 @@ public:
     }
 
     void RemoveComponent(Component::ID_t id) {
-        assert(id > 1);
+        assert(id != 1);
 
         auto comp = std::find_if(m_Components.begin(),
                                  m_Components.end(),
                                  [=](std::unique_ptr<Component>& comp) { return comp->ID() == id; });
 
         // Mark to destroy
-        if (comp != m_Components.end()) {
-            auto result = m_MarkedToDestroy.insert(id);
-            assert(result.second);
-            UnregisterUpdateCall(comp->get());
-        }
+        assert(comp != m_Components.end());
+        auto result = m_MarkedToDestroy.insert(id);
+        assert(result.second);
+        UnregisterUpdateCall(comp->get());
     }
 
     template <class T>

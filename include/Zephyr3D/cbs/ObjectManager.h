@@ -24,6 +24,7 @@ public:
     void DestroyObjects();
 
     Scene& Scene() const { return m_Scene; }
+    Object* Object(Object::ID_t id) const;
 
 private:
     class Scene& m_Scene;
