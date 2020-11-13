@@ -4,7 +4,9 @@
 #include "Object.h"
 
 #include <vector>
+#include <set>
 #include <string>
+#include <algorithm>
 
 class Scene;
 
@@ -14,11 +16,12 @@ class ObjectManager {
 public:
     explicit ObjectManager(class Scene& owner);
 
-    void ProcessFrame();
-    void DestroyObjects();
-
     Object* CreateObject(const std::string& name);
     void DestroyObject(Object::ID_t id);
+
+    void InitializeObjects();
+    void ProcessFrame();
+    void DestroyObjects();
 
     Scene& Scene() const { return m_Scene; }
 
@@ -28,8 +31,8 @@ private:
     Object::ID_t m_NextObjectID;
 
     Objects_t m_Objects;
-    Objects_t::size_type m_ToDestroy;
     Objects_t::size_type m_ToInitializeNextFrame;
+    std::set<Object::ID_t> m_MarkedToDestroy;
 };
 
 #endif

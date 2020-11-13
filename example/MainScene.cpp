@@ -13,29 +13,32 @@ void MainScene::CreateScene() {
            LoadImage("skyboxes/basic_blue/back.png"),
            LoadImage("skyboxes/basic_blue/front.png"));
 
-    /*auto light = CreateObject("Light"); {
+    auto light = CreateObject("Light"); {
         light->CreateComponent<DirectionalLight>(glm::vec3(-1.0f, -0.5f, -0.5f),
                                                  glm::vec3(0.05f),
                                                  glm::vec3(0.7f, 0.68f, 0.68f),
                                                  glm::vec3(0.8f, 0.78f, 0.78f));
-    }*/
+    }
 
-    auto camera = CreateObject("Camera"); {
-        camera->Root().Move(glm::vec3(-10.0f, 4.0f, -2.0f));
-        camera->Root().Rotate(glm::vec3(0.0f, 0.0f, glm::radians(-25.0f)));
-        camera->Root().Rotate(glm::vec3(0.0f, glm::radians(-20.0f), 0.0f));
+    auto player = CreateObject("Player"); {
+        player->Root().Move(glm::vec3(-10.0f, 4.0f, -2.0f));
+        player->Root().Rotate(glm::vec3(0.0f, 0.0f, glm::radians(-25.0f)));
+        player->Root().Rotate(glm::vec3(0.0f, glm::radians(-20.0f), 0.0f));
 
-        auto comp = camera->CreateComponent<Camera>(glm::radians(45.0f), 
+        auto comp = player->CreateComponent<Camera>(glm::radians(45.0f), 
                                                     static_cast<float>(zephyr::Engine::Instance().GetWindow().Width()) / static_cast<float>(zephyr::Engine::Instance().GetWindow().Height()),
                                                     0.1f, 
                                                     500.0f);
-        camera->Connect(camera->Root().This, comp->TransformIn);
+        player->Connect(player->Root().This, comp->TransformIn);
 
-        auto fpc = camera->CreateComponent<FirstPersonController>();
-        camera->Connect(camera->Root().This, fpc->TransformIn);
+        auto fpc = player->CreateComponent<FirstPersonController>();
+        player->Connect(player->Root().This, fpc->TransformIn);
 
-        auto gravity_gun = camera->CreateComponent<GravityGun>(10.0f, 5.0f);
-        camera->Connect(camera->Root().This, gravity_gun->TransformIn);
+        auto gravity_gun = player->CreateComponent<GravityGun>(10.0f, 5.0f);
+        player->Connect(player->Root().This, gravity_gun->TransformIn);
+
+        auto object_spawner = player->CreateComponent<CubeSpawner>(5.0f);
+        player->Connect(player->Root().This, object_spawner->TransfromIn);
     }
 
     for (auto i = 0; i < 3; i++) {

@@ -15,6 +15,7 @@ Scene::Scene()
 void Scene::Initialize() {
     m_DrawManager.Initialize();
     m_PhysicsManager.Initialize();
+    m_ObjectManager.InitializeObjects();
 }
 
 void Scene::Run() {
