@@ -9,7 +9,6 @@
     cmake .. -G
 
 ## TODO
-* cbs rework
 * audio rework
 * scene rework
 * advanced OpenGL lighting
