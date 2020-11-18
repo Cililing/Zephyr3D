@@ -2,13 +2,13 @@
 
 #include "../scenes/Scene.h"
 
-ObjectManager::ObjectManager(class Scene& owner)
+zephyr::cbs::ObjectManager::ObjectManager(class Scene& owner)
     : m_Scene(owner)
     , m_NextObjectID(0)
     , m_ToInitializeNextFrame(0) {
 }
 
-Object* ObjectManager::CreateObject(const std::string& name) {
+zephyr::cbs::Object* zephyr::cbs::ObjectManager::CreateObject(const std::string& name) {
     auto& obj = m_Objects.emplace_back(std::make_unique<class Object>(*this, m_NextObjectID, name));
 
     m_NextObjectID++;
@@ -17,7 +17,7 @@ Object* ObjectManager::CreateObject(const std::string& name) {
     return obj.get();
 }
 
-void ObjectManager::DestroyObject(Object::ID_t id) {
+void zephyr::cbs::ObjectManager::DestroyObject(Object::ID_t id) {
     auto object = std::find_if(m_Objects.begin(),
                                m_Objects.end(),
                                [=](auto& it) { return it->ID() == id; });
@@ -28,13 +28,13 @@ void ObjectManager::DestroyObject(Object::ID_t id) {
 }
 
 
-void ObjectManager::InitializeObjects() {
+void zephyr::cbs::ObjectManager::InitializeObjects() {
     for (int i = 0; i < m_Objects.size(); i++) {
         m_Objects[i]->InitializeComponents();
     }
 }
 
-void ObjectManager::ProcessFrame() {
+void zephyr::cbs::ObjectManager::ProcessFrame() {
     Objects_t::size_type iterator = m_Objects.size() - m_ToInitializeNextFrame;
     m_ToInitializeNextFrame = 0;
     for (; iterator < m_Objects.size(); iterator++) {
@@ -63,14 +63,14 @@ void ObjectManager::ProcessFrame() {
     }
 }
 
-void ObjectManager::DestroyObjects() {
+void zephyr::cbs::ObjectManager::DestroyObjects() {
     for (int i = 0; i < m_Objects.size(); i++) {
         m_Objects[i]->DestroyComponents();
     }
     m_Objects.clear();
 }
 
-Object* ObjectManager::Object(Object::ID_t id) const {
+zephyr::cbs::Object* zephyr::cbs::ObjectManager::Object(Object::ID_t id) const {
     auto res = std::find_if(m_Objects.begin(),
                             m_Objects.end(),
                             [=](auto& obj) { return obj->ID() == id; });

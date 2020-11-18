@@ -3,6 +3,8 @@
 
 #include "AbstractConnectors.h"
 
+namespace zephyr::cbs {
+
 template <typename M>
 class MessageOut final : public AbstractMessageOut {
 public:
@@ -25,6 +27,8 @@ public:
     void Send(T&& message);
 };
 
+}
+
 #include "ConnectionsManager.h"
 
 template <typename M>
@@ -32,7 +36,7 @@ template <
     typename T,
     typename CHECK
 >
-void MessageOut<M>::Send(T&& message) {
+void zephyr::cbs::MessageOut<M>::Send(T&& message) {
     m_ConnectionsManager->ForwardMessage(*this, std::forward<T>(message));
 }
 

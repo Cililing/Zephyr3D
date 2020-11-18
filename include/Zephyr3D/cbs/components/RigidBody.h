@@ -10,7 +10,9 @@
 #include "../connections/MessageOut.h"
 #include "../../core/Math.h"
 
-class RigidBody : public Component, public zephyr::physics::CollisionObject {
+namespace zephyr::cbs {
+
+class RigidBody : public Component, public physics::CollisionObject {
 public:
     RigidBody(class Object& object, ID_t id, btScalar mass, btCollisionShape* shape, int group = 1, int mask = -1);
 
@@ -30,5 +32,7 @@ private:
     int m_Group;
     int m_Mask;
 };
+
+}
 
 #endif

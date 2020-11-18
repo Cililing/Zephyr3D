@@ -1,8 +1,8 @@
 #include "TextRenderer.h"
 
-unsigned int TextRenderer::s_Index = 1;
+unsigned int zephyr::cbs::TextRenderer::s_Index = 1;
 
-TextRenderer::TextRenderer(class Object& object, ID_t id, EAlign horizontal, EAlign vertical, float size, const std::string& font_path)
+zephyr::cbs::TextRenderer::TextRenderer(class Object& object, ID_t id, EAlign horizontal, EAlign vertical, float size, const std::string& font_path)
     : Component(object, id)
     , m_Horizontal(horizontal)
     , m_Vertical(vertical)
@@ -23,15 +23,15 @@ TextRenderer::TextRenderer(class Object& object, ID_t id, EAlign horizontal, EAl
     s_Index++;
 }
 
-void TextRenderer::Initialize() {
+void zephyr::cbs::TextRenderer::Initialize() {
     Object().Scene().RegisterGUIWidget(this);
 }
 
-void TextRenderer::Destroy() {
+void zephyr::cbs::TextRenderer::Destroy() {
     Object().Scene().UnregisterGUIWidget(this);
 }
 
-void TextRenderer::Draw() const {
+void zephyr::cbs::TextRenderer::Draw() const {
     ImGui::Begin(m_Title.c_str(), nullptr, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_AlwaysAutoResize);
     ImGui::PushFont(m_Font);
 
@@ -51,13 +51,13 @@ void TextRenderer::Draw() const {
     ImGui::End();
 }
 
-void TextRenderer::Font(const std::string& path, float size) {
+void zephyr::cbs::TextRenderer::Font(const std::string& path, float size) {
     ImGuiIO& io = ImGui::GetIO();
     m_Font = io.Fonts->AddFontFromFileTTF(path.c_str(), size);
     io.Fonts->Build();
 }
 
-void TextRenderer::Position(glm::vec2 offset, EAlign horizontal, EAlign vertical) {
+void zephyr::cbs::TextRenderer::Position(glm::vec2 offset, EAlign horizontal, EAlign vertical) {
     m_Offset = offset;
     m_Vertical = vertical;
     m_Horizontal = horizontal;

@@ -1,6 +1,6 @@
 #include "RigidBody.h"
 
-RigidBody::RigidBody(class Object& object, ID_t id, btScalar mass, btCollisionShape* shape, int group, int mask)
+zephyr::cbs::RigidBody::RigidBody(class Object& object, ID_t id, btScalar mass, btCollisionShape* shape, int group, int mask)
     : Component(object, id)
     , CollisionObject(CreateRigibBody(mass, shape))
     , m_Group(group)
@@ -8,7 +8,7 @@ RigidBody::RigidBody(class Object& object, ID_t id, btScalar mass, btCollisionSh
 
 }
 
-void RigidBody::Initialize() {
+void zephyr::cbs::RigidBody::Initialize() {
     btTransform transform;
     transform.setIdentity();
 
@@ -22,15 +22,15 @@ void RigidBody::Initialize() {
     Object().Scene().AddRigidBody(this, m_Group, m_Mask);
 }
 
-void RigidBody::Destroy() {
+void zephyr::cbs::RigidBody::Destroy() {
     Object().Scene().RemoveRigidBody(this);
 }
 
-void RigidBody::OnCollision(const btCollisionObject* collider) {
+void zephyr::cbs::RigidBody::OnCollision(const btCollisionObject* collider) {
     CollisionOut.Send(collider);
 }
 
-void RigidBody::PhysicsUpdate() {
+void zephyr::cbs::RigidBody::PhysicsUpdate() {
     btTransform trans;
     btRigidBody* rigid_body = static_cast<btRigidBody*>(m_BulletHandle);
 
@@ -41,7 +41,7 @@ void RigidBody::PhysicsUpdate() {
     TransformIn.Value()->Scale(Vector3(rigid_body->getCollisionShape()->getLocalScaling()));
 }
 
-btRigidBody* RigidBody::CreateRigibBody(btScalar mass, btCollisionShape* shape) const {
+btRigidBody* zephyr::cbs::RigidBody::CreateRigibBody(btScalar mass, btCollisionShape* shape) const {
     btVector3 local_inertia(0, 0, 0);
 
     if (mass != 0.0f) {

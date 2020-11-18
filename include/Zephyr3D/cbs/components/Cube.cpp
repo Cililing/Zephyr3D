@@ -1,6 +1,6 @@
 #include "Cube.h"
 
-Cube::Cube(class Object& object, ID_t id, const glm::vec3& color)
+zephyr::cbs::Cube::Cube(class Object& object, ID_t id, const glm::vec3& color)
     : Component(object, id) {
     float vertices[] = {
      -0.5f, -0.5f, -0.5f,color.x, color.y, color.z,
@@ -65,7 +65,7 @@ Cube::Cube(class Object& object, ID_t id, const glm::vec3& color)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Cube::Draw(const zephyr::rendering::ShaderProgram& shader) const {
+void zephyr::cbs::Cube::Draw(const zephyr::rendering::ShaderProgram& shader) const {
     shader.Uniform("model", TransformIn.Value()->Model());
 
     glBindVertexArray(m_VAO);
@@ -73,10 +73,10 @@ void Cube::Draw(const zephyr::rendering::ShaderProgram& shader) const {
     glBindVertexArray(0);
 }
 
-void Cube::Initialize() {
+void zephyr::cbs::Cube::Initialize() {
     Object().Scene().RegisterDrawCall(this, "PureColor");
 }
 
-void Cube::Destroy() {
+void zephyr::cbs::Cube::Destroy() {
     Object().Scene().UnregisterDrawCall(this, "PureColor");
 }

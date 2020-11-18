@@ -19,6 +19,8 @@
 #include <iostream>
 #include <string>
 
+namespace zephyr::cbs {
+
 #undef far
 #undef near
 
@@ -34,5 +36,7 @@ public:
 private:
     zephyr::rendering::PerspectiveCamera m_Camera;
 };
+
+}
 
 #endif

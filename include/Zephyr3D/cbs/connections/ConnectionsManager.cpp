@@ -2,25 +2,25 @@
 
 #include "../components/Component.h"
 
-void ConnectionsManager::RegisterConnector(Connector* connector) {
+void zephyr::cbs::ConnectionsManager::RegisterConnector(Connector* connector) {
     connector->m_ID = m_NextConnectorID;
     connector->m_ConnectionsManager = this;
     m_NextConnectorID++;
 }
 
-void ConnectionsManager::ForwadTrigger(AbstractTriggerOut& sender) {
+void zephyr::cbs::ConnectionsManager::ForwadTrigger(AbstractTriggerOut& sender) {
     for (auto it : m_TriggerConnections[&sender]) {
         it->Receive();
     }
 }
 
-void ConnectionsManager::RemoveConnections() {
+void zephyr::cbs::ConnectionsManager::RemoveConnections() {
     m_PropertyConnections.clear();
     m_MessageConnections.clear();
     m_TriggerConnections.clear();
 }
 
-void ConnectionsManager::RemoveConnections(Component* component) {
+void zephyr::cbs::ConnectionsManager::RemoveConnections(Component* component) {
     auto comp_id = component->ID();
 
     //

@@ -1,7 +1,7 @@
 #include "FirstPersonController.h"
 #include "Transform.h"
 
-FirstPersonController::FirstPersonController(class Object& object, ID_t id, float movement_speed_fast, float movement_speed_slow, float mouse_sensivity)
+zephyr::cbs::FirstPersonController::FirstPersonController(class Object& object, ID_t id, float movement_speed_fast, float movement_speed_slow, float mouse_sensivity)
     : Component(object, id)
     , m_CurrentMovementSpeed(0.0f)
     , m_MovementSpeedFast(movement_speed_fast)
@@ -10,14 +10,14 @@ FirstPersonController::FirstPersonController(class Object& object, ID_t id, floa
     , m_VerticalRotation(0.0f)
     , m_LastMousePos(0.0f) {}
 
-void FirstPersonController::Initialize() {
+void zephyr::cbs::FirstPersonController::Initialize() {
     // TODO store original rotation from Transform component
     m_LastMousePos = zephyr::Engine::Instance().GetInput().MousePosition();
 
     RegisterUpdateCall();
 }
 
-void FirstPersonController::Update() {
+void zephyr::cbs::FirstPersonController::Update() {
     // Mouse
     float rot_ver = glm::radians(zephyr::Engine::Instance().GetInput().MouseOffset().y * m_MouseSensitivity);
     float rot_hor = glm::radians(-zephyr::Engine::Instance().GetInput().MouseOffset().x * m_MouseSensitivity);

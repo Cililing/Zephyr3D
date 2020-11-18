@@ -2,16 +2,16 @@
 
 #include "../Object.h"
 
-Transform::Transform(class Object& object, ID_t id)
+zephyr::cbs::Transform::Transform(class Object& object, ID_t id)
     : Component(object, id) {
 
 }
 
-void Transform::Initialize() {
+void zephyr::cbs::Transform::Initialize() {
     UpdateModel();
 }
 
-void Transform::Identity() {
+void zephyr::cbs::Transform::Identity() {
     m_Position = glm::vec3(0.0f);
     m_Rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     m_Scale = glm::vec3(1.0f);
@@ -19,7 +19,7 @@ void Transform::Identity() {
     m_Model = glm::mat4(1.0f);
 }
 
-glm::mat4 Transform::Model() const {
+glm::mat4 zephyr::cbs::Transform::Model() const {
     if (Parent.Connected()) {
         glm::mat4 model = glm::translate(Parent.Value()->Model(), m_Position) * glm::toMat4(m_Rotation);
         model = glm::scale(model, m_Scale);
@@ -29,15 +29,15 @@ glm::mat4 Transform::Model() const {
     }
 }
 
-void Transform::Model(const glm::mat4 model) {
+void zephyr::cbs::Transform::Model(const glm::mat4 model) {
     m_Model = model;
 }
 
-void Transform::Model(const float* model) {
+void zephyr::cbs::Transform::Model(const float* model) {
     m_Model = glm::make_mat4(model);
 }
 
-glm::vec3 Transform::Position() const {
+glm::vec3 zephyr::cbs::Transform::Position() const {
     if (Parent.Connected()) {
         return glm::vec3(Model()[3]);
     } else {
@@ -45,19 +45,19 @@ glm::vec3 Transform::Position() const {
     }
 }
 
-void Transform::Position(const glm::vec3& position) {
+void zephyr::cbs::Transform::Position(const glm::vec3& position) {
     m_Position = position;
 
     UpdateModel();
 }
 
-void Transform::Move(const glm::vec3& vector) {
+void zephyr::cbs::Transform::Move(const glm::vec3& vector) {
     m_Position = m_Position + m_Rotation * vector;
 
     UpdateModel();
 }
 
-glm::quat Transform::Rotation() const {
+glm::quat zephyr::cbs::Transform::Rotation() const {
     if (Parent.Connected()) {
         glm::quat rotation;
         glm::vec3 tmp1, tmp2, tmp3;
@@ -70,25 +70,25 @@ glm::quat Transform::Rotation() const {
     }
 }
 
-void Transform::Rotation(const glm::quat &rotation) {
+void zephyr::cbs::Transform::Rotation(const glm::quat &rotation) {
     m_Rotation = rotation;
 
     UpdateModel();
 }
 
-void Transform::Rotate(const glm::quat& rotation) {
+void zephyr::cbs::Transform::Rotate(const glm::quat& rotation) {
     m_Rotation = rotation * m_Rotation;
 
     UpdateModel();
 }
 
-void Transform::RotateRelative(const glm::quat& rotation) {
+void zephyr::cbs::Transform::RotateRelative(const glm::quat& rotation) {
     m_Rotation = m_Rotation * rotation;
 
     UpdateModel();
 }
 
-glm::vec3 Transform::Scale() const {
+glm::vec3 zephyr::cbs::Transform::Scale() const {
     if (Parent.Connected()) {
         return m_Scale * Parent.Value()->Scale();
     } else {
@@ -96,13 +96,13 @@ glm::vec3 Transform::Scale() const {
     }
 }
 
-void Transform::Scale(const glm::vec3& scale) {
+void zephyr::cbs::Transform::Scale(const glm::vec3& scale) {
     m_Scale = scale;
     
     UpdateModel();
 }
 
-void Transform::UpdateModel() {
+void zephyr::cbs::Transform::UpdateModel() {
     if (Parent.Connected()) {
         m_Model = Parent.Value()->Model();
     } else {

@@ -3,6 +3,8 @@
 
 #include "AbstractConnectors.h"
 
+namespace zephyr::cbs {
+
 template <class O, void(O::* F)()>
 class TriggerIn final : public AbstractTriggerIn {
 public:
@@ -18,5 +20,7 @@ public:
 
     void Receive() override { (m_Owner->*F)(); }
 };
+
+}
 
 #endif

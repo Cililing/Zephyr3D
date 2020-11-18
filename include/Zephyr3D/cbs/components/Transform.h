@@ -14,6 +14,8 @@
 #include <glm/gtx/matrix_decompose.hpp>
 #pragma warning(pop)
 
+namespace zephyr::cbs {
+
 class Transform : public Component {
 public:
     Transform(class Object& object, ID_t id);
@@ -53,5 +55,7 @@ private:
     glm::quat m_Rotation{ glm::vec3(0.0f) };
     glm::vec3 m_Scale{ 1.0f };
 };
+
+}
 
 #endif

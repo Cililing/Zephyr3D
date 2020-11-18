@@ -1,6 +1,6 @@
 #include "GravityGun.h"
 
-GravityGun::GravityGun(class Object& object, ID_t id, float range, float impulse_force)
+GravityGun::GravityGun(class zephyr::cbs::Object& object, ID_t id, float range, float impulse_force)
 	: Component(object, id)
 	, m_Range(range)
 	, m_ImpulsForce(impulse_force * range) {

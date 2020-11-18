@@ -17,6 +17,8 @@
 
 #include <iostream>
 
+namespace zephyr::cbs {
+
 constexpr auto DEGREES_60 = (60.0f * 3.14f / 180.0f);
 
 class FirstPersonController : public Component {
@@ -37,5 +39,7 @@ private:
 
     glm::vec2 m_LastMousePos;
 };
+
+}
 
 #endif

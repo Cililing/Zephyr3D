@@ -4,6 +4,8 @@
 #include "AbstractConnectors.h"
 #include "PropertyOut.h"
 
+namespace zephyr::cbs {
+
 template <class T>
 class PropertyIn final : public AbstractPropertyIn {
 public:
@@ -34,5 +36,6 @@ private:
     PropertyOut<T>* m_Source;
 };
 
+}
 
 #endif

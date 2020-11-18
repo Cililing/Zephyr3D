@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <assert.h>
 
+namespace zephyr::cbs {
+
 class Object;
 
 /** \brief Base class for all components
@@ -41,5 +43,7 @@ private:
     class Object& m_Object;
     ID_t m_ID;
 };
+
+}
 
 #endif

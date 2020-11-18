@@ -3,6 +3,8 @@
 
 #include "AbstractConnectors.h"
 
+namespace zephyr::cbs {
+
 template <class M, class O, void(O::*F)(M)>
 class MessageIn final : public AbstractMessageIn {
 public:
@@ -20,5 +22,7 @@ public:
 
     void Receive(void* message) override { (dynamic_cast<O*>(m_Owner)->*F)(*static_cast<M*>(message)); }
 };
+
+}
 
 #endif

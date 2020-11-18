@@ -5,6 +5,8 @@
 #include "../../scenes/Scene.h"
 #include "../../rendering/IShaderProperty.h"
 
+namespace zephyr::cbs {
+
 class DirectionalLight : public Component, public zephyr::rendering::IShaderProperty {
 public:
     DirectionalLight(class Object& object, ID_t id, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
@@ -20,5 +22,7 @@ private:
     glm::vec3 m_Diffuse;
     glm::vec3 m_Specular;
 };
+
+}
 
 #endif

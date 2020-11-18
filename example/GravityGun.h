@@ -14,14 +14,14 @@
 #include <GLFW/glfw3.h>
 #pragma warning(pop)
 
-class GravityGun : public Component {
+class GravityGun : public zephyr::cbs::Component {
 public:
-	GravityGun(class Object& object, ID_t id, float range, float impuls_force);
+	GravityGun(class zephyr::cbs::Object& object, ID_t id, float range, float impuls_force);
 
 	void Initialize() override;
 	void Update() override;
 
-	PropertyIn<Transform*> TransformIn{ this };
+	zephyr::cbs::PropertyIn<zephyr::cbs::Transform*> TransformIn{ this };
 
 private:
 	int m_PickUpKey{ GLFW_MOUSE_BUTTON_1 };

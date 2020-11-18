@@ -3,6 +3,8 @@
 
 #include "AbstractConnectors.h"
 
+namespace zephyr::cbs {
+
 template <class T>
 class PropertyOut final : public AbstractPropertyOut {
 public:
@@ -35,5 +37,7 @@ public:
 private:
     std::unique_ptr<T> m_Value;
 };
+
+}
 
 #endif

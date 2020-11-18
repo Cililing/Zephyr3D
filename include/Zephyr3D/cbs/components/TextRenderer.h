@@ -10,9 +10,11 @@
 
 #include <string>
 
+namespace zephyr::cbs {
+
 constexpr char* TITLE_PREFIX = "__dummy";
 
-class TextRenderer : public Component, public zephyr::rendering::IGUIWidget {
+class TextRenderer : public Component, public rendering::IGUIWidget {
 public:
     TextRenderer(class Object& object, ID_t id, EAlign horizontal, EAlign vertical, float size, const std::string& font_path = "");
 
@@ -46,5 +48,7 @@ private:
     glm::vec4 m_Color;
     ImFont* m_Font;
 };
+
+}
 
 #endif

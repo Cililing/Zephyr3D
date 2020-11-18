@@ -13,3 +13,4 @@ file(GLOB_RECURSE Zephyr3D_SHADERS "include/*.frag" "include/*.vert")
 
 add_subdirectory(include/Zephyr3D)
 add_subdirectory(example)
+add_compile_definitions(CONFIGURATION="$(ConfigurationName)")

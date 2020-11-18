@@ -10,6 +10,8 @@
 
 class Scene;
 
+namespace zephyr::cbs {
+
 class ObjectManager {
     using Objects_t = std::vector<std::unique_ptr<Object>>;
 
@@ -35,5 +37,7 @@ private:
     Objects_t::size_type m_ToInitializeNextFrame;
     std::set<Object::ID_t> m_MarkedToDestroy;
 };
+
+}
 
 #endif

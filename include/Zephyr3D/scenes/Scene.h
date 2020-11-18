@@ -40,8 +40,8 @@ public:
     float FrameRate() const;
 
     // ObjectManager functions
-    Object* CreateObject(const std::string& name);
-    void DestroyObject(Object::ID_t id);
+    zephyr::cbs::Object* CreateObject(const std::string& name);
+    void DestroyObject(zephyr::cbs::Object::ID_t id);
 
     // DrawManager functions
     void RegisterDrawCall(const zephyr::rendering::IDrawable* drawable, const std::string& shader_name);
@@ -75,7 +75,7 @@ public:
     zephyr::resources::Model& LoadModel(const std::string& path);
 
 private:
-    ObjectManager m_ObjectManager;
+    zephyr::cbs::ObjectManager m_ObjectManager;
     zephyr::rendering::DrawManager m_DrawManager;
     zephyr::physics::PhysicsManager m_PhysicsManager;
     zephyr::resources::ResourcesManager m_ResourceManager;

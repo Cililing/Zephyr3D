@@ -8,14 +8,14 @@
 
 #include <vector>
 
-class CubeSpawner : public Component {
+class CubeSpawner : public zephyr::cbs::Component {
 public:
-    CubeSpawner(class Object& object, ID_t id, float offset);
+    CubeSpawner(class zephyr::cbs::Object& object, ID_t id, float offset);
 
     void Initialize() override;
     void Update() override;
 
-    PropertyIn<Transform*> TransfromIn{this};
+    zephyr::cbs::PropertyIn<zephyr::cbs::Transform*> TransfromIn{this};
 
 private:
     float m_Offset;

@@ -3,6 +3,8 @@
 
 #include "AbstractConnectors.h"
 
+namespace zephyr::cbs {
+
 class TriggerOut final : public AbstractTriggerOut {
 public:
     TriggerOut(Component* owner)
@@ -18,5 +20,7 @@ public:
 
     void Trigger() override;
 };
+
+}
 
 #endif

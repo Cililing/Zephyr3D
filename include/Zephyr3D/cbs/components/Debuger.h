@@ -9,6 +9,8 @@
 
 #include <string>
 
+namespace zephyr::cbs {
+
 class Debuger : public Component {
 public:
     Debuger(class Object& object, ID_t id);
@@ -18,5 +20,7 @@ public:
 
     MessageOut<std::string> DebugInfo{ this };
 };
+
+}
 
 #endif

@@ -1,14 +1,14 @@
 #ifndef MeshRenderer_h
 #define MeshRenderer_h
 
-#pragma warning(disable: 26495)
-
 #include "Component.h"
 #include "../Object.h"
 #include "../connections/PropertyIn.h"
 #include "../../scenes/Scene.h"
 #include "../../rendering/IDrawable.h"
 #include "../../rendering/StaticModel.h"
+
+namespace zephyr::cbs {
 
 class Transform;
 
@@ -30,5 +30,6 @@ private:
     std::string m_ShaderName;
 };
 
-#pragma warning(default: 26495)
+}
+
 #endif

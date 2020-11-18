@@ -14,6 +14,8 @@
 #include <glm/gtx/rotate_vector.hpp>
 #pragma warning(pop)
 
+namespace zephyr::cbs {
+
 constexpr auto ROTATION_LIMIT = (75.0f * 3.14f / 180.0f);
 
 class ThirdPersonController : public Component {
@@ -41,5 +43,7 @@ private:
     
     glm::quat m_RotationBeetwen(const glm::vec3& start, const glm::vec3& dest);
 };
+
+}
 
 #endif

@@ -1,6 +1,6 @@
 #include "DirectionalLight.h"
 
-DirectionalLight::DirectionalLight(class Object& object, ID_t id, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular)
+zephyr::cbs::DirectionalLight::DirectionalLight(class Object& object, ID_t id, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular)
     : Component(object, id)
     , m_Direction(direction)
     , m_Ambient(ambient)
@@ -8,15 +8,15 @@ DirectionalLight::DirectionalLight(class Object& object, ID_t id, glm::vec3 dire
     , m_Specular(specular) {
 }
 
-void DirectionalLight::Initialize() {
+void zephyr::cbs::DirectionalLight::Initialize() {
     Object().Scene().RegisterShaderProperty(this, "Phong");
 }
 
-void DirectionalLight::Destroy() {
+void zephyr::cbs::DirectionalLight::Destroy() {
     Object().Scene().UnregisterShaderProperty(this, "Phong");
 }
 
-void DirectionalLight::SetProperty(const zephyr::rendering::ShaderProgram& shader) const {
+void zephyr::cbs::DirectionalLight::SetProperty(const zephyr::rendering::ShaderProgram& shader) const {
     shader.Uniform("dirLight.direction", m_Direction);
     shader.Uniform("dirLight.ambient", m_Ambient);
     shader.Uniform("dirLight.diffuse", m_Diffuse);

@@ -25,8 +25,11 @@
 #include <set>
 #include <algorithm>
 
-class ObjectManager;
 class Scene;
+
+namespace zephyr::cbs {
+
+class ObjectManager;
 
 class Object {
     using Components_t = std::vector<std::unique_ptr<Component>>;
@@ -41,7 +44,7 @@ public:
     Object& operator=(const Object&) = delete;
     Object(Object&&) = delete;
     Object& operator=(Object&&) = delete;
-    ~Object();
+    ~Object() = default;
 
     void InitializeComponents();
     void ProcessFrame();
@@ -168,5 +171,7 @@ private:
 
     Component::ID_t m_NextCompID;
 };
+
+}
 
 #endif

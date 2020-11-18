@@ -7,6 +7,8 @@
 #include "../connections/PropertyIn.h"
 #include "../../rendering/IDrawable.h"
 
+namespace zephyr::cbs {
+
 class Cube : public Component, public zephyr::rendering::IDrawable {
 public:
     Cube(class Object& object, ID_t id, const glm::vec3& color);
@@ -23,5 +25,6 @@ private:
     GLuint m_VAO;
 };
 
+}
 
 #endif

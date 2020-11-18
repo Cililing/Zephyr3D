@@ -1,6 +1,6 @@
 #include "GhostObject.h"
 
-GhostObject::GhostObject(class Object& object, ID_t id, btCollisionShape* shape, int group, int mask)
+zephyr::cbs::GhostObject::GhostObject(class Object& object, ID_t id, btCollisionShape* shape, int group, int mask)
     : Component(object, id)
     , CollisionObject(new btGhostObject)
     , m_Group(group)
@@ -9,7 +9,7 @@ GhostObject::GhostObject(class Object& object, ID_t id, btCollisionShape* shape,
     m_BulletHandle->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
 }
 
-void GhostObject::Initialize() {
+void zephyr::cbs::GhostObject::Initialize() {
     btTransform transform;
     transform.setIdentity();
 
@@ -22,11 +22,11 @@ void GhostObject::Initialize() {
     Object().Scene().AddCollisionObject(this, m_Group, m_Mask);
 }
 
-void GhostObject::Destroy() {
+void zephyr::cbs::GhostObject::Destroy() {
     Object().Scene().RemoveCollisionObject(this);
 }
 
-void GhostObject::PhysicsUpdate() {
+void zephyr::cbs::GhostObject::PhysicsUpdate() {
     btTransform trans;
     trans.setIdentity();
     trans.setOrigin(Vector3(TransformIn.Value()->Position()));
@@ -35,6 +35,6 @@ void GhostObject::PhysicsUpdate() {
     m_BulletHandle->getCollisionShape()->setLocalScaling(Vector3(TransformIn.Value()->Scale()));
 }
 
-void GhostObject::OnCollision(const btCollisionObject* collider) {
+void zephyr::cbs::GhostObject::OnCollision(const btCollisionObject* collider) {
     CollisionOut.Send(collider);
 }

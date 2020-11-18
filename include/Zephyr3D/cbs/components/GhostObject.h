@@ -14,8 +14,9 @@
 #include "BulletCollision/CollisionDispatch/btGhostObject.h"
 #pragma warning(pop)
 
+namespace zephyr::cbs {
 
-class GhostObject : public Component, public zephyr::physics::CollisionObject {
+class GhostObject : public Component, public physics::CollisionObject {
 public:
     GhostObject(class Object& object, ID_t id, btCollisionShape* shape, int group = 1, int mask = -1);
 
@@ -32,5 +33,7 @@ private:
     int m_Group;
     int m_Mask;
 };
+
+}
 
 #endif

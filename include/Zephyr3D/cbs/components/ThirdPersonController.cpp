@@ -1,6 +1,6 @@
 #include "ThirdPersonController.h"
 
-ThirdPersonController::ThirdPersonController(class Object& object, ID_t id, class Object& target, glm::vec3 front, glm::vec3 right, float radius, float mouse_sensitivity)
+zephyr::cbs::ThirdPersonController::ThirdPersonController(class Object& object, ID_t id, class Object& target, glm::vec3 front, glm::vec3 right, float radius, float mouse_sensitivity)
     : Component(object, id)
     , m_Target(target)
     , m_TargetTransform(nullptr)
@@ -12,13 +12,13 @@ ThirdPersonController::ThirdPersonController(class Object& object, ID_t id, clas
     , m_YRotation(0.0f) {
 }
 
-void ThirdPersonController::Initialize() {
+void zephyr::cbs::ThirdPersonController::Initialize() {
     m_TargetTransform = &m_Target.Root();
 
     RegisterUpdateCall();
 }
 
-void ThirdPersonController::Update() {
+void zephyr::cbs::ThirdPersonController::Update() {
     // Camera input
     if (zephyr::Engine::Instance().GetInput().KeyHold(GLFW_MOUSE_BUTTON_2)) {
         // Rotate camera with mouse
@@ -82,7 +82,7 @@ void ThirdPersonController::Update() {
     TransformIn.Value()->Rotation(front_rot_ver * front_rot_hor);
 }
 
-glm::quat ThirdPersonController::m_RotationBeetwen(const glm::vec3& start, const glm::vec3& dest) {
+glm::quat zephyr::cbs::ThirdPersonController::m_RotationBeetwen(const glm::vec3& start, const glm::vec3& dest) {
     if ((start.x == 0 && start.y == 0 && start.z == 0)
         || (dest.x == 0 && dest.y == 0 && dest.z == 0)) {
         return glm::quat();
@@ -112,7 +112,7 @@ glm::quat ThirdPersonController::m_RotationBeetwen(const glm::vec3& start, const
     return glm::quat(s * 0.5f, rotation_axis.x * invs, rotation_axis.y * invs, rotation_axis.z * invs);
 }
 
-void ThirdPersonController::Radius(float radius) {
+void zephyr::cbs::ThirdPersonController::Radius(float radius) {
     if (radius < 0.0f) {
         radius = 0.0f;
     }

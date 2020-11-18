@@ -11,14 +11,16 @@
 #include <glm/glm.hpp>
 #pragma warning(pop)
 
-class PointLight : public Component, public zephyr::rendering::IShaderProperty {
+namespace zephyr::cbs {
+
+class PointLight : public Component, public rendering::IShaderProperty {
 public:
     PointLight(class Object& object, ID_t id, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic);
     
     void Initialize() override;
     void Destroy() override;
     
-    void SetProperty(const zephyr::rendering::ShaderProgram& shader) const override;
+    void SetProperty(const rendering::ShaderProgram& shader) const override;
     
     const glm::vec3& Ambient() const { return m_Ambient; }
     void Ambient(const glm::vec3& ambient);
@@ -52,5 +54,7 @@ private:
         number = number < 0.0f ? 0.0f : number > 1.0f ? 1.0f : number;
     }
 };
+
+}
 
 #endif

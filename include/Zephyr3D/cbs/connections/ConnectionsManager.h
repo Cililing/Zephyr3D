@@ -13,6 +13,8 @@
 #include <vector>
 #include <unordered_map>
 
+namespace zephyr::cbs {
+
 class ConnectionsManager {
     using PropertyConnections_t = std::vector<std::pair<AbstractPropertyOut*, AbstractPropertyIn*>>;
     using MessageConnections_t = std::unordered_map<AbstractMessageOut*, std::vector<AbstractMessageIn*>>;
@@ -81,6 +83,8 @@ void ConnectionsManager::ForwardMessage(AbstractMessageOut& sender, T&& message)
     for (auto it : m_MessageConnections[&sender]) {
         it->Receive(&message);
     }
+}
+
 }
 
 #endif

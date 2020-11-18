@@ -1,8 +1,8 @@
 #include "PointLight.h"
 
-int PointLight::QUANTITY = 0;
+int zephyr::cbs::PointLight::QUANTITY = 0;
 
-PointLight::PointLight(class Object& object, ID_t id, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic)
+zephyr::cbs::PointLight::PointLight(class Object& object, ID_t id, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic)
     : Component(object, id)
     , m_Ambient(ambient)
     , m_Diffuse(diffuse)
@@ -31,15 +31,15 @@ PointLight::PointLight(class Object& object, ID_t id, glm::vec3 ambient, glm::ve
     QUANTITY = (QUANTITY + 1) % 4;
 }
 
-void PointLight::Initialize() {
+void zephyr::cbs::PointLight::Initialize() {
     Object().Scene().RegisterShaderProperty(this, "Phong");
 }
 
-void PointLight::Destroy() {
+void zephyr::cbs::PointLight::Destroy() {
     Object().Scene().UnregisterShaderProperty(this, "Phong");
 }
 
-void PointLight::SetProperty(const zephyr::rendering::ShaderProgram& shader) const {
+void zephyr::cbs::PointLight::SetProperty(const zephyr::rendering::ShaderProgram& shader) const {
     std::string pointLight = "pointLights[" + std::to_string(m_Index) + "].";
 
     shader.Uniform(pointLight + "position", Object().Root().Position());
@@ -50,7 +50,7 @@ void PointLight::SetProperty(const zephyr::rendering::ShaderProgram& shader) con
     shader.Uniform(pointLight + "quadratic", m_Quadratic);
 }
 
-void PointLight::Ambient(const glm::vec3& ambient) {
+void zephyr::cbs::PointLight::Ambient(const glm::vec3& ambient) {
     m_Ambient = ambient;
 
     NumberInRange(m_Ambient.x);
@@ -58,7 +58,7 @@ void PointLight::Ambient(const glm::vec3& ambient) {
     NumberInRange(m_Ambient.z);
 }
 
-void PointLight::Diffuse(const glm::vec3& diffuse) {
+void zephyr::cbs::PointLight::Diffuse(const glm::vec3& diffuse) {
     m_Diffuse = diffuse;
 
     NumberInRange(m_Diffuse.x);
@@ -66,7 +66,7 @@ void PointLight::Diffuse(const glm::vec3& diffuse) {
     NumberInRange(m_Diffuse.z);
 }
 
-void PointLight::Constant(float constant) {
+void zephyr::cbs::PointLight::Constant(float constant) {
     if (constant <= 0) {
         constant = 0.0000001f;
     }
@@ -74,7 +74,7 @@ void PointLight::Constant(float constant) {
     m_Constant = constant;
 }
 
-void PointLight::Linear(float linear) {
+void zephyr::cbs::PointLight::Linear(float linear) {
     if (linear <= 0) {
         linear = 0.0000001f;
     }
@@ -82,7 +82,7 @@ void PointLight::Linear(float linear) {
     m_Linear = linear;
 }
 
-void PointLight::Quadratic(float quadratic) {
+void zephyr::cbs::PointLight::Quadratic(float quadratic) {
     if (quadratic <= 0) {
         quadratic = 0.0000001f;
     }

@@ -3,6 +3,8 @@
 
 #include "../components/Component.h"
 
+namespace zephyr::cbs {
+
 class ConnectionsManager;
 
 class Connector {
@@ -30,5 +32,7 @@ protected:
 private:
     ID_t m_ID{-1};
 };
+
+}
 
 #endif

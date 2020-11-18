@@ -3,6 +3,8 @@
 
 #include "Connector.h"
 
+namespace zephyr::cbs {
+
 class AbstractPropertyOut : public Connector {
 public:
     AbstractPropertyOut(Component* owner)
@@ -82,5 +84,7 @@ public:
 
     virtual void Receive() = 0;
 };
+
+}
 
 #endif

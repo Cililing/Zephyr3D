@@ -3,7 +3,7 @@
 #include "ObjectManager.h"
 #include "../scenes/Scene.h"
 
-Object::Object(ObjectManager& owner, ID_t id, std::string name)
+zephyr::cbs::Object::Object(ObjectManager& owner, ID_t id, std::string name)
     : m_ID(id)
     , m_Name(name)
     , m_Owner(owner)
@@ -16,11 +16,7 @@ Object::Object(ObjectManager& owner, ID_t id, std::string name)
     
 }
 
-Object::~Object() {
-    
-}
-
-void Object::InitializeComponents() {
+void zephyr::cbs::Object::InitializeComponents() {
     m_ToInitializeNextFrame = 0;
     m_Root.Initialize();
     for (auto& comp : m_Components) {
@@ -28,7 +24,7 @@ void Object::InitializeComponents() {
     }
 }
 
-void Object::ProcessFrame() {
+void zephyr::cbs::Object::ProcessFrame() {
     // Becuase either Initialize, Update or Destory functions can alter m_Components
     // use raw loop with indices instead of iterators
 
@@ -70,7 +66,7 @@ void Object::ProcessFrame() {
     }
 }
 
-void Object::DestroyComponents() {
+void zephyr::cbs::Object::DestroyComponents() {
     m_Root.Destroy();
     for (auto& comp : m_Components) {
         comp->Destroy();
@@ -78,7 +74,7 @@ void Object::DestroyComponents() {
     m_ConnectionsManager.RemoveConnections();
 }
 
-void Object::RegisterUpdateCall(const Component* component) {
+void zephyr::cbs::Object::RegisterUpdateCall(const Component* component) {
     assert(component->Object().ID() == m_ID);
 
     auto id = component->ID();
@@ -94,7 +90,7 @@ void Object::RegisterUpdateCall(const Component* component) {
     }*/
 }
 
-void Object::UnregisterUpdateCall(const Component* component) {
+void zephyr::cbs::Object::UnregisterUpdateCall(const Component* component) {
     assert(component->Object().ID() == m_ID);
 
     auto id = component->ID();
@@ -110,11 +106,11 @@ void Object::UnregisterUpdateCall(const Component* component) {
     }*/
 }
 
-Scene& Object::Scene() const {
+Scene& zephyr::cbs::Object::Scene() const {
     return m_Owner.Scene();
 }
 
-void Object::RegisterConnector(Connector* connector) {
+void zephyr::cbs::Object::RegisterConnector(Connector* connector) {
     m_ConnectionsManager.RegisterConnector(connector);
 }
 

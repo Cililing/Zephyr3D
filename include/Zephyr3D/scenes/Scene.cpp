@@ -67,11 +67,11 @@ float Scene::FrameRate() const {
 }
 
 
-Object* Scene::CreateObject(const std::string& name) {
+zephyr::cbs::Object* Scene::CreateObject(const std::string& name) {
     return m_ObjectManager.CreateObject(name);
 }
 
-void Scene::DestroyObject(Object::ID_t id) {
+void Scene::DestroyObject(zephyr::cbs::Object::ID_t id) {
     m_ObjectManager.DestroyObject(id);
 }
 
