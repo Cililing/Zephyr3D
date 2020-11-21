@@ -12,6 +12,8 @@
 
 #undef LoadImage
 
+namespace zephyr {
+
 class IGUIWidget;
 class ICamera;
 
@@ -40,27 +42,27 @@ public:
     float FrameRate() const;
 
     // ObjectManager functions
-    zephyr::cbs::Object* CreateObject(const std::string& name);
-    void DestroyObject(zephyr::cbs::Object::ID_t id);
+    cbs::Object* CreateObject(const std::string& name);
+    void DestroyObject(cbs::Object::ID_t id);
 
     // DrawManager functions
-    void RegisterDrawCall(const zephyr::rendering::IDrawable* drawable, const std::string& shader_name);
-    void UnregisterDrawCall(const zephyr::rendering::IDrawable* drawable, const std::string& shader_name);
-    void RegisterShaderProperty(const zephyr::rendering::IShaderProperty* property, const std::string& shader_name);
-    void UnregisterShaderProperty(const zephyr::rendering::IShaderProperty* property, const std::string& shader_name);
-    void RegisterGUIWidget(zephyr::rendering::IGUIWidget* widget);
-    void UnregisterGUIWidget(zephyr::rendering::IGUIWidget* widget);
-    void RegisterCamera(zephyr::rendering::ICamera* camera);
-    zephyr::rendering::ICamera* MainCamera() const;
-    void Skybox(const zephyr::resources::Image& right, const zephyr::resources::Image& left, const zephyr::resources::Image& top, const zephyr::resources::Image& bottom, const zephyr::resources::Image& back, const zephyr::resources::Image& front);
-    zephyr::rendering::ShaderProgram* Shader(const std::string& name);
+    void RegisterDrawCall(const rendering::IDrawable* drawable, const std::string& shader_name);
+    void UnregisterDrawCall(const rendering::IDrawable* drawable, const std::string& shader_name);
+    void RegisterShaderProperty(const rendering::IShaderProperty* property, const std::string& shader_name);
+    void UnregisterShaderProperty(const rendering::IShaderProperty* property, const std::string& shader_name);
+    void RegisterGUIWidget(rendering::IGUIWidget* widget);
+    void UnregisterGUIWidget(rendering::IGUIWidget* widget);
+    void RegisterCamera(rendering::ICamera* camera);
+    rendering::ICamera* MainCamera() const;
+    void Skybox(const resources::Image& right, const resources::Image& left, const resources::Image& top, const resources::Image& bottom, const resources::Image& back, const resources::Image& front);
+    rendering::ShaderProgram* Shader(const std::string& name);
     void Background(const glm::vec3& background);
 
     // PhysicsManager functions
-    void AddCollisionObject(zephyr::physics::CollisionObject* collision_object, int collision_filter_group = 1, int collision_filter_mask = -1);
-    void RemoveCollisionObject(zephyr::physics::CollisionObject* collision_object);
-    void AddRigidBody(zephyr::physics::CollisionObject* rigid_body, int group = 1, int mask = -1);
-    void RemoveRigidBody(zephyr::physics::CollisionObject* rigid_body);
+    void AddCollisionObject(physics::CollisionObject* collision_object, int collision_filter_group = 1, int collision_filter_mask = -1);
+    void RemoveCollisionObject(physics::CollisionObject* collision_object);
+    void AddRigidBody(physics::CollisionObject* rigid_body, int group = 1, int mask = -1);
+    void RemoveRigidBody(physics::CollisionObject* rigid_body);
     void AddConstraint(btTypedConstraint* constraint, bool disable_collisions_between_linked_bodies = false);
     void RemoveConstraint(btTypedConstraint* constraint);
     void AddVehicle(btRaycastVehicle* vehicle);
@@ -71,17 +73,19 @@ public:
     btDynamicsWorld* DynamicsWorld();
 
     // ResourceManager functions
-    zephyr::resources::Image& LoadImage(const std::string& path);
-    zephyr::resources::Model& LoadModel(const std::string& path);
+    resources::Image& LoadImage(const std::string& path);
+    resources::Model& LoadModel(const std::string& path);
 
 private:
-    zephyr::cbs::ObjectManager m_ObjectManager;
-    zephyr::rendering::DrawManager m_DrawManager;
-    zephyr::physics::PhysicsManager m_PhysicsManager;
-    zephyr::resources::ResourcesManager m_ResourceManager;
+    cbs::ObjectManager m_ObjectManager;
+    rendering::DrawManager m_DrawManager;
+    physics::PhysicsManager m_PhysicsManager;
+    resources::ResourcesManager m_ResourceManager;
 
     bool m_Running{ false };
     float m_FrameRateLimit{ 0.0f };
 };
+
+}
 
 #endif

@@ -8,7 +8,9 @@
 #include <string>
 #include <algorithm>
 
+namespace zephyr {
 class Scene;
+}
 
 namespace zephyr::cbs {
 

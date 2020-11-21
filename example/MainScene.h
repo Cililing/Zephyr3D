@@ -14,7 +14,7 @@
 #include "GravityGun.h"
 #include "CubeSpawner.h"
 
-class MainScene : public Scene {
+class MainScene : public zephyr::Scene {
 public:
     void CreateScene() override;
 };

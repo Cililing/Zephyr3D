@@ -16,9 +16,9 @@
 #include <fstream>
 #pragma warning(pop)
 
-class Scene;
-
 namespace zephyr {
+
+class Scene;
 
 class Engine {
 public:

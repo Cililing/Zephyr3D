@@ -106,7 +106,7 @@ void zephyr::cbs::Object::UnregisterUpdateCall(const Component* component) {
     }*/
 }
 
-Scene& zephyr::cbs::Object::Scene() const {
+zephyr::Scene& zephyr::cbs::Object::Scene() const {
     return m_Owner.Scene();
 }
 

@@ -25,7 +25,9 @@
 #include <set>
 #include <algorithm>
 
+namespace zephyr {
 class Scene;
+}
 
 namespace zephyr::cbs {
 
@@ -56,7 +58,7 @@ public:
     ID_t ID() const { return m_ID; }
     const std::string& Name() const { return m_Name; }
     Transform& Root() { return m_Root; }
-    Scene& Scene() const;
+    class Scene& Scene() const;
 
     template <class T, typename ...Args>
     T* CreateComponent(Args&&... params) {

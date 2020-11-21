@@ -2,7 +2,7 @@
 
 #include "../scenes/Scene.h"
 
-zephyr::cbs::ObjectManager::ObjectManager(class Scene& owner)
+zephyr::cbs::ObjectManager::ObjectManager(class zephyr::Scene& owner)
     : m_Scene(owner)
     , m_NextObjectID(0)
     , m_ToInitializeNextFrame(0) {
