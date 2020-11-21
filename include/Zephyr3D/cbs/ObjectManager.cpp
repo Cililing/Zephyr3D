@@ -1,6 +1,6 @@
 #include "ObjectManager.h"
 
-#include "../scenes/Scene.h"
+#include "../Scene.h"
 
 zephyr::cbs::ObjectManager::ObjectManager(class zephyr::Scene& owner)
     : m_Scene(owner)

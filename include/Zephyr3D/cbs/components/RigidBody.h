@@ -2,7 +2,7 @@
 #define RigidBody_h
 
 #include "Component.h"
-#include "../../scenes/Scene.h"
+#include "../../Scene.h"
 #include "../../physics/PhysicsManager.h"
 #include "../../physics/CollisionObject.h"
 #include "../connections/PropertyIn.h"

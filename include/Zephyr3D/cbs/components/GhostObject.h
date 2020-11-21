@@ -6,7 +6,7 @@
 #include "../connections/PropertyIn.h"
 #include "../connections/MessageOut.h"
 #include "../Object.h"
-#include "../../scenes/Scene.h"
+#include "../../Scene.h"
 #include "../../core/Math.h"
 
 #pragma warning(push, 0)

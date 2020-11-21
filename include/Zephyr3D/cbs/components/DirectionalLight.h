@@ -2,7 +2,7 @@
 #define DirectionalLight_h
 
 #include "Component.h"
-#include "../../scenes/Scene.h"
+#include "../../Scene.h"
 #include "../../rendering/IShaderProperty.h"
 
 namespace zephyr::cbs {

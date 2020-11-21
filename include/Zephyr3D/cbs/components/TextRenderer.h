@@ -5,7 +5,7 @@
 #include "Component.h"
 #include "../../rendering/IGUIWidget.h"
 #include "../Object.h"
-#include "../../scenes/Scene.h"
+#include "../../Scene.h"
 #include "../connections/MessageIn.h"
 
 #include <string>

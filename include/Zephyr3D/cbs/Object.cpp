@@ -1,7 +1,7 @@
 #include "Object.h"
 
 #include "ObjectManager.h"
-#include "../scenes/Scene.h"
+#include "../Scene.h"
 
 zephyr::cbs::Object::Object(ObjectManager& owner, ID_t id, std::string name)
     : m_ID(id)

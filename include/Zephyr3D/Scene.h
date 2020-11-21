@@ -1,14 +1,14 @@
 #ifndef Scene_hpp
 #define Scene_hpp
 
-#include "../physics/PhysicsManager.h"
-#include "../cbs/ObjectManager.h"
-#include "../rendering/DrawManager.h"
-#include "../resources/ResourcesManager.h"
+#include "physics/PhysicsManager.h"
+#include "cbs/ObjectManager.h"
+#include "rendering/DrawManager.h"
+#include "resources/ResourcesManager.h"
 
-#include "../utilities/Time.h"
-#include "../utilities/Input.h"
-#include "../utilities/Window.h"
+#include "utilities/Time.h"
+#include "utilities/Input.h"
+#include "utilities/Window.h"
 
 #undef LoadImage
 

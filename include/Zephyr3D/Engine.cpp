@@ -1,5 +1,5 @@
 #include "Engine.h"
-#include "scenes/Scene.h"
+#include "Scene.h"
 
 int zephyr::Engine::Init() {
     // Initialize OpenGL

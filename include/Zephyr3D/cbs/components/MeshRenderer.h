@@ -4,7 +4,7 @@
 #include "Component.h"
 #include "../Object.h"
 #include "../connections/PropertyIn.h"
-#include "../../scenes/Scene.h"
+#include "../../Scene.h"
 #include "../../rendering/IDrawable.h"
 #include "../../rendering/StaticModel.h"
 

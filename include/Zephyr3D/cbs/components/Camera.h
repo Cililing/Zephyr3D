@@ -4,7 +4,7 @@
 #include "Component.h"
 #include "../connections/PropertyIn.h"
 #include "../Object.h"
-#include "../../scenes/Scene.h"
+#include "../../Scene.h"
 #include "../../rendering/PerspectiveCamera.h"
 #include "../../rendering/OrthographicCamera.h"
 

@@ -3,7 +3,7 @@
 
 #include "Component.h"
 #include "../Object.h"
-#include "../../scenes/Scene.h"
+#include "../../Scene.h"
 #include "../../rendering/IShaderProperty.h"
 #include "../../debuging/Logger.h"
 

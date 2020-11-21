@@ -6,7 +6,7 @@
 #include <Zephyr3D/cbs/connections/PropertyIn.h>
 
 #include <Zephyr3D/cbs/Object.h>
-#include <Zephyr3D/scenes/Scene.h>
+#include <Zephyr3D/Scene.h>
 
 #include <Zephyr3D/Engine.h>
 
