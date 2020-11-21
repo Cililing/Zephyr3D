@@ -39,10 +39,10 @@ void zephyr::cbs::TextRenderer::Draw() const {
     const glm::vec2 text_size = ImGui::CalcTextSize(m_Text.c_str());
 
     glm::vec2 pos(0.0f, 0.0f);
-    pos.x = pos.x + m_Offset.x * zephyr::Engine::Instance().GetWindow().Width();
-    pos.y = pos.y + m_Offset.y * zephyr::Engine::Instance().GetWindow().Height();
-    IGUIWidget::Align(&pos.x, -margin.x / 2, zephyr::Engine::Instance().GetWindow().Width() - margin.x / 2 - text_size.x, m_Horizontal);
-    IGUIWidget::Align(&pos.y, -margin.y / 2, zephyr::Engine::Instance().GetWindow().Height() - margin.y / 2 - text_size.y, m_Vertical);
+    pos.x = pos.x + m_Offset.x * zephyr::ZephyrEngine::Instance().GetWindow().Width();
+    pos.y = pos.y + m_Offset.y * zephyr::ZephyrEngine::Instance().GetWindow().Height();
+    IGUIWidget::Align(&pos.x, -margin.x / 2, zephyr::ZephyrEngine::Instance().GetWindow().Width() - margin.x / 2 - text_size.x, m_Horizontal);
+    IGUIWidget::Align(&pos.y, -margin.y / 2, zephyr::ZephyrEngine::Instance().GetWindow().Height() - margin.y / 2 - text_size.y, m_Vertical);
 
     ImGui::SetWindowPos(pos);
     ImGui::TextColored(m_Color, m_Text.c_str());

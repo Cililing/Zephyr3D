@@ -96,20 +96,20 @@ zephyr::Input::EKeyState zephyr::Input::KeyState(int glfw_key_enum) const {
 void zephyr::mouse_callback(GLFWwindow* window, double x_pos, double y_pos) {
     (void*)window;
 
-    zephyr::Engine::Instance().GetInput().m_MousePosition.x = static_cast<float>(x_pos);
-    zephyr::Engine::Instance().GetInput().m_MousePosition.y = static_cast<float>(y_pos);
+    zephyr::ZephyrEngine::Instance().GetInput().m_MousePosition.x = static_cast<float>(x_pos);
+    zephyr::ZephyrEngine::Instance().GetInput().m_MousePosition.y = static_cast<float>(y_pos);
     
     // Executed only once at the beginning
-    if (zephyr::Engine::Instance().GetInput().m_MouseFirstMove) {
-        zephyr::Engine::Instance().GetInput().m_MouseLastPosition = zephyr::Engine::Instance().GetInput().m_MousePosition;
-        zephyr::Engine::Instance().GetInput().m_MouseFirstMove = false;
+    if (zephyr::ZephyrEngine::Instance().GetInput().m_MouseFirstMove) {
+        zephyr::ZephyrEngine::Instance().GetInput().m_MouseLastPosition = zephyr::ZephyrEngine::Instance().GetInput().m_MousePosition;
+        zephyr::ZephyrEngine::Instance().GetInput().m_MouseFirstMove = false;
     }
 }
 
 void zephyr::scroll_callback(GLFWwindow* window, double x_offset, double y_offset) {
     (void*)window;
     (void)x_offset;
-    zephyr::Engine::Instance().GetInput().m_ScrollOffset = static_cast<float>(y_offset);
+    zephyr::ZephyrEngine::Instance().GetInput().m_ScrollOffset = static_cast<float>(y_offset);
 
-    zephyr::Engine::Instance().GetInput().m_ScrollChanged = true;
+    zephyr::ZephyrEngine::Instance().GetInput().m_ScrollChanged = true;
 }

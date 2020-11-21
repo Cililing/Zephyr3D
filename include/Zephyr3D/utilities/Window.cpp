@@ -12,7 +12,7 @@ void zephyr::Window::Initialize(unsigned int width, unsigned int height, const s
 void zephyr::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     (void*)window;
 
-    zephyr::Engine::Instance().GetWindow().m_Width = width;
-    zephyr::Engine::Instance().GetWindow().m_Height = height;
+    zephyr::ZephyrEngine::Instance().GetWindow().m_Width = width;
+    zephyr::ZephyrEngine::Instance().GetWindow().m_Height = height;
     glViewport(0, 0, width, height);
 }

@@ -1,7 +1,7 @@
 #include "Engine.h"
 #include "Scene.h"
 
-int zephyr::Engine::Init() {
+int zephyr::ZephyrEngine::Init() {
     // Initialize OpenGL
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -11,13 +11,13 @@ int zephyr::Engine::Init() {
     glfwWindowHint(GLFW_SAMPLES, 4);
 
     // Create window
-    Engine::Instance().GetWindow().Initialize(1920, 1080, "Zephyr3D");
-    if (!Engine::Instance().GetWindow()) {
+    ZephyrEngine::Instance().GetWindow().Initialize(1920, 1080, "Zephyr3D");
+    if (!ZephyrEngine::Instance().GetWindow()) {
         glfwTerminate();
         std::cout << "Failed to create GLFW window\n";
         return EXIT_FAILURE;
     }
-    glfwMakeContextCurrent(Engine::Instance().GetWindow());
+    glfwMakeContextCurrent(ZephyrEngine::Instance().GetWindow());
 
     // Load glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -26,34 +26,34 @@ int zephyr::Engine::Init() {
     }
 
     // Set callbacks
-    glfwSetFramebufferSizeCallback(Engine::Instance().GetWindow(), framebuffer_size_callback);
-    glfwSetCursorPosCallback(Engine::Instance().GetWindow(), mouse_callback);
-    glfwSetScrollCallback(Engine::Instance().GetWindow(), scroll_callback);
+    glfwSetFramebufferSizeCallback(ZephyrEngine::Instance().GetWindow(), framebuffer_size_callback);
+    glfwSetCursorPosCallback(ZephyrEngine::Instance().GetWindow(), mouse_callback);
+    glfwSetScrollCallback(ZephyrEngine::Instance().GetWindow(), scroll_callback);
 
-    glfwSetInputMode(Engine::Instance().GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(ZephyrEngine::Instance().GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     return EXIT_SUCCESS;
 }
 
-void zephyr::Engine::StartScene(Scene& scene) {
+void zephyr::ZephyrEngine::StartScene(Scene& scene) {
     scene.Initialize();
     scene.CreateScene();
     scene.Run();
     scene.Destroy();
 }
 
-void zephyr::Engine::Destroy() {
-    glfwSetWindowShouldClose(Engine::Instance().GetWindow(), true);
+void zephyr::ZephyrEngine::Destroy() {
+    glfwSetWindowShouldClose(ZephyrEngine::Instance().GetWindow(), true);
     glfwTerminate();
 }
 
-zephyr::Time& zephyr::Engine::GetTime() {
+zephyr::Time& zephyr::ZephyrEngine::GetTime() {
     return m_Time;
 }
 
-zephyr::Input& zephyr::Engine::GetInput() {
+zephyr::Input& zephyr::ZephyrEngine::GetInput() {
     return m_Input;
 }
 
-zephyr::Window& zephyr::Engine::GetWindow() {
+zephyr::Window& zephyr::ZephyrEngine::GetWindow() {
     return m_Window;
 }

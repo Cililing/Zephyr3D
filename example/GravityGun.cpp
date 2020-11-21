@@ -20,7 +20,7 @@ void GravityGun::Update() {
 
 	btVector3 to = from + direction * m_Range;
 
-	if (zephyr::Engine::Instance().GetInput().KeyPressed(m_PickUpKey)) {
+	if (zephyr::ZephyrEngine::Instance().GetInput().KeyPressed(m_PickUpKey)) {
 		// Pick up rigidbody
 
 		btCollisionWorld::ClosestRayResultCallback result(from, to);
@@ -46,7 +46,7 @@ void GravityGun::Update() {
 		m_Constraint->m_setting.m_tau = 0.001f;
 		m_OldPickingDistance = (pick_position - from).length();
 
-	} else if (m_Target != nullptr && zephyr::Engine::Instance().GetInput().KeyHold(m_PickUpKey)) {
+	} else if (m_Target != nullptr && zephyr::ZephyrEngine::Instance().GetInput().KeyHold(m_PickUpKey)) {
 		// Move picked body
 		
 		m_Target->activate();
@@ -54,7 +54,7 @@ void GravityGun::Update() {
 		btVector3 new_pivot = from + direction;
 		m_Constraint->setPivotB(new_pivot);
 
-	} else if (m_Target != nullptr && zephyr::Engine::Instance().GetInput().KeyReleased(m_PickUpKey)) {
+	} else if (m_Target != nullptr && zephyr::ZephyrEngine::Instance().GetInput().KeyReleased(m_PickUpKey)) {
 		// Let go
 
 		m_Target->forceActivationState(m_SavedState);
@@ -63,7 +63,7 @@ void GravityGun::Update() {
 		delete m_Constraint;
 		m_Constraint = nullptr;
 		m_Target = nullptr;
-	} else if (zephyr::Engine::Instance().GetInput().KeyPressed(m_PushKey)) {
+	} else if (zephyr::ZephyrEngine::Instance().GetInput().KeyPressed(m_PushKey)) {
 		// Push
 
 		btCollisionWorld::ClosestRayResultCallback result(from, to);

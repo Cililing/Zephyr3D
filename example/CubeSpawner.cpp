@@ -14,7 +14,7 @@ void CubeSpawner::Initialize() {
 }
 
 void CubeSpawner::Update() {
-    if (zephyr::Engine::Instance().GetInput().KeyPressed(GLFW_KEY_F)) {
+    if (zephyr::ZephyrEngine::Instance().GetInput().KeyPressed(GLFW_KEY_F)) {
         auto cube = Object().Scene().CreateObject("Cube");
         cube->Root().Position(Object().Root().Position() + Object().Root().Front() * m_Offset);
 

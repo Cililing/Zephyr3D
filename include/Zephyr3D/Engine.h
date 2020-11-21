@@ -20,17 +20,17 @@ namespace zephyr {
 
 class Scene;
 
-class Engine {
+class ZephyrEngine {
 public:
-    static Engine& Instance() {
-        static Engine instance;
+    static ZephyrEngine& Instance() {
+        static ZephyrEngine instance;
         return instance;
     }
 
-    Engine(const Engine&) = delete;
-    Engine& operator=(const Engine&) = delete;
-    Engine(Engine&&) = delete;
-    Engine& operator=(Engine&&) = delete;
+    ZephyrEngine(const ZephyrEngine&) = delete;
+    ZephyrEngine& operator=(const ZephyrEngine&) = delete;
+    ZephyrEngine(ZephyrEngine&&) = delete;
+    ZephyrEngine& operator=(ZephyrEngine&&) = delete;
 
     int Init();
     void StartScene(Scene& scene);
@@ -41,7 +41,7 @@ public:
     Window& GetWindow();
 
 private:
-    Engine() {}
+    ZephyrEngine() {}
 
     Time m_Time;
     Input m_Input;
