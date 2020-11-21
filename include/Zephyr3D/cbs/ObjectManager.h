@@ -1,6 +1,7 @@
 #ifndef ObjectManager_h
 #define ObjectManager_h
 
+#include "IObjectManager.h"
 #include "Object.h"
 
 #include <vector>
@@ -14,7 +15,7 @@ class Scene;
 
 namespace zephyr::cbs {
 
-class ObjectManager {
+class ObjectManager : public IObjectManager {
     using Objects_t = std::vector<std::unique_ptr<Object>>;
 
 public:

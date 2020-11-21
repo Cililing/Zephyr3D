@@ -1,6 +1,7 @@
 #ifndef PhysicsManager_h
 #define PhysicsManager_h
 
+#include "IPhysicsManager.h"
 #include "CollisionObject.h"
 #include "PhysicsRenderer.h"
 #include "../debuging/Logger.h"
@@ -18,7 +19,7 @@
 
 namespace zephyr::physics {
 
-class PhysicsManager {
+class PhysicsManager : IPhysicsManager {
 public:
     explicit PhysicsManager(zephyr::rendering::DrawManager& draw_manager);
 

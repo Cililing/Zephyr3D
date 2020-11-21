@@ -67,6 +67,7 @@ float zephyr::Scene::FrameRate() const {
 }
 
 
+
 zephyr::cbs::Object* zephyr::Scene::CreateObject(const std::string& name) {
     return m_ObjectManager.CreateObject(name);
 }

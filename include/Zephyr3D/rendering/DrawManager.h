@@ -1,6 +1,7 @@
 #ifndef DrawManager_h
 #define DrawManager_h
 
+#include "IDrawManager.h"
 #include "shaders/CommonShaders.h"
 #include "Cubemap.h"
 
@@ -28,7 +29,7 @@ class IDrawable;
 class IShaderProperty;
 class IGUIWidget;
 
-class DrawManager {
+class DrawManager : IDrawManager {
 public:
     void Initialize();
     void Destroy();
