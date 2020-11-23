@@ -20,34 +20,28 @@
 #include <map>
 #include <assert.h>
 
-class zephyr::resources::Image;
-
 namespace zephyr::rendering {
 
-class ICamera;
-class IDrawable;
-class IShaderProperty;
-class IGUIWidget;
-
-class DrawManager : IDrawManager {
+class DrawManager : public IDrawManager {
 public:
     void Initialize();
     void Destroy();
 
-    void RegisterCamera(ICamera* camera);
-    ICamera* MainCamera() const;
+    void RegisterCamera(ICamera* camera) override;
+    ICamera* MainCamera() const override;
 
-    void Skybox(const resources::Image& right, const resources::Image& left, const resources::Image& top, const resources::Image& bottom, const resources::Image& back, const resources::Image& front);
-    void Background(const glm::vec3& background);
+    void Skybox(const resources::Image& right, const resources::Image& left, const resources::Image& top, const resources::Image& bottom, const resources::Image& back, const resources::Image& front) override;
+    void ClearColor(const glm::vec3& background);
+    glm::vec3 ClearColor() const override;
 
-    void RegisterDrawCall(const IDrawable* drawable, const std::string& shader_name);
-    void UnregisterDrawCall(const IDrawable* drawable, const std::string& shader_name);
+    void RegisterDrawCall(const IDrawable* drawable, const std::string& shader_name) override;
+    void UnregisterDrawCall(const IDrawable* drawable, const std::string& shader_name) override;
 
-    void RegisterShaderProperty(const IShaderProperty* property, const std::string& shader_name);
-    void UnregisterShaderProperty(const IShaderProperty* property, const std::string& shader_name);
+    void RegisterShaderProperty(const IShaderProperty* property, const std::string& shader_name) override;
+    void UnregisterShaderProperty(const IShaderProperty* property, const std::string& shader_name) override;
 
-    void RegisterGUIWidget(IGUIWidget* widget);
-    void UnregisterGUIWidget(IGUIWidget* widget);
+    void RegisterGUIWidget(IGUIWidget* widget) override;
+    void UnregisterGUIWidget(IGUIWidget* widget) override;
 
     void CallDraws();
 

@@ -9,11 +9,11 @@ zephyr::cbs::MeshRenderer::MeshRenderer(class Object& object, ID_t id, const zep
 }
 
 void zephyr::cbs::MeshRenderer::Initialize() {
-    Object().Scene().RegisterDrawCall(this, m_ShaderName);
+    Object().Scene().GetDrawManager().RegisterDrawCall(this, m_ShaderName);
 }
 
 void zephyr::cbs::MeshRenderer::Destroy() {
-    Object().Scene().UnregisterDrawCall(this, m_ShaderName);
+    Object().Scene().GetDrawManager().UnregisterDrawCall(this, m_ShaderName);
 }
 
 void zephyr::cbs::MeshRenderer::Draw(const zephyr::rendering::ShaderProgram& shader) const {

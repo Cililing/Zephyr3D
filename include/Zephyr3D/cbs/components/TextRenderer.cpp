@@ -24,11 +24,11 @@ zephyr::cbs::TextRenderer::TextRenderer(class Object& object, ID_t id, EAlign ho
 }
 
 void zephyr::cbs::TextRenderer::Initialize() {
-    Object().Scene().RegisterGUIWidget(this);
+    Object().Scene().GetDrawManager().RegisterGUIWidget(this);
 }
 
 void zephyr::cbs::TextRenderer::Destroy() {
-    Object().Scene().UnregisterGUIWidget(this);
+    Object().Scene().GetDrawManager().UnregisterGUIWidget(this);
 }
 
 void zephyr::cbs::TextRenderer::Draw() const {

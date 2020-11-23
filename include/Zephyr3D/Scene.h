@@ -4,6 +4,7 @@
 #include "physics/PhysicsManager.h"
 #include "cbs/ObjectManager.h"
 #include "rendering/DrawManager.h"
+#include "rendering/IDrawManager.h"
 #include "resources/ResourcesManager.h"
 
 #include "utilities/Time.h"
@@ -27,7 +28,6 @@ public:
     Scene& operator=(Scene&&) = delete;
     virtual ~Scene() = default;
 
-    // 
     void Initialize();
     virtual void PreRun() {}
     virtual void CreateScene() = 0;
@@ -35,28 +35,15 @@ public:
     virtual void PostRun() {}
     void Destroy();
 
-    // Scene functions
     void Exit();
     void FrameRateLimit(unsigned int frame_rate);
     float FrameRateLimit() const;
     float FrameRate() const;
 
-    // ObjectManager functions
     cbs::Object* CreateObject(const std::string& name);
     void DestroyObject(cbs::Object::ID_t id);
 
-    // DrawManager functions
-    void RegisterDrawCall(const rendering::IDrawable* drawable, const std::string& shader_name);
-    void UnregisterDrawCall(const rendering::IDrawable* drawable, const std::string& shader_name);
-    void RegisterShaderProperty(const rendering::IShaderProperty* property, const std::string& shader_name);
-    void UnregisterShaderProperty(const rendering::IShaderProperty* property, const std::string& shader_name);
-    void RegisterGUIWidget(rendering::IGUIWidget* widget);
-    void UnregisterGUIWidget(rendering::IGUIWidget* widget);
-    void RegisterCamera(rendering::ICamera* camera);
-    rendering::ICamera* MainCamera() const;
-    void Skybox(const resources::Image& right, const resources::Image& left, const resources::Image& top, const resources::Image& bottom, const resources::Image& back, const resources::Image& front);
-    rendering::ShaderProgram* Shader(const std::string& name);
-    void Background(const glm::vec3& background);
+    rendering::IDrawManager& GetDrawManager() { return m_DrawManager; }
 
     // PhysicsManager functions
     void AddCollisionObject(physics::CollisionObject* collision_object, int collision_filter_group = 1, int collision_filter_mask = -1);

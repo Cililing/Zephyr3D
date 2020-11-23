@@ -58,8 +58,13 @@ void zephyr::rendering::DrawManager::Skybox(const resources::Image& right, const
     m_Skybox = std::make_unique<Cubemap>(right, left, top, bottom, back, front);
 }
 
-void zephyr::rendering::DrawManager::Background(const glm::vec3& background) {
+void zephyr::rendering::DrawManager::ClearColor(const glm::vec3& background) {
     m_Background = background;
+}
+
+glm::vec3 zephyr::rendering::DrawManager::ClearColor() const
+{
+    return glm::vec3();
 }
 
 void zephyr::rendering::DrawManager::RegisterDrawCall(const IDrawable* drawable, const std::string& shader_name) {

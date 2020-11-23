@@ -77,50 +77,6 @@ void zephyr::Scene::DestroyObject(zephyr::cbs::Object::ID_t id) {
 }
 
 
-void zephyr::Scene::RegisterDrawCall(const zephyr::rendering::IDrawable* drawable, const std::string& shader_name) {
-    m_DrawManager.RegisterDrawCall(drawable, shader_name);
-}
-
-void zephyr::Scene::UnregisterDrawCall(const zephyr::rendering::IDrawable* drawable, const std::string& shader_name) {
-    m_DrawManager.UnregisterDrawCall(drawable, shader_name);
-}
-
-void zephyr::Scene::RegisterShaderProperty(const zephyr::rendering::IShaderProperty* property, const std::string& shader_name) {
-    m_DrawManager.RegisterShaderProperty(property, shader_name);
-}
-
-void zephyr::Scene::UnregisterShaderProperty(const zephyr::rendering::IShaderProperty* property, const std::string& shader_name) {
-    m_DrawManager.UnregisterShaderProperty(property, shader_name);
-}
-
-void zephyr::Scene::RegisterGUIWidget(zephyr::rendering::IGUIWidget* widget) {
-    m_DrawManager.RegisterGUIWidget(widget);
-}
-
-void zephyr::Scene::UnregisterGUIWidget(zephyr::rendering::IGUIWidget* widget) {
-    //m_DrawManager.UnregisterGUIWidget(widget);
-}
-
-void zephyr::Scene::RegisterCamera(zephyr::rendering::ICamera* camera) {
-    m_DrawManager.RegisterCamera(camera);
-}
-
-zephyr::rendering::ICamera* zephyr::Scene::MainCamera() const {
-    return m_DrawManager.MainCamera();
-}
-
-void zephyr::Scene::Skybox(const zephyr::resources::Image& right, const zephyr::resources::Image& left, const zephyr::resources::Image& top, const zephyr::resources::Image& bottom, const zephyr::resources::Image& back, const zephyr::resources::Image& front) {
-    m_DrawManager.Skybox(right, left, top, bottom, back, front);
-}
-
-zephyr::rendering::ShaderProgram* zephyr::Scene::Shader(const std::string& name) {
-    return m_DrawManager.Shader(name);
-}
-
-void zephyr::Scene::Background(const glm::vec3& background) {
-    m_DrawManager.Background(background);
-}
-
 
 void zephyr::Scene::AddCollisionObject(zephyr::physics::CollisionObject* collision_object, int collision_filter_group, int collision_filter_mask) {
     m_PhysicsManager.AddCollisionObject(collision_object, collision_filter_group, collision_filter_mask);

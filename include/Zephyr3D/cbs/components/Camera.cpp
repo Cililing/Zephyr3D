@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include "../../Engine.h"
 
 zephyr::cbs::Camera::Camera(class Object& object, ID_t id, float fovy, float aspect, float near, float far)
     : Component(object, id)
@@ -7,7 +8,7 @@ zephyr::cbs::Camera::Camera(class Object& object, ID_t id, float fovy, float asp
 }
 
 void zephyr::cbs::Camera::Initialize() {
-    Object().Scene().RegisterCamera(&m_Camera);
+    Object().Scene().GetDrawManager().RegisterCamera(&m_Camera);
 
     RegisterUpdateCall();
 }

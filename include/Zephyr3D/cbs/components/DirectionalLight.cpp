@@ -9,11 +9,11 @@ zephyr::cbs::DirectionalLight::DirectionalLight(class Object& object, ID_t id, g
 }
 
 void zephyr::cbs::DirectionalLight::Initialize() {
-    Object().Scene().RegisterShaderProperty(this, "Phong");
+    Object().Scene().GetDrawManager().RegisterShaderProperty(this, "Phong");
 }
 
 void zephyr::cbs::DirectionalLight::Destroy() {
-    Object().Scene().UnregisterShaderProperty(this, "Phong");
+    Object().Scene().GetDrawManager().UnregisterShaderProperty(this, "Phong");
 }
 
 void zephyr::cbs::DirectionalLight::SetProperty(const zephyr::rendering::ShaderProgram& shader) const {

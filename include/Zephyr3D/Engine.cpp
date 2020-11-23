@@ -35,10 +35,14 @@ int zephyr::ZephyrEngine::Init() {
 }
 
 void zephyr::ZephyrEngine::StartScene(Scene& scene) {
+    m_CurrentScene = &scene;
+
     scene.Initialize();
     scene.CreateScene();
     scene.Run();
     scene.Destroy();
+
+    m_CurrentScene = nullptr;
 }
 
 void zephyr::ZephyrEngine::Destroy() {
@@ -56,4 +60,8 @@ zephyr::Input& zephyr::ZephyrEngine::GetInput() {
 
 zephyr::Window& zephyr::ZephyrEngine::GetWindow() {
     return m_Window;
+}
+
+zephyr::rendering::IDrawManager& zephyr::ZephyrEngine::Drawing() {
+    return m_CurrentScene->GetDrawManager();
 }

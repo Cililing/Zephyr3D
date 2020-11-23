@@ -6,7 +6,7 @@
 #include <stb_image.h>
 
 void MainScene::CreateScene() {
-    Skybox(LoadImage("skyboxes/basic_blue/right.png"),
+    GetDrawManager().Skybox(LoadImage("skyboxes/basic_blue/right.png"),
            LoadImage("skyboxes/basic_blue/left.png"),
            LoadImage("skyboxes/basic_blue/top.png"),
            LoadImage("skyboxes/basic_blue/bottom.png"),

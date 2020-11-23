@@ -4,6 +4,7 @@
 #include "Zephyr3D/utilities/Time.h"
 #include "Zephyr3D/utilities/Input.h"
 #include "Zephyr3D/utilities/Window.h"
+#include "rendering/IDrawManager.h"
 
 #pragma warning(push, 0)
 #include <glad/glad.h>
@@ -19,6 +20,7 @@
 namespace zephyr {
 
 class Scene;
+class rendering::IDrawManager;
 
 class ZephyrEngine {
 public:
@@ -39,13 +41,15 @@ public:
     Time& GetTime();
     Input& GetInput();
     Window& GetWindow();
+    rendering::IDrawManager& Drawing();
 
 private:
-    ZephyrEngine() {}
+    ZephyrEngine() = default;
 
     Time m_Time;
     Input m_Input;
     Window m_Window;
+    Scene* m_CurrentScene{nullptr};
 };
 
 }
