@@ -1,5 +1,5 @@
 #include "Window.h"
-#include "../Engine.h"
+#include "../ZephyrEngine.h"
 
 void zephyr::Window::Initialize(unsigned int width, unsigned int height, const std::string& title) {
     m_Width = width;

@@ -1,6 +1,6 @@
 #include "CubeSpawner.h"
 
-#include <Zephyr3D/Engine.h>
+#include <Zephyr3D/ZephyrEngine.h>
 #include <Zephyr3D/cbs/Object.h>
 #include <Zephyr3D/Scene.h>
 

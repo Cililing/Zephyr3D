@@ -5,7 +5,7 @@
 #include "IGUIWidget.h"
 #include "Cubemap.h"
 
-#include "../Engine.h"
+#include "../ZephyrEngine.h"
 #include "../utilities/Window.h"
 #include "../cbs/components/Camera.h"
 

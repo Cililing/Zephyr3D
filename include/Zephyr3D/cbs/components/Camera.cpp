@@ -1,5 +1,5 @@
 #include "Camera.h"
-#include "../../Engine.h"
+#include "../../ZephyrEngine.h"
 
 zephyr::cbs::Camera::Camera(class Object& object, ID_t id, float fovy, float aspect, float near, float far)
     : Component(object, id)

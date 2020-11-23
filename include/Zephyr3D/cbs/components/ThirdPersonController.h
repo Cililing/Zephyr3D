@@ -1,7 +1,7 @@
 #ifndef ThirdPersonController_h
 #define ThirdPersonController_h
 
-#include "../../Engine.h"
+#include "../../ZephyrEngine.h"
 #include "Component.h"
 #include "../Object.h"
 #include "../../Scene.h"

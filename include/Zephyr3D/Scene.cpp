@@ -5,7 +5,7 @@
 #include "rendering/IGUIWidget.h"
 #include "rendering/Cubemap.h"
 
-#include "Engine.h"
+#include "ZephyrEngine.h"
 
 zephyr::Scene::Scene() 
     : m_ObjectManager(*this)

@@ -1,5 +1,5 @@
-#ifndef Engine_h
-#define Engine_h
+#ifndef ZephyrEngine_h
+#define ZephyrEngine_h
 
 #include "Zephyr3D/utilities/Time.h"
 #include "Zephyr3D/utilities/Input.h"

@@ -5,7 +5,7 @@
 #include "../Object.h"
 #include "../../Scene.h"
 #include "../connections/MessageOut.h"
-#include "../../Engine.h"
+#include "../../ZephyrEngine.h"
 
 #include <string>
 

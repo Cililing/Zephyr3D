@@ -8,7 +8,7 @@
 #include <Zephyr3D/cbs/Object.h>
 #include <Zephyr3D/Scene.h>
 
-#include <Zephyr3D/Engine.h>
+#include <Zephyr3D/ZephyrEngine.h>
 
 #pragma warning(push, 0)
 #include <GLFW/glfw3.h>
