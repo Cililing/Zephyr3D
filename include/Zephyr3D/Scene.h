@@ -44,20 +44,7 @@ public:
     void DestroyObject(cbs::Object::ID_t id);
 
     rendering::IDrawManager& GetDrawManager() { return m_DrawManager; }
-
-    // PhysicsManager functions
-    void AddCollisionObject(physics::CollisionObject* collision_object, int collision_filter_group = 1, int collision_filter_mask = -1);
-    void RemoveCollisionObject(physics::CollisionObject* collision_object);
-    void AddRigidBody(physics::CollisionObject* rigid_body, int group = 1, int mask = -1);
-    void RemoveRigidBody(physics::CollisionObject* rigid_body);
-    void AddConstraint(btTypedConstraint* constraint, bool disable_collisions_between_linked_bodies = false);
-    void RemoveConstraint(btTypedConstraint* constraint);
-    void AddVehicle(btRaycastVehicle* vehicle);
-    void RemoveVehicle(btRaycastVehicle* vehicle);
-    void Raycast(const btVector3& from, const btVector3& to, btCollisionWorld::RayResultCallback& result);
-    void Gravity(const btVector3& gravity);
-    btVector3 Gravity() const;
-    btDynamicsWorld* DynamicsWorld();
+    physics::IPhysicsManager& GetPhysicsManager() { return m_PhysicsManager; }
 
     // ResourceManager functions
     resources::Image& LoadImage(const std::string& path);

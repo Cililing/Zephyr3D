@@ -19,11 +19,11 @@ void zephyr::cbs::GhostObject::Initialize() {
     m_BulletHandle->setWorldTransform(transform);
     m_BulletHandle->getCollisionShape()->setLocalScaling(Vector3(TransformIn.Value()->Scale()));
 
-    Object().Scene().AddCollisionObject(this, m_Group, m_Mask);
+    Object().Scene().GetPhysicsManager().AddCollisionObject(this, m_Group, m_Mask);
 }
 
 void zephyr::cbs::GhostObject::Destroy() {
-    Object().Scene().RemoveCollisionObject(this);
+    Object().Scene().GetPhysicsManager().RemoveCollisionObject(this);
 }
 
 void zephyr::cbs::GhostObject::PhysicsUpdate() {

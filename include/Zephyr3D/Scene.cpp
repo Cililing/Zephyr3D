@@ -78,55 +78,6 @@ void zephyr::Scene::DestroyObject(zephyr::cbs::Object::ID_t id) {
 
 
 
-void zephyr::Scene::AddCollisionObject(zephyr::physics::CollisionObject* collision_object, int collision_filter_group, int collision_filter_mask) {
-    m_PhysicsManager.AddCollisionObject(collision_object, collision_filter_group, collision_filter_mask);
-}
-
-void zephyr::Scene::RemoveCollisionObject(zephyr::physics::CollisionObject* collision_object) {
-    m_PhysicsManager.RemoveCollisionObject(collision_object);
-}
-
-void zephyr::Scene::AddRigidBody(zephyr::physics::CollisionObject* rigid_body, int group, int mask) {
-    m_PhysicsManager.AddRigidBody(rigid_body, group, mask);
-}
-
-void zephyr::Scene::RemoveRigidBody(zephyr::physics::CollisionObject* rigid_body) {
-    m_PhysicsManager.RemoveRigidBody(rigid_body);
-}
-
-void zephyr::Scene::AddConstraint(btTypedConstraint* constraint, bool disable_collisions_between_linked_bodies) {
-    m_PhysicsManager.AddConstraint(constraint, disable_collisions_between_linked_bodies);
-}
-
-void zephyr::Scene::RemoveConstraint(btTypedConstraint* constraint) {
-    m_PhysicsManager.RemoveConstraint(constraint);
-}
-
-void zephyr::Scene::AddVehicle(btRaycastVehicle* vehicle) {
-    m_PhysicsManager.AddVehicle(vehicle);
-}
-
-void zephyr::Scene::RemoveVehicle(btRaycastVehicle* vehicle) {
-    m_PhysicsManager.RemoveVehicle(vehicle);
-}
-
-void zephyr::Scene::Raycast(const btVector3& from, const btVector3& to, btCollisionWorld::RayResultCallback& result) {
-    m_PhysicsManager.Raycast(from, to, result);
-}
-
-void zephyr::Scene::Gravity(const btVector3& gravity) {
-    m_PhysicsManager.Gravity(gravity);
-}
-
-btVector3 zephyr::Scene::Gravity() const {
-    return m_PhysicsManager.Gravity();
-}
-
-btDynamicsWorld* zephyr::Scene::DynamicsWorld() {
-    return m_PhysicsManager.DynamicsWorld();
-}
-
-
 zephyr::resources::Image& zephyr::Scene::LoadImage(const std::string& path) {
     return m_ResourceManager.LoadImage(path);
 }

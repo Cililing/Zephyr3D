@@ -2,7 +2,6 @@
 #define PhysicsManager_h
 
 #include "IPhysicsManager.h"
-#include "CollisionObject.h"
 #include "PhysicsRenderer.h"
 #include "../debuging/Logger.h"
 
@@ -19,7 +18,7 @@
 
 namespace zephyr::physics {
 
-class PhysicsManager : IPhysicsManager {
+class PhysicsManager : public IPhysicsManager {
 public:
     explicit PhysicsManager(zephyr::rendering::DrawManager& draw_manager);
 
@@ -33,24 +32,24 @@ public:
     void StepSimulation(float delta_time);
     void ExitPhysics();
 
-    void AddCollisionObject(CollisionObject* collision_object, int group = 1, int mask = -1);
-    void RemoveCollisionObject(CollisionObject* collision_object);
+    void AddCollisionObject(CollisionObject* collision_object, int group = 1, int mask = -1) override;
+    void RemoveCollisionObject(CollisionObject* collision_object) override;
 
-    void AddRigidBody(CollisionObject* rigid_body, int group = 1, int mask = -1);
-    void RemoveRigidBody(CollisionObject* rigid_body);
+    void AddRigidBody(CollisionObject* rigid_body, int group = 1, int mask = -1) override;
+    void RemoveRigidBody(CollisionObject* rigid_body) override;
 
-    void AddConstraint(btTypedConstraint* constraint, bool disable_collisions_between_linked_bodies = false);
-    void RemoveConstraint(btTypedConstraint* constraint);
+    void AddConstraint(btTypedConstraint* constraint, bool disable_collisions_between_linked_bodies = false) override;
+    void RemoveConstraint(btTypedConstraint* constraint) override;
 
-    void AddVehicle(btRaycastVehicle* vehicle);
-    void RemoveVehicle(btRaycastVehicle* vehicle);
+    void AddVehicle(btRaycastVehicle* vehicle) override;
+    void RemoveVehicle(btRaycastVehicle* vehicle) override;
 
-    void Raycast(const btVector3& from, const btVector3& to, btCollisionWorld::RayResultCallback& result);
+    void Raycast(const btVector3& from, const btVector3& to, btCollisionWorld::RayResultCallback& result) override;
 
-    void Gravity(btVector3 gravity);
-    btVector3 Gravity() const;
+    void Gravity(btVector3 gravity) override;
+    btVector3 Gravity() const override;
 
-    btDynamicsWorld* DynamicsWorld();
+    btDynamicsWorld* DynamicsWorld() override;
 
 private:
     std::unique_ptr<btCollisionConfiguration> m_CollisionConfiguration;

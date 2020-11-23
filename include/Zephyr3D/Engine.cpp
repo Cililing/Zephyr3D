@@ -65,3 +65,7 @@ zephyr::Window& zephyr::ZephyrEngine::GetWindow() {
 zephyr::rendering::IDrawManager& zephyr::ZephyrEngine::Drawing() {
     return m_CurrentScene->GetDrawManager();
 }
+
+zephyr::physics::IPhysicsManager& zephyr::ZephyrEngine::Physics() {
+    return m_CurrentScene->GetPhysicsManager();
+}

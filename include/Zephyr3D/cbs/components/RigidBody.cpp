@@ -19,11 +19,11 @@ void zephyr::cbs::RigidBody::Initialize() {
     static_cast<btRigidBody*>(m_BulletHandle)->getMotionState()->setWorldTransform(transform);
     m_BulletHandle->getCollisionShape()->setLocalScaling(Vector3(TransformIn.Value()->Scale()));
 
-    Object().Scene().AddRigidBody(this, m_Group, m_Mask);
+    Object().Scene().GetPhysicsManager().AddRigidBody(this, m_Group, m_Mask);
 }
 
 void zephyr::cbs::RigidBody::Destroy() {
-    Object().Scene().RemoveRigidBody(this);
+    Object().Scene().GetPhysicsManager().RemoveRigidBody(this);
 }
 
 void zephyr::cbs::RigidBody::OnCollision(const btCollisionObject* collider) {

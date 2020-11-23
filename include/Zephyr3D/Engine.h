@@ -5,6 +5,7 @@
 #include "Zephyr3D/utilities/Input.h"
 #include "Zephyr3D/utilities/Window.h"
 #include "rendering/IDrawManager.h"
+#include "physics/IPhysicsManager.h"
 
 #pragma warning(push, 0)
 #include <glad/glad.h>
@@ -42,6 +43,7 @@ public:
     Input& GetInput();
     Window& GetWindow();
     rendering::IDrawManager& Drawing();
+    physics::IPhysicsManager& Physics();
 
 private:
     ZephyrEngine() = default;
