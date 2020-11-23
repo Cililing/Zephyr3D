@@ -69,3 +69,7 @@ zephyr::rendering::IDrawManager& zephyr::ZephyrEngine::Drawing() {
 zephyr::physics::IPhysicsManager& zephyr::ZephyrEngine::Physics() {
     return m_CurrentScene->GetPhysicsManager();
 }
+
+zephyr::resources::ResourcesManager& zephyr::ZephyrEngine::Resources() {
+    return m_CurrentScene->GetResourcesManager();
+}

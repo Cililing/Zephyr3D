@@ -75,13 +75,3 @@ zephyr::cbs::Object* zephyr::Scene::CreateObject(const std::string& name) {
 void zephyr::Scene::DestroyObject(zephyr::cbs::Object::ID_t id) {
     m_ObjectManager.DestroyObject(id);
 }
-
-
-
-zephyr::resources::Image& zephyr::Scene::LoadImage(const std::string& path) {
-    return m_ResourceManager.LoadImage(path);
-}
-
-zephyr::resources::Model& zephyr::Scene::LoadModel(const std::string& path) {
-    return m_ResourceManager.LoadModel(path);
-}

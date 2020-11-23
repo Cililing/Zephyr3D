@@ -45,10 +45,7 @@ public:
 
     rendering::IDrawManager& GetDrawManager() { return m_DrawManager; }
     physics::IPhysicsManager& GetPhysicsManager() { return m_PhysicsManager; }
-
-    // ResourceManager functions
-    resources::Image& LoadImage(const std::string& path);
-    resources::Model& LoadModel(const std::string& path);
+    resources::ResourcesManager& GetResourcesManager() { return m_ResourceManager; }
 
 private:
     cbs::ObjectManager m_ObjectManager;

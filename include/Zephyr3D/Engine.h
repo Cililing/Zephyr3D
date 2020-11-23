@@ -6,6 +6,7 @@
 #include "Zephyr3D/utilities/Window.h"
 #include "rendering/IDrawManager.h"
 #include "physics/IPhysicsManager.h"
+#include "resources/ResourcesManager.h"
 
 #pragma warning(push, 0)
 #include <glad/glad.h>
@@ -21,7 +22,6 @@
 namespace zephyr {
 
 class Scene;
-class rendering::IDrawManager;
 
 class ZephyrEngine {
 public:
@@ -44,6 +44,7 @@ public:
     Window& GetWindow();
     rendering::IDrawManager& Drawing();
     physics::IPhysicsManager& Physics();
+    resources::ResourcesManager& Resources();
 
 private:
     ZephyrEngine() = default;

@@ -6,12 +6,14 @@
 #include <stb_image.h>
 
 void MainScene::CreateScene() {
-    GetDrawManager().Skybox(LoadImage("skyboxes/basic_blue/right.png"),
-           LoadImage("skyboxes/basic_blue/left.png"),
-           LoadImage("skyboxes/basic_blue/top.png"),
-           LoadImage("skyboxes/basic_blue/bottom.png"),
-           LoadImage("skyboxes/basic_blue/back.png"),
-           LoadImage("skyboxes/basic_blue/front.png"));
+    GetDrawManager().Skybox(
+        GetResourcesManager().LoadImage("skyboxes/basic_blue/right.png"),
+        GetResourcesManager().LoadImage("skyboxes/basic_blue/left.png"),
+        GetResourcesManager().LoadImage("skyboxes/basic_blue/top.png"),
+        GetResourcesManager().LoadImage("skyboxes/basic_blue/bottom.png"),
+        GetResourcesManager().LoadImage("skyboxes/basic_blue/back.png"),
+        GetResourcesManager().LoadImage("skyboxes/basic_blue/front.png")
+    );
 
     auto light = CreateObject("Light"); {
         light->CreateComponent<zephyr::cbs::DirectionalLight>(glm::vec3(-1.0f, -0.5f, -0.5f),
