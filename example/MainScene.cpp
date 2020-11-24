@@ -6,6 +6,8 @@
 #include <stb_image.h>
 
 void MainScene::CreateScene() {
+    FrameRateLimit(60);
+
     GetDrawManager().Skybox(
         GetResourcesManager().LoadImage("skyboxes/basic_blue/right.png"),
         GetResourcesManager().LoadImage("skyboxes/basic_blue/left.png"),

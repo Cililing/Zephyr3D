@@ -19,8 +19,8 @@ void zephyr::cbs::FirstPersonController::Initialize() {
 
 void zephyr::cbs::FirstPersonController::Update() {
     // Mouse
-    float rot_ver = glm::radians(zephyr::ZephyrEngine::Instance().GetInput().MouseOffset().y * m_MouseSensitivity);
-    float rot_hor = glm::radians(-zephyr::ZephyrEngine::Instance().GetInput().MouseOffset().x * m_MouseSensitivity);
+    float rot_ver = glm::radians(ZephyrEngine::Instance().GetInput().MouseOffset().y * m_MouseSensitivity);
+    float rot_hor = glm::radians(-ZephyrEngine::Instance().GetInput().MouseOffset().x * m_MouseSensitivity);
     m_VerticalRotation += rot_ver;
 
     // Prevent object flip
@@ -37,24 +37,25 @@ void zephyr::cbs::FirstPersonController::Update() {
     TransformIn.Value()->RotateRelative(glm::vec3(0.0f, 0.0f, rot_ver));
 
     // Keyboard
-    if (zephyr::ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_LEFT_SHIFT) || zephyr::ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_RIGHT_SHIFT)) {
+    if (ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_LEFT_SHIFT) || ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_RIGHT_SHIFT)) {
         m_CurrentMovementSpeed = m_MovementSpeedFast;
     } else {
         m_CurrentMovementSpeed = m_MovementSpeedSlow;
     }
 
+
     glm::vec3 movement(0.0f);
-    if (zephyr::ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_UP)) {
-        movement.x = m_CurrentMovementSpeed * zephyr::ZephyrEngine::Instance().Time().DeltaTime();;
+    if (ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_UP)) {
+        movement.x = m_CurrentMovementSpeed;
     }
-    if (zephyr::ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_DOWN)) {
-        movement.x = -m_CurrentMovementSpeed * zephyr::ZephyrEngine::Instance().Time().DeltaTime();;
+    if (ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_DOWN)) {
+        movement.x = -m_CurrentMovementSpeed;
     }
-    if (zephyr::ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_LEFT)) {
-        movement.z = -m_CurrentMovementSpeed * zephyr::ZephyrEngine::Instance().Time().DeltaTime();;
+    if (ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_LEFT)) {
+        movement.z = -m_CurrentMovementSpeed;
     }
-    if (zephyr::ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_RIGHT)) {
-        movement.z = m_CurrentMovementSpeed * zephyr::ZephyrEngine::Instance().Time().DeltaTime();;
+    if (ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_RIGHT)) {
+        movement.z = m_CurrentMovementSpeed;
     }
 
     TransformIn.Value()->Move(movement);

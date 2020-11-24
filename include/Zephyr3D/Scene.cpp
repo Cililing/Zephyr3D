@@ -23,24 +23,25 @@ void zephyr::Scene::Run() {
 
     // Initialize Time manager as close to game loop as possible
     // to avoid misrepresented delta time
-    zephyr::ZephyrEngine::Instance().Time().Initialize();
+    ZephyrEngine::Instance().Time().Initialize();
     
     // Game loop
     while (m_Running && !glfwWindowShouldClose(zephyr::ZephyrEngine::Instance().GetWindow())) {
-        // If frame rate is greater than limit then wait
-        do {
-            zephyr::ZephyrEngine::Instance().Time().Hold();
-            glfwPollEvents();
-        } while (zephyr::ZephyrEngine::Instance().Time().DeltaTime() < m_FrameRateLimit);
-        
+        ZephyrEngine::Instance().Time().Update();
+        ZephyrEngine::Instance().GetInput().Update(zephyr::ZephyrEngine::Instance().GetWindow());
+
         // Update global systems
-        zephyr::ZephyrEngine::Instance().Time().Update();
-        zephyr::ZephyrEngine::Instance().GetInput().Update(zephyr::ZephyrEngine::Instance().GetWindow());
-        
+        while (ZephyrEngine::Instance().Time().DeltaTime() < m_FrameRateLimit) {
+            ZephyrEngine::Instance().Time().HoldFrame();
+
+        }
+
         // Update managers
         m_PhysicsManager.StepSimulation(zephyr::ZephyrEngine::Instance().Time().DeltaTime());
         m_ObjectManager.ProcessFrame();
         m_DrawManager.CallDraws();
+
+        glfwPollEvents();
     }
 }
 

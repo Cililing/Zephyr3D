@@ -1,6 +1,7 @@
 #ifndef ZephyrEngine_h
 #define ZephyrEngine_h
 
+#include "Zephyr3D/utilities/ITimer.h"
 #include "Zephyr3D/utilities/Timer.h"
 #include "Zephyr3D/utilities/Input.h"
 #include "Zephyr3D/utilities/Window.h"

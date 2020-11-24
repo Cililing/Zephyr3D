@@ -32,11 +32,11 @@ zephyr::cbs::PointLight::PointLight(class Object& object, ID_t id, glm::vec3 amb
 }
 
 void zephyr::cbs::PointLight::Initialize() {
-    Object().Scene().RegisterShaderProperty(this, "Phong");
+    Object().Scene().GetDrawManager().RegisterShaderProperty(this, "Phong");
 }
 
 void zephyr::cbs::PointLight::Destroy() {
-    Object().Scene().UnregisterShaderProperty(this, "Phong");
+    Object().Scene().GetDrawManager().UnregisterShaderProperty(this, "Phong");
 }
 
 void zephyr::cbs::PointLight::SetProperty(const zephyr::rendering::ShaderProgram& shader) const {
