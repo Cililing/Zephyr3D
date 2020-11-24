@@ -50,7 +50,7 @@ void zephyr::ZephyrEngine::Destroy() {
     glfwTerminate();
 }
 
-zephyr::Time& zephyr::ZephyrEngine::GetTime() {
+zephyr::Timer& zephyr::ZephyrEngine::Time() {
     return m_Time;
 }
 
@@ -62,7 +62,7 @@ zephyr::Window& zephyr::ZephyrEngine::GetWindow() {
     return m_Window;
 }
 
-zephyr::rendering::IDrawManager& zephyr::ZephyrEngine::Drawing() {
+zephyr::rendering::IDrawManager& zephyr::ZephyrEngine::Rendering() {
     return m_CurrentScene->GetDrawManager();
 }
 

@@ -7,7 +7,7 @@
 #include "../connections/PropertyIn.h"
 #include "../../Scene.h"
 
-#include "../../utilities/Time.h"
+#include "../../utilities/Timer.h"
 #include "../../utilities/Input.h"
 
 #define GLM_ENABLE_EXPERIMENTAL

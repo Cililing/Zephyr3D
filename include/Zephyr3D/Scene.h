@@ -7,7 +7,7 @@
 #include "rendering/IDrawManager.h"
 #include "resources/ResourcesManager.h"
 
-#include "utilities/Time.h"
+#include "utilities/Timer.h"
 #include "utilities/Input.h"
 #include "utilities/Window.h"
 

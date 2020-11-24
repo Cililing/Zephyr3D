@@ -1,7 +1,7 @@
 #ifndef ZephyrEngine_h
 #define ZephyrEngine_h
 
-#include "Zephyr3D/utilities/Time.h"
+#include "Zephyr3D/utilities/Timer.h"
 #include "Zephyr3D/utilities/Input.h"
 #include "Zephyr3D/utilities/Window.h"
 #include "rendering/IDrawManager.h"
@@ -39,17 +39,17 @@ public:
     void StartScene(Scene& scene);
     void Destroy();
 
-    Time& GetTime();
+    Timer& Time();
     Input& GetInput();
     Window& GetWindow();
-    rendering::IDrawManager& Drawing();
+    rendering::IDrawManager& Rendering();
     physics::IPhysicsManager& Physics();
     resources::ResourcesManager& Resources();
 
 private:
     ZephyrEngine() = default;
 
-    Time m_Time;
+    Timer m_Time;
     Input m_Input;
     Window m_Window;
     Scene* m_CurrentScene{nullptr};

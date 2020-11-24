@@ -7,7 +7,7 @@
 #include "../../Scene.h"
 #include "../connections/PropertyIn.h"
 
-#include "../../utilities/Time.h"
+#include "../../utilities/Timer.h"
 #include "../../utilities/Input.h"
 
 #pragma warning(push, 0)

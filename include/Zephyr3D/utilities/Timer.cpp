@@ -1,6 +1,6 @@
-#include "Time.h"
+#include "Timer.h"
 
-zephyr::Time::Time()
+zephyr::Timer::Timer()
     : m_CurrentTime(0.0f)
     , m_FixedCurrentTime(0.0f)
     , m_DeltaTime(0.0f)
@@ -9,16 +9,16 @@ zephyr::Time::Time()
     , m_TimeMultiplier(1) {
 }
 
-void zephyr::Time::Initialize() {
+void zephyr::Timer::Initialize() {
     m_CurrentTime = static_cast<float>(glfwGetTime());
     m_LastFrame = m_FixedCurrentTime = m_CurrentTime;
 }
 
-void zephyr::Time::Hold() {
+void zephyr::Timer::Hold() {
     m_DeltaTime = static_cast<float>(glfwGetTime()) - m_LastFrame;
 }
 
-void zephyr::Time::Update() {
+void zephyr::Timer::Update() {
     m_CurrentTime = static_cast<float>(glfwGetTime());
     
     // Absolute time calculations
@@ -30,6 +30,6 @@ void zephyr::Time::Update() {
     m_FixedCurrentTime +=  m_FixedDeltaTime;
 }
 
-void zephyr::Time::TimeMultiplayer(unsigned int time_multiplayer) {
+void zephyr::Timer::TimeMultiplayer(unsigned int time_multiplayer) {
     m_TimeMultiplier = time_multiplayer;
 }

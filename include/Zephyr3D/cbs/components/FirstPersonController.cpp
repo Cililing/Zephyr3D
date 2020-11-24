@@ -45,16 +45,16 @@ void zephyr::cbs::FirstPersonController::Update() {
 
     glm::vec3 movement(0.0f);
     if (zephyr::ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_UP)) {
-        movement.x = m_CurrentMovementSpeed * zephyr::ZephyrEngine::Instance().GetTime().DeltaTime();;
+        movement.x = m_CurrentMovementSpeed * zephyr::ZephyrEngine::Instance().Time().DeltaTime();;
     }
     if (zephyr::ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_DOWN)) {
-        movement.x = -m_CurrentMovementSpeed * zephyr::ZephyrEngine::Instance().GetTime().DeltaTime();;
+        movement.x = -m_CurrentMovementSpeed * zephyr::ZephyrEngine::Instance().Time().DeltaTime();;
     }
     if (zephyr::ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_LEFT)) {
-        movement.z = -m_CurrentMovementSpeed * zephyr::ZephyrEngine::Instance().GetTime().DeltaTime();;
+        movement.z = -m_CurrentMovementSpeed * zephyr::ZephyrEngine::Instance().Time().DeltaTime();;
     }
     if (zephyr::ZephyrEngine::Instance().GetInput().KeyHold(GLFW_KEY_RIGHT)) {
-        movement.z = m_CurrentMovementSpeed * zephyr::ZephyrEngine::Instance().GetTime().DeltaTime();;
+        movement.z = m_CurrentMovementSpeed * zephyr::ZephyrEngine::Instance().Time().DeltaTime();;
     }
 
     TransformIn.Value()->Move(movement);
