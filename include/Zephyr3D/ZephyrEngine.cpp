@@ -54,7 +54,7 @@ zephyr::Timer& zephyr::ZephyrEngine::Time() {
     return m_Time;
 }
 
-zephyr::Input& zephyr::ZephyrEngine::GetInput() {
+zephyr::InputManager& zephyr::ZephyrEngine::Input() {
     return m_Input;
 }
 

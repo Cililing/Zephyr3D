@@ -41,7 +41,7 @@ public:
     void Destroy();
 
     Timer& Time();
-    Input& GetInput();
+    InputManager& Input();
     Window& GetWindow();
     rendering::IDrawManager& Rendering();
     physics::IPhysicsManager& Physics();
@@ -51,7 +51,7 @@ private:
     ZephyrEngine() = default;
 
     Timer m_Time;
-    Input m_Input;
+    InputManager m_Input;
     Window m_Window;
     Scene* m_CurrentScene{nullptr};
 };

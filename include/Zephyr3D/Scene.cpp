@@ -28,12 +28,12 @@ void zephyr::Scene::Run() {
     // Game loop
     while (m_Running && !glfwWindowShouldClose(zephyr::ZephyrEngine::Instance().GetWindow())) {
         ZephyrEngine::Instance().Time().Update();
-        ZephyrEngine::Instance().GetInput().Update(zephyr::ZephyrEngine::Instance().GetWindow());
+        ZephyrEngine::Instance().Input().Update(zephyr::ZephyrEngine::Instance().GetWindow());
 
         // Update global systems
         while (ZephyrEngine::Instance().Time().DeltaTime() < m_FrameRateLimit) {
             ZephyrEngine::Instance().Time().HoldFrame();
-
+            glfwPollEvents();
         }
 
         // Update managers

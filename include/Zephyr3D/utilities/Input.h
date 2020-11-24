@@ -1,29 +1,21 @@
 #ifndef Input_hpp
 #define Input_hpp
 
+#include "IInput.h"
+
 #pragma warning(push, 0)
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
-#include <glm/glm.hpp>
 #pragma warning(pop)
 
 namespace zephyr {
 
-class Input {
+class InputManager : public IInput {
     friend void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);
     friend void scroll_callback(GLFWwindow* window, double x_offset, double y_offset);
 
 public:
-    Input();
-
-    // Old style enums to allow easy check
-    enum EKeyState {
-        FREE = 0,   // The key is not being pressed nor has been
-        PRESSED,    // The key is pressed in this frame
-        HOLD,       // The key is still being pressed
-        RELEASED,   // The key was pressed in previous frame and is not now
-    };
+    InputManager();
 
     void Update(GLFWwindow *window);
 
@@ -33,7 +25,7 @@ public:
     bool KeyPressed(int glfw_key_enum) const;
     bool KeyHold(int glfw_key_enum) const ;
     bool KeyReleased(int glfw_key_enum) const ;
-    Input::EKeyState KeyState(int glfw_key_enum) const;
+    IInput::EKeyState KeyState(int glfw_key_enum) const;
 
     const glm::vec2& MousePosition() const { return m_MousePosition; }
     const glm::vec2& MouseOffset() const { return m_MouseOffset; }
@@ -43,7 +35,7 @@ private:
     bool m_AnyKeyPressed;
     bool m_AnyKeyHold;
     bool m_AnyKeyReleased;
-    Input::EKeyState m_Keys[GLFW_KEY_MENU + 1];
+    IInput::EKeyState m_Keys[GLFW_KEY_MENU + 1];
 
     bool m_MouseFirstMove;
     bool m_ScrollChanged;
