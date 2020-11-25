@@ -65,7 +65,7 @@ zephyr::cbs::Cube::Cube(class Object& object, ID_t id, const glm::vec3& color)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void zephyr::cbs::Cube::Draw(const zephyr::rendering::ShaderProgram& shader) const {
+void zephyr::cbs::Cube::Draw(const rendering::ShaderProgram& shader) const {
     shader.Uniform("model", TransformIn.Value()->Model());
 
     glBindVertexArray(m_VAO);

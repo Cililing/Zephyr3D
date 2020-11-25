@@ -12,21 +12,21 @@ namespace zephyr::cbs {
 
 class Transform;
 
-class MeshRenderer : public Component, public zephyr::rendering::IDrawable {
+class MeshRenderer : public Component, public rendering::IDrawable {
 public:
-    MeshRenderer(class Object& object, ID_t id, const zephyr::resources::Model& model, const std::string& shader_name);
+    MeshRenderer(class Object& object, ID_t id, const resources::Model& model, const std::string& shader_name);
 
     void Initialize() override;
     void Destroy() override;
 
-    void Draw(const zephyr::rendering::ShaderProgram& shader) const override;
+    void Draw(const rendering::ShaderProgram& shader) const override;
 
     PropertyIn<Transform*> TransformIn{ this };
 
 private:
-    void DrawMesh(const zephyr::rendering::ShaderProgram& shader, const zephyr::rendering::StaticModel::StaticMesh& mesh) const;
+    void DrawMesh(const rendering::ShaderProgram& shader, const rendering::StaticModel::StaticMesh& mesh) const;
 
-    zephyr::rendering::StaticModel m_Model;
+    rendering::StaticModel m_Model;
     std::string m_ShaderName;
 };
 

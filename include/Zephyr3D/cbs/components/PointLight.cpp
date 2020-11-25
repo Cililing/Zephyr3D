@@ -39,7 +39,7 @@ void zephyr::cbs::PointLight::Destroy() {
     Object().Scene().GetDrawManager().UnregisterShaderProperty(this, "Phong");
 }
 
-void zephyr::cbs::PointLight::SetProperty(const zephyr::rendering::ShaderProgram& shader) const {
+void zephyr::cbs::PointLight::SetProperty(const rendering::ShaderProgram& shader) const {
     std::string pointLight = "pointLights[" + std::to_string(m_Index) + "].";
 
     shader.Uniform(pointLight + "position", Object().Root().Position());

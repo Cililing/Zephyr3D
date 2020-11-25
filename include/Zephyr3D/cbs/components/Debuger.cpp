@@ -10,7 +10,7 @@ void zephyr::cbs::Debuger::Initialize() {
 }
 
 void zephyr::cbs::Debuger::Update() {
-    auto fps = std::to_string(1.0f / zephyr::ZephyrEngine::Instance().Time().DeltaTime());
+    auto fps = std::to_string(1.0f / ZephyrEngine::Instance().Time().DeltaTime());
 
     std::string msg = 
         "Zephyr3D alpha scene\n"
