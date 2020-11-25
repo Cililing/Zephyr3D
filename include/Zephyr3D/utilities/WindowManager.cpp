@@ -1,7 +1,7 @@
-#include "Window.h"
+#include "WindowManager.h"
 #include "../ZephyrEngine.h"
 
-void zephyr::Window::Initialize(unsigned int width, unsigned int height, const std::string& title) {
+void zephyr::WindowManager::Initialize(unsigned int width, unsigned int height, const std::string& title) {
     m_Width = width;
     m_Height = height;
     m_Title = title;

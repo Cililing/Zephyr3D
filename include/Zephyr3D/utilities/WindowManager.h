@@ -1,5 +1,5 @@
-#ifndef Window_h
-#define Window_h
+#ifndef WindowManager_h
+#define WindowManager_h
 
 #pragma warning(push, 0)
 #include <glad/glad.h>
@@ -10,7 +10,7 @@
 
 namespace zephyr {
 
-class Window {
+class WindowManager {
     friend void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 public:

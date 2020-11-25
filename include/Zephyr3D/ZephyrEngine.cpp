@@ -58,7 +58,7 @@ zephyr::InputManager& zephyr::ZephyrEngine::Input() {
     return m_Input;
 }
 
-zephyr::Window& zephyr::ZephyrEngine::GetWindow() {
+zephyr::WindowManager& zephyr::ZephyrEngine::GetWindow() {
     return m_Window;
 }
 

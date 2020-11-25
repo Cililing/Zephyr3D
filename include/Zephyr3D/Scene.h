@@ -9,7 +9,7 @@
 
 #include "utilities/Timer.h"
 #include "utilities/Input.h"
-#include "utilities/Window.h"
+#include "utilities/WindowManager.h"
 
 #undef LoadImage
 

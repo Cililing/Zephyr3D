@@ -6,7 +6,7 @@
 #include "Cubemap.h"
 
 #include "../ZephyrEngine.h"
-#include "../utilities/Window.h"
+#include "../utilities/WindowManager.h"
 #include "../cbs/components/Camera.h"
 
 void zephyr::rendering::DrawManager::Initialize() {
@@ -62,8 +62,7 @@ void zephyr::rendering::DrawManager::ClearColor(const glm::vec3& background) {
     m_Background = background;
 }
 
-glm::vec3 zephyr::rendering::DrawManager::ClearColor() const
-{
+glm::vec3 zephyr::rendering::DrawManager::ClearColor() const {
     return glm::vec3();
 }
 
