@@ -10,5 +10,4 @@
 
 ## TODO
 * audio rework
-* scene rework
 * advanced OpenGL lighting
