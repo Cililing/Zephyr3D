@@ -34,7 +34,7 @@ public:
     PropertyIn<Transform*> TransformIn { this };
 
 private:
-    zephyr::rendering::PerspectiveCamera m_Camera;
+    rendering::PerspectiveCamera m_Camera;
 };
 
 }

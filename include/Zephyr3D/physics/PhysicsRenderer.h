@@ -15,7 +15,7 @@ namespace zephyr::physics {
 
 class PhysicsRenderer : public btIDebugDraw {
 public:
-    PhysicsRenderer(zephyr::rendering::DrawManager& draw_manager);
+    PhysicsRenderer(rendering::DrawManager& draw_manager);
 
     void drawLine(const btVector3& from, const btVector3& to, const btVector3& color) override;
     void drawTriangle(const btVector3& v0, const btVector3& v1, const btVector3& v2, [[maybe_unused]] const btVector3& /*n0*/, [[maybe_unused]] const btVector3& /*n1*/, [[maybe_unused]] const btVector3& /*n2*/, const btVector3& color, btScalar alpha) override;
@@ -30,10 +30,10 @@ public:
 
     void setDebugMode(int debugMode) override;
     int getDebugMode() const override;
-
+    
 private:
     int m_DebugMode;
-    zephyr::rendering::Debug* m_DebugShader;
+    rendering::Debug* m_DebugShader;
 };
 
 }

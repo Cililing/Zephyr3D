@@ -9,11 +9,11 @@
 
 namespace zephyr::cbs {
 
-class Cube : public Component, public zephyr::rendering::IDrawable {
+class Cube : public Component, public rendering::IDrawable {
 public:
     Cube(class Object& object, ID_t id, const glm::vec3& color);
 
-    void Draw(const zephyr::rendering::ShaderProgram& shader) const override;
+    void Draw(const rendering::ShaderProgram& shader) const override;
 
     void Initialize() override;
     void Destroy() override;

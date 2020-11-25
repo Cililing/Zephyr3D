@@ -16,7 +16,7 @@ void zephyr::cbs::DirectionalLight::Destroy() {
     Object().Scene().GetDrawManager().UnregisterShaderProperty(this, "Phong");
 }
 
-void zephyr::cbs::DirectionalLight::SetProperty(const zephyr::rendering::ShaderProgram& shader) const {
+void zephyr::cbs::DirectionalLight::SetProperty(const rendering::ShaderProgram& shader) const {
     shader.Uniform("dirLight.direction", m_Direction);
     shader.Uniform("dirLight.ambient", m_Ambient);
     shader.Uniform("dirLight.diffuse", m_Diffuse);

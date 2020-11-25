@@ -66,7 +66,7 @@ float zephyr::Scene::FrameRateLimit() const {
 }
 
 float zephyr::Scene::FrameRate() const {
-    return 1.0f / zephyr::ZephyrEngine::Instance().Time().DeltaTime();
+    return 1.0f / ZephyrEngine::Instance().Time().DeltaTime();
 }
 
 
