@@ -15,7 +15,7 @@ void zephyr::rendering::DrawManager::Initialize() {
     // Dear imgui initialiation
     ImGui::CreateContext();
     ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(ZephyrEngine::Instance().GetWindow(), true);
+    ImGui_ImplGlfw_InitForOpenGL(ZephyrEngine::Instance().Window(), true);
     ImGui_ImplOpenGL3_Init("#version 330 core");
 
     // Load default font
@@ -146,7 +146,7 @@ void zephyr::rendering::DrawManager::CallDraws() {
     ImGui::EndFrame();
 
     // End of drawing
-    glfwSwapBuffers(zephyr::ZephyrEngine::Instance().GetWindow());
+    glfwSwapBuffers(ZephyrEngine::Instance().Window());
 }
 
 zephyr::rendering::ShaderProgram* zephyr::rendering::DrawManager::Shader(const std::string& name) {

@@ -26,9 +26,9 @@ void zephyr::Scene::Run() {
     ZephyrEngine::Instance().Time().Initialize();
     
     // Game loop
-    while (m_Running && !glfwWindowShouldClose(zephyr::ZephyrEngine::Instance().GetWindow())) {
+    while (m_Running && !ZephyrEngine::Instance().Window().ShouldClose()) {
         ZephyrEngine::Instance().Time().Update();
-        ZephyrEngine::Instance().Input().Update(zephyr::ZephyrEngine::Instance().GetWindow());
+        ZephyrEngine::Instance().Input().Update(ZephyrEngine::Instance().Window());
 
         // Update global systems
         while (ZephyrEngine::Instance().Time().DeltaTime() < m_FrameRateLimit) {

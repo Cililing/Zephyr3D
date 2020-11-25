@@ -4,6 +4,7 @@
 #include "Zephyr3D/utilities/ITimer.h"
 #include "Zephyr3D/utilities/Timer.h"
 #include "Zephyr3D/utilities/Input.h"
+#include "Zephyr3D/utilities/IWindow.h"
 #include "Zephyr3D/utilities/WindowManager.h"
 #include "rendering/IDrawManager.h"
 #include "physics/IPhysicsManager.h"
@@ -42,7 +43,7 @@ public:
 
     Timer& Time();
     InputManager& Input();
-    WindowManager& GetWindow();
+    IWindow& Window();
     rendering::IDrawManager& Rendering();
     physics::IPhysicsManager& Physics();
     resources::ResourcesManager& Resources();

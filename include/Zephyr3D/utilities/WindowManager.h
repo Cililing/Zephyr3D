@@ -1,26 +1,25 @@
 #ifndef WindowManager_h
 #define WindowManager_h
 
-#pragma warning(push, 0)
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <string>
-#pragma warning(pop)
+#include "IWindow.h"
 
 namespace zephyr {
 
-class WindowManager {
+class WindowManager : public IWindow {
     friend void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 public:
     void Initialize(unsigned int width, unsigned int heigth, const std::string& title);
-    
-    GLFWwindow* Pointer() const { return m_GLFWHandler; }
-    unsigned int Width() const { return m_Width; }
-    unsigned int Height() const {return m_Height; }
-    
-    operator GLFWwindow*() { return m_GLFWHandler; }
+
+    bool ShouldClose() const override;
+
+    unsigned int Width() const override { return m_Width; }
+    unsigned int Height() const override {return m_Height; }
+    std::string Title() const override { return m_Title; }
+    void Title(const std::string& title) override;
+
+    GLFWwindow* Pointer() const override { return m_GLFWHandler; }
+    operator GLFWwindow*() const override { return m_GLFWHandler; }
     
 private:
     GLFWwindow* m_GLFWHandler{ nullptr };

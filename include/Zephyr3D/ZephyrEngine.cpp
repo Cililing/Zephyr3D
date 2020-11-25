@@ -11,13 +11,13 @@ int zephyr::ZephyrEngine::Init() {
     glfwWindowHint(GLFW_SAMPLES, 4);
 
     // Create window
-    ZephyrEngine::Instance().GetWindow().Initialize(1920, 1080, "Zephyr3D");
-    if (!ZephyrEngine::Instance().GetWindow()) {
+    m_Window.Initialize(1920, 1080, "Zephyr3D");
+    if (!m_Window) {
         glfwTerminate();
         std::cout << "Failed to create GLFW window\n";
         return EXIT_FAILURE;
     }
-    glfwMakeContextCurrent(ZephyrEngine::Instance().GetWindow());
+    glfwMakeContextCurrent(m_Window);
 
     // Load glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -26,11 +26,11 @@ int zephyr::ZephyrEngine::Init() {
     }
 
     // Set callbacks
-    glfwSetFramebufferSizeCallback(ZephyrEngine::Instance().GetWindow(), framebuffer_size_callback);
-    glfwSetCursorPosCallback(ZephyrEngine::Instance().GetWindow(), mouse_callback);
-    glfwSetScrollCallback(ZephyrEngine::Instance().GetWindow(), scroll_callback);
+    glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(m_Window, mouse_callback);
+    glfwSetScrollCallback(m_Window, scroll_callback);
 
-    glfwSetInputMode(ZephyrEngine::Instance().GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     return EXIT_SUCCESS;
 }
 
@@ -46,7 +46,7 @@ void zephyr::ZephyrEngine::StartScene(Scene& scene) {
 }
 
 void zephyr::ZephyrEngine::Destroy() {
-    glfwSetWindowShouldClose(ZephyrEngine::Instance().GetWindow(), true);
+    glfwSetWindowShouldClose(m_Window, true);
     glfwTerminate();
 }
 
@@ -58,7 +58,7 @@ zephyr::InputManager& zephyr::ZephyrEngine::Input() {
     return m_Input;
 }
 
-zephyr::WindowManager& zephyr::ZephyrEngine::GetWindow() {
+zephyr::IWindow& zephyr::ZephyrEngine::Window() {
     return m_Window;
 }
 
