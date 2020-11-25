@@ -13,13 +13,12 @@
 #pragma warning(push, 0)
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
-#include <al.h>
-#include <alc.h>
+#pragma warning(pop)
 
 #include <iostream>
 #include <fstream>
-#pragma warning(pop)
+#include <type_traits>
+#include <assert.h>
 
 namespace zephyr {
 
@@ -38,23 +37,29 @@ public:
     ZephyrEngine& operator=(ZephyrEngine&&) = delete;
 
     int Init();
-    void StartScene(Scene& scene);
     void Destroy();
 
+    template <class T>
+    void StartScene() {
+        T scene(m_Timer, m_InputManager);
+
+        scene.Initialize();
+        scene.CreateScene();
+        scene.Run();
+        scene.Destroy();
+    }
+    
+
     Timer& Time();
-    InputManager& Input();
+    IInput& Input();
     IWindow& Window();
-    rendering::IDrawManager& Rendering();
-    physics::IPhysicsManager& Physics();
-    resources::ResourcesManager& Resources();
 
 private:
     ZephyrEngine() = default;
 
-    Timer m_Time;
-    InputManager m_Input;
-    WindowManager m_Window;
-    Scene* m_CurrentScene{nullptr};
+    Timer m_Timer;
+    InputManager m_InputManager;
+    WindowManager m_WindowManager;
 };
 
 }

@@ -1,6 +1,7 @@
 #ifndef MainScene_h
 #define MainScene_h
 
+#include <Zephyr3D/ZephyrEngine.h>
 #include <Zephyr3D/Scene.h>
 #include <Zephyr3D/cbs/components/Camera.h>
 #include <Zephyr3D/cbs/components/DirectionalLight.h>
@@ -16,6 +17,8 @@
 
 class MainScene : public zephyr::Scene {
 public:
+    MainScene(zephyr::Timer& timer, zephyr::InputManager& input);
+
     void CreateScene() override;
 };
 

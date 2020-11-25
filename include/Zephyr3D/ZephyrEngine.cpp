@@ -11,13 +11,13 @@ int zephyr::ZephyrEngine::Init() {
     glfwWindowHint(GLFW_SAMPLES, 4);
 
     // Create window
-    m_Window.Initialize(1920, 1080, "Zephyr3D");
-    if (!m_Window) {
+    m_WindowManager.Initialize(1920, 1080, "Zephyr3D");
+    if (!m_WindowManager) {
         glfwTerminate();
         std::cout << "Failed to create GLFW window\n";
         return EXIT_FAILURE;
     }
-    glfwMakeContextCurrent(m_Window);
+    glfwMakeContextCurrent(m_WindowManager);
 
     // Load glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -26,50 +26,27 @@ int zephyr::ZephyrEngine::Init() {
     }
 
     // Set callbacks
-    glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(m_Window, mouse_callback);
-    glfwSetScrollCallback(m_Window, scroll_callback);
+    glfwSetFramebufferSizeCallback(m_WindowManager, framebuffer_size_callback);
+    glfwSetCursorPosCallback(m_WindowManager, mouse_callback);
+    glfwSetScrollCallback(m_WindowManager, scroll_callback);
 
-    glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(m_WindowManager, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     return EXIT_SUCCESS;
 }
 
-void zephyr::ZephyrEngine::StartScene(Scene& scene) {
-    m_CurrentScene = &scene;
-
-    scene.Initialize();
-    scene.CreateScene();
-    scene.Run();
-    scene.Destroy();
-
-    m_CurrentScene = nullptr;
-}
-
 void zephyr::ZephyrEngine::Destroy() {
-    glfwSetWindowShouldClose(m_Window, true);
+    glfwSetWindowShouldClose(m_WindowManager, true);
     glfwTerminate();
 }
 
 zephyr::Timer& zephyr::ZephyrEngine::Time() {
-    return m_Time;
+    return m_Timer;
 }
 
-zephyr::InputManager& zephyr::ZephyrEngine::Input() {
-    return m_Input;
+zephyr::IInput& zephyr::ZephyrEngine::Input() {
+    return m_InputManager;
 }
 
 zephyr::IWindow& zephyr::ZephyrEngine::Window() {
-    return m_Window;
-}
-
-zephyr::rendering::IDrawManager& zephyr::ZephyrEngine::Rendering() {
-    return m_CurrentScene->GetDrawManager();
-}
-
-zephyr::physics::IPhysicsManager& zephyr::ZephyrEngine::Physics() {
-    return m_CurrentScene->GetPhysicsManager();
-}
-
-zephyr::resources::ResourcesManager& zephyr::ZephyrEngine::Resources() {
-    return m_CurrentScene->GetResourcesManager();
+    return m_WindowManager;
 }

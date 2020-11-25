@@ -7,8 +7,10 @@
 
 #include "ZephyrEngine.h"
 
-zephyr::Scene::Scene() 
-    : m_ObjectManager(*this)
+zephyr::Scene::Scene(Timer& timer, InputManager& input_manager)
+    : m_Timer(timer)
+    , m_InputManager(input_manager)
+    , m_ObjectManager(*this)
     , m_PhysicsManager(m_DrawManager) {
 }
 
@@ -23,16 +25,16 @@ void zephyr::Scene::Run() {
 
     // Initialize Time manager as close to game loop as possible
     // to avoid misrepresented delta time
-    ZephyrEngine::Instance().Time().Initialize();
+    m_Timer.Initialize();
     
     // Game loop
     while (m_Running && !ZephyrEngine::Instance().Window().ShouldClose()) {
-        ZephyrEngine::Instance().Time().Update();
-        ZephyrEngine::Instance().Input().Update(ZephyrEngine::Instance().Window());
+        m_Timer.Update();
+        m_InputManager.Update(ZephyrEngine::Instance().Window());
 
         // Update global systems
-        while (ZephyrEngine::Instance().Time().DeltaTime() < m_FrameRateLimit) {
-            ZephyrEngine::Instance().Time().HoldFrame();
+        while (m_Timer.DeltaTime() < m_FrameRateLimit) {
+            m_Timer.HoldFrame();
             glfwPollEvents();
         }
 

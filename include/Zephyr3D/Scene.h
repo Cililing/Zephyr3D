@@ -20,7 +20,7 @@ class ICamera;
 
 class Scene {
 public:
-    Scene();
+    Scene(Timer& timer, InputManager& input_manager);
 
     Scene(const Scene&) = delete;
     Scene& operator=(const Scene&) = delete;
@@ -48,13 +48,16 @@ public:
     resources::ResourcesManager& GetResourcesManager() { return m_ResourceManager; }
 
 private:
+    Timer& m_Timer;
+    InputManager& m_InputManager;
+
     cbs::ObjectManager m_ObjectManager;
     rendering::DrawManager m_DrawManager;
     physics::PhysicsManager m_PhysicsManager;
     resources::ResourcesManager m_ResourceManager;
 
-    bool m_Running{ false };
     float m_FrameRateLimit{ 0.0f };
+    bool m_Running{ false };
 };
 
 }
