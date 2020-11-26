@@ -84,10 +84,6 @@ void zephyr::cbs::Object::RegisterUpdateCall(const Component* component) {
 
     assert(comp != m_Components.end());
     m_ToUpdate += 1;
-    /*if (std::distance(m_Components.begin() + m_ToDestroy, comp) >= static_cast<ptrdiff_t>(m_ToUpdate)) {
-        std::iter_swap(m_Components.begin() + m_ToDestroy + m_ToUpdate, comp);
-        m_ToUpdate += 1;
-    }*/
 }
 
 void zephyr::cbs::Object::UnregisterUpdateCall(const Component* component) {
@@ -100,10 +96,6 @@ void zephyr::cbs::Object::UnregisterUpdateCall(const Component* component) {
 
     assert(comp != m_Components.end());
     m_ToUpdate -= 1;
-    /*if (std::distance(m_Components.begin() + m_ToDestroy, comp) <= static_cast<ptrdiff_t>(m_ToUpdate)) {
-        std::iter_swap(m_Components.begin() + m_ToDestroy + m_ToUpdate, comp);
-        m_ToUpdate -= 1;
-    }*/
 }
 
 zephyr::Scene& zephyr::cbs::Object::Scene() const {

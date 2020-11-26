@@ -10,11 +10,6 @@ namespace zephyr::cbs {
 
 class Object;
 
-/** \brief Base class for all components
- *
- * Components represents behaviour of game objects. To create new component inherit from this class and override
- * all neccesary functions. Each component has unique ID of type ID_t. 
- */
 class Component {
 public:
     using ID_t = int;
