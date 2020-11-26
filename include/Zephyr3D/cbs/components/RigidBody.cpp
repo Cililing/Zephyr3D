@@ -9,6 +9,8 @@ zephyr::cbs::RigidBody::RigidBody(class Object& object, ID_t id, btScalar mass, 
 }
 
 void zephyr::cbs::RigidBody::Initialize() {
+    assert(TransformIn.Connected());
+
     btTransform transform;
     transform.setIdentity();
 

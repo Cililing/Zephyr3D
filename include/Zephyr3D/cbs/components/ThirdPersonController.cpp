@@ -13,6 +13,8 @@ zephyr::cbs::ThirdPersonController::ThirdPersonController(class Object& object, 
 }
 
 void zephyr::cbs::ThirdPersonController::Initialize() {
+    assert(TransformIn.Connected());
+
     m_TargetTransform = &m_Target.Root();
 
     RegisterUpdateCall();

@@ -10,6 +10,8 @@ zephyr::cbs::GhostObject::GhostObject(class Object& object, ID_t id, btCollision
 }
 
 void zephyr::cbs::GhostObject::Initialize() {
+    assert(TransformIn.Connected());
+
     btTransform transform;
     transform.setIdentity();
 

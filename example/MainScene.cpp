@@ -32,11 +32,11 @@ void MainScene::CreateScene() {
         player->Root().Rotate(glm::vec3(0.0f, 0.0f, glm::radians(-25.0f)));
         player->Root().Rotate(glm::vec3(0.0f, glm::radians(-20.0f), 0.0f));
 
-        auto comp = player->CreateComponent<zephyr::cbs::Camera>(glm::radians(45.0f),
+        auto camera = player->CreateComponent<zephyr::cbs::Camera>(glm::radians(45.0f),
                                                     static_cast<float>(zephyr::ZephyrEngine::Instance().Window().Width()) / static_cast<float>(zephyr::ZephyrEngine::Instance().Window().Height()),
                                                     0.1f, 
                                                     500.0f);
-        player->Connect(player->Root().This, comp->TransformIn);
+        player->Connect(player->Root().This, camera->TransformIn);
 
         auto fpc = player->CreateComponent<zephyr::cbs::FirstPersonController>();
         player->Connect(player->Root().This, fpc->TransformIn);

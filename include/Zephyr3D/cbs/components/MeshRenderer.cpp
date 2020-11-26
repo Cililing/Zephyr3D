@@ -9,6 +9,8 @@ zephyr::cbs::MeshRenderer::MeshRenderer(class Object& object, ID_t id, const res
 }
 
 void zephyr::cbs::MeshRenderer::Initialize() {
+    assert(TransformIn.Connected());
+
     Object().Scene().GetDrawManager().RegisterDrawCall(this, m_ShaderName);
 }
 

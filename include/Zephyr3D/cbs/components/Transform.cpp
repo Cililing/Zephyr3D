@@ -8,6 +8,8 @@ zephyr::cbs::Transform::Transform(class Object& object, ID_t id)
 }
 
 void zephyr::cbs::Transform::Initialize() {
+    assert(Parent.Connected());
+
     UpdateModel();
 }
 

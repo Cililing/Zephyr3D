@@ -8,6 +8,8 @@ zephyr::cbs::Camera::Camera(class Object& object, ID_t id, float fovy, float asp
 }
 
 void zephyr::cbs::Camera::Initialize() {
+    assert(TransformIn.Connected());
+
     Object().Scene().GetDrawManager().RegisterCamera(&m_Camera);
 
     RegisterUpdateCall();

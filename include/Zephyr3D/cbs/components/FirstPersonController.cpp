@@ -11,6 +11,8 @@ zephyr::cbs::FirstPersonController::FirstPersonController(class Object& object, 
     , m_LastMousePos(0.0f) {}
 
 void zephyr::cbs::FirstPersonController::Initialize() {
+    assert(TransformIn.Connected());
+
     // TODO store original rotation from Transform component
     m_LastMousePos = ZephyrEngine::Instance().Input().MousePosition();
 

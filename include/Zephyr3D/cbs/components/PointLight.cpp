@@ -11,23 +11,11 @@ zephyr::cbs::PointLight::PointLight(class Object& object, ID_t id, glm::vec3 amb
     , m_Linear(linear)
     , m_Quadratic(quadratic) {
 
-    if (m_Constant < 0.0f) {
-        m_Constant = 0.0f;
-        WARNING_LOG(Logger::ESender::CBS, "Constant value of point light should not be negative, changing to 0");
-    }
-
-    if (m_Linear < 0.0f) {
-        m_Linear = 0.0f;
-        WARNING_LOG(Logger::ESender::CBS, "Linear value of point light should not be negative, changing to 0");
-    }
-
-    if (m_Quadratic < 0.0f) {
-        m_Quadratic = 0.0f;
-        WARNING_LOG(Logger::ESender::CBS, "Quadratic value of point light should not be negative, changing to 0");
-    }
+    assert(constant > 0.0f);
+    assert(linear > 0.0f);
+    assert(quadratic > 0.0f);
 
     m_Index = QUANTITY;
-
     QUANTITY = (QUANTITY + 1) % 4;
 }
 
