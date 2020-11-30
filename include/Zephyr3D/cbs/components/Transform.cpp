@@ -8,8 +8,6 @@ zephyr::cbs::Transform::Transform(class Object& object, ID_t id)
 }
 
 void zephyr::cbs::Transform::Initialize() {
-    assert(Parent.Connected());
-
     UpdateModel();
 }
 
@@ -23,9 +21,7 @@ void zephyr::cbs::Transform::Identity() {
 
 glm::mat4 zephyr::cbs::Transform::Model() const {
     if (Parent.Connected()) {
-        glm::mat4 model = glm::translate(Parent.Value()->Model(), m_Position) * glm::toMat4(m_Rotation);
-        model = glm::scale(model, m_Scale);
-        return model;
+        return Parent.Value()->Model() * m_Model;
     } else {
         return m_Model;
     }
@@ -40,11 +36,7 @@ void zephyr::cbs::Transform::Model(const float* model) {
 }
 
 glm::vec3 zephyr::cbs::Transform::Position() const {
-    if (Parent.Connected()) {
-        return glm::vec3(Model()[3]);
-    } else {
-        return m_Position;
-    }
+    return glm::vec3(Model()[3]);
 }
 
 void zephyr::cbs::Transform::Position(const glm::vec3& position) {
@@ -60,16 +52,12 @@ void zephyr::cbs::Transform::Move(const glm::vec3& vector) {
 }
 
 glm::quat zephyr::cbs::Transform::Rotation() const {
-    if (Parent.Connected()) {
-        glm::quat rotation;
-        glm::vec3 tmp1, tmp2, tmp3;
-        glm::vec4 tmp4;
-        glm::decompose(Model(), tmp1, rotation, tmp2, tmp3, tmp4);
+    glm::quat rotation;
+    glm::vec3 scale, translation, skew;
+    glm::vec4 perspective;
+    glm::decompose(Model(), scale, rotation, translation, skew, perspective);
 
-        return rotation;
-    } else {
-        return m_Rotation;
-    }
+    return rotation;
 }
 
 void zephyr::cbs::Transform::Rotation(const glm::quat &rotation) {
@@ -91,11 +79,12 @@ void zephyr::cbs::Transform::RotateRelative(const glm::quat& rotation) {
 }
 
 glm::vec3 zephyr::cbs::Transform::Scale() const {
-    if (Parent.Connected()) {
-        return m_Scale * Parent.Value()->Scale();
-    } else {
-        return m_Scale;
-    }
+    glm::quat rotation;
+    glm::vec3 scale, translation, skew;
+    glm::vec4 perspective;
+    glm::decompose(Model(), scale, rotation, translation, skew, perspective);
+
+    return scale;
 }
 
 void zephyr::cbs::Transform::Scale(const glm::vec3& scale) {
@@ -105,13 +94,7 @@ void zephyr::cbs::Transform::Scale(const glm::vec3& scale) {
 }
 
 void zephyr::cbs::Transform::UpdateModel() {
-    if (Parent.Connected()) {
-        m_Model = Parent.Value()->Model();
-    } else {
-        m_Model = glm::mat4(1.0f);
-    }
-
-    m_Model = glm::translate(m_Model, m_Position);
+    m_Model = glm::translate(glm::mat4(1.0f), m_Position);
     m_Model = m_Model * glm::toMat4(m_Rotation);
     m_Model = glm::scale(m_Model, m_Scale);
 }
