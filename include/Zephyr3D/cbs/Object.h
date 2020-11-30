@@ -46,7 +46,7 @@ public:
     Object& operator=(const Object&) = delete;
     Object(Object&&) = delete;
     Object& operator=(Object&&) = delete;
-    ~Object() = default;
+    ~Object();
 
     void InitializeComponents();
     void ProcessFrame();

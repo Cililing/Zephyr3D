@@ -15,6 +15,12 @@ zephyr::cbs::Object::Object(ObjectManager& owner, ID_t id, std::string name)
     m_Root.Identity();
 }
 
+zephyr::cbs::Object::~Object() {
+    for (auto child : m_Children) {
+        child->Root().Parent.Connect(nullptr);
+    }
+}
+
 void zephyr::cbs::Object::InitializeComponents() {
     m_ToInitializeNextFrame = 0;
     m_Root.Initialize();
@@ -90,6 +96,8 @@ void zephyr::cbs::Object::AddChild(Object* child) {
     if (std::find(m_Children.cbegin(), m_Children.cend(), child) == m_Children.cend()) {
         child->m_Parent = this;
         m_Children.push_back(child);
+
+        child->Root().Parent.Connect(&Root().This);
     }
 }
 
@@ -99,6 +107,8 @@ void zephyr::cbs::Object::RemoveChild(Object* child) {
     if (auto found = std::find(m_Children.begin(), m_Children.end(), child); found != m_Children.end()) {
         (*found)->m_Parent = nullptr;
         m_Children.erase(found);
+
+        child->Root().Parent.Connect(nullptr);
     }
 }
 
