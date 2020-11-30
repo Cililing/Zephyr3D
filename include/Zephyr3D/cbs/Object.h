@@ -52,6 +52,10 @@ public:
     void ProcessFrame();
     void DestroyComponents();
 
+    void AddChild(Object* child);
+    void RemoveChild(Object* child);
+    const std::vector<Object*>& Children() const;
+
     void RegisterUpdateCall(const Component* component);
     void UnregisterUpdateCall(const Component* component);
 
@@ -164,6 +168,9 @@ private:
     std::string m_Name;
     ObjectManager& m_Owner;
     ConnectionsManager m_ConnectionsManager;
+
+    Object* m_Parent{ nullptr };
+    std::vector<Object*> m_Children;
 
     Transform m_Root;
     Components_t m_Components;

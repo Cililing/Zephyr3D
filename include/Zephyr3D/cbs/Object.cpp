@@ -13,7 +13,6 @@ zephyr::cbs::Object::Object(ObjectManager& owner, ID_t id, std::string name)
     , m_ToUpdate(0) 
     , m_ToInitializeNextFrame(0) {
     m_Root.Identity();
-    
 }
 
 void zephyr::cbs::Object::InitializeComponents() {
@@ -72,6 +71,39 @@ void zephyr::cbs::Object::DestroyComponents() {
         comp->Destroy();
     }
     m_ConnectionsManager.RemoveConnections();
+}
+
+void zephyr::cbs::Object::AddChild(Object* child) {
+    assert(child != this);
+
+    // Prevent cycles
+    auto curr = this;
+    while (curr->m_Parent != nullptr) {
+        curr = curr->m_Parent;
+
+        if (curr == child) {
+            WARNING_LOG(Logger::ESender::CBS, "Detected cycle in object hierarchy between Object %s and child %s", m_Name, child->Name());
+            return;
+        }
+    }
+
+    if (std::find(m_Children.cbegin(), m_Children.cend(), child) == m_Children.cend()) {
+        child->m_Parent = this;
+        m_Children.push_back(child);
+    }
+}
+
+void zephyr::cbs::Object::RemoveChild(Object* child) {
+    assert(child != this);
+
+    if (auto found = std::find(m_Children.begin(), m_Children.end(), child); found != m_Children.end()) {
+        (*found)->m_Parent = nullptr;
+        m_Children.erase(found);
+    }
+}
+
+const std::vector<zephyr::cbs::Object*>& zephyr::cbs::Object::Children() const {
+    return m_Children;
 }
 
 void zephyr::cbs::Object::RegisterUpdateCall(const Component* component) {

@@ -48,7 +48,7 @@ void MainScene::CreateScene() {
         player->Connect(player->Root().This, object_spawner->TransfromIn);
     }
 
-    for (auto i = 0; i < 3; i++) {
+    /*for (auto i = 0; i < 3; i++) {
         for (auto j = 0; j < 3; j++) {
             for (auto k = 0; k < 3; k++) {
                 auto cube = CreateObject("Cube"); {
@@ -62,7 +62,27 @@ void MainScene::CreateScene() {
                 }
             }
         }
+    }*/
+
+    int i = 0, j = 0, k = 0;
+    auto cube = CreateObject("Cube"); {
+        cube->Root().Position(glm::vec3(i, j, k));
+
+        auto comp = cube->CreateComponent<zephyr::cbs::Cube>(glm::vec3((float)i / 3.0f, (float)j / 3.0f, (float)k / 3.0f));
+        cube->Connect(cube->Root().This, comp->TransformIn);
+
+        auto rb = cube->CreateComponent<zephyr::cbs::RigidBody>(10.0f * (i + 1) * (j + 1) * (k + 1), new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
+        cube->Connect(cube->Root().This, rb->TransformIn);
     }
+
+    auto child = CreateObject("Child"); {
+        cube->Root().Position(glm::vec3(0.0f, 2.0f, 0.0f));
+
+        auto vis = child->CreateComponent<zephyr::cbs::Cube>(glm::vec3(1.0f));
+        child->Connect(child->Root().This, vis->TransformIn);
+    }
+
+    cube->AddChild(child);
 
     auto ground = CreateObject("Ground"); {
         ground->Root().Position(glm::vec3(0.0f, -5.0f, 0.0f));
