@@ -15,11 +15,11 @@ void zephyr::cbs::GhostObject::Initialize() {
     btTransform transform;
     transform.setIdentity();
 
-    transform.setOrigin(Vector3(TransformIn.Value()->Position()));
-    transform.setRotation(Quaternion(TransformIn.Value()->Rotation()));
+    transform.setOrigin(Vector3(TransformIn.Value()->GlobalPosition()));
+    transform.setRotation(Quaternion(TransformIn.Value()->GlobalRotation()));
 
     m_BulletHandle->setWorldTransform(transform);
-    m_BulletHandle->getCollisionShape()->setLocalScaling(Vector3(TransformIn.Value()->Scale()));
+    m_BulletHandle->getCollisionShape()->setLocalScaling(Vector3(TransformIn.Value()->LocalScale()));
 
     Object().Scene().GetPhysicsManager().AddCollisionObject(this, m_Group, m_Mask);
 }
@@ -31,10 +31,10 @@ void zephyr::cbs::GhostObject::Destroy() {
 void zephyr::cbs::GhostObject::PhysicsUpdate() {
     btTransform trans;
     trans.setIdentity();
-    trans.setOrigin(Vector3(TransformIn.Value()->Position()));
-    trans.setRotation(Quaternion(TransformIn.Value()->Rotation()));
+    trans.setOrigin(Vector3(TransformIn.Value()->GlobalPosition()));
+    trans.setRotation(Quaternion(TransformIn.Value()->GlobalRotation()));
     m_BulletHandle->setWorldTransform(trans);
-    m_BulletHandle->getCollisionShape()->setLocalScaling(Vector3(TransformIn.Value()->Scale()));
+    m_BulletHandle->getCollisionShape()->setLocalScaling(Vector3(TransformIn.Value()->LocalScale()));
 }
 
 void zephyr::cbs::GhostObject::OnCollision(const btCollisionObject* collider) {

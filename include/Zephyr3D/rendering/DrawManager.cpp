@@ -110,7 +110,7 @@ void zephyr::rendering::DrawManager::CallDraws() {
         shader->Use();
 
         shader->Uniform("pv", pv);
-        shader->Uniform("viewPos", m_Camera->Position());
+        shader->Uniform("viewPos", m_Camera->LocalPosition());
 
         shader->CallProperties();
         shader->CallDraws();

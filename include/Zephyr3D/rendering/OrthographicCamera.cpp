@@ -15,7 +15,7 @@ glm::mat4 zephyr::rendering::OrthographicCamera::Projection() {
     return m_Projection;
 }
 
-glm::vec3 zephyr::rendering::OrthographicCamera::Position() {
+glm::vec3 zephyr::rendering::OrthographicCamera::LocalPosition() {
     return m_Position;
 }
 

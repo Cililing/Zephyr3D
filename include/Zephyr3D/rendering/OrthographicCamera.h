@@ -14,7 +14,7 @@ public:
 
     glm::mat4 View() override;
     glm::mat4 Projection() override;
-    glm::vec3 Position() override;
+    glm::vec3 LocalPosition() override;
 
     void Update(const glm::vec3& position, const glm::vec3& front, const glm::vec3& up);
 

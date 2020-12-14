@@ -47,9 +47,9 @@ void zephyr::resources::Model::LoadMesh(const aiMesh* mesh, const aiScene* scene
     for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
         Mesh::Vertex vertex;
 
-        vertex.Position.x = mesh->mVertices[i].x;
-        vertex.Position.y = mesh->mVertices[i].y;
-        vertex.Position.z = mesh->mVertices[i].z;
+        vertex.LocalPosition.x = mesh->mVertices[i].x;
+        vertex.LocalPosition.y = mesh->mVertices[i].y;
+        vertex.LocalPosition.z = mesh->mVertices[i].z;
 
         vertex.Normal.x = mesh->mNormals[i].x;
         vertex.Normal.y = mesh->mNormals[i].y;

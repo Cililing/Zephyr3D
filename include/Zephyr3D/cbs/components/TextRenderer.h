@@ -24,7 +24,7 @@ public:
     void Draw() const override;
 
     void Font(const std::string& path, float size);
-    void Position(glm::vec2 offset, EAlign horizontal, EAlign vertical);
+    void LocalPosition(glm::vec2 offset, EAlign horizontal, EAlign vertical);
 
     const std::string Text() const { return m_Text; }
     void Text(std::string text) { m_Text = text; }

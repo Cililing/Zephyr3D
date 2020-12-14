@@ -30,7 +30,7 @@ void zephyr::cbs::PointLight::Destroy() {
 void zephyr::cbs::PointLight::SetProperty(const rendering::ShaderProgram& shader) const {
     std::string pointLight = "pointLights[" + std::to_string(m_Index) + "].";
 
-    shader.Uniform(pointLight + "position", Object().Root().Position());
+    shader.Uniform(pointLight + "position", Object().Root().GlobalPosition());
     shader.Uniform(pointLight + "ambient", m_Ambient);
     shader.Uniform(pointLight + "diffuse", m_Diffuse);
     shader.Uniform(pointLight + "constant", m_Constant);

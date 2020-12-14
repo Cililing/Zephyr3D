@@ -29,8 +29,8 @@ void MainScene::CreateScene() {
 
     auto player = CreateObject("Player"); {
         player->Root().Move(glm::vec3(-10.0f, 4.0f, -2.0f));
-        player->Root().Rotate(glm::vec3(0.0f, 0.0f, glm::radians(-25.0f)));
-        player->Root().Rotate(glm::vec3(0.0f, glm::radians(-20.0f), 0.0f));
+        player->Root().RotateGlobally(glm::vec3(0.0f, 0.0f, glm::radians(-25.0f)));
+        player->Root().RotateGlobally(glm::vec3(0.0f, glm::radians(-20.0f), 0.0f));
 
         auto camera = player->CreateComponent<zephyr::cbs::Camera>(glm::radians(45.0f),
                                                     static_cast<float>(zephyr::ZephyrEngine::Instance().Window().Width()) / static_cast<float>(zephyr::ZephyrEngine::Instance().Window().Height()),
@@ -66,8 +66,6 @@ void MainScene::CreateScene() {
 
     int i = 0, j = 0, k = 0;
     auto cube = CreateObject("Cube"); {
-        cube->Root().Position(glm::vec3(i, j, k));
-
         auto comp = cube->CreateComponent<zephyr::cbs::Cube>(glm::vec3((float)i / 3.0f, (float)j / 3.0f, (float)k / 3.0f));
         cube->Connect(cube->Root().This, comp->TransformIn);
 
@@ -76,20 +74,19 @@ void MainScene::CreateScene() {
     }
 
     auto child = CreateObject("Child"); {
-        child->Root().Position(glm::vec3(0.0f, 2.0f, 0.0f));
-
         auto vis1 = child->CreateComponent<zephyr::cbs::Cube>(glm::vec3(1.0f));
         child->Connect(child->Root().This, vis1->TransformIn);
 
-        //auto rb = child->CreateComponent<zephyr::cbs::RigidBody>(10.0f * (i + 1) * (j + 1) * (k + 1), new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
-        //child->Connect(child->Root().This, rb->TransformIn);
+        auto rb = child->CreateComponent<zephyr::cbs::RigidBody>(10.0f * (i + 1) * (j + 1) * (k + 1), new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
+        child->Connect(child->Root().This, rb->TransformIn);
     }
 
     cube->AddChild(child);
+    child->Root().GlobalPosition(glm::vec3(-2.0f, 0.0f, 0.0f));
 
     auto ground = CreateObject("Ground"); {
-        ground->Root().Position(glm::vec3(0.0f, -5.0f, 0.0f));
-        ground->Root().Scale(glm::vec3(20.0f, 1.0f, 20.0f));
+        ground->Root().GlobalPosition(glm::vec3(0.0f, -5.0f, 0.0f));
+        ground->Root().GlobalScale(glm::vec3(20.0f, 1.0f, 20.0f));
 
         auto cube = ground->CreateComponent<zephyr::cbs::Cube>(glm::vec3(1.0f, 0.0f, 0.0f));
         ground->Connect(ground->Root().This, cube->TransformIn);
@@ -98,10 +95,10 @@ void MainScene::CreateScene() {
         ground->Connect(ground->Root().This, rb->TransformIn);
     }
 
-    /*auto gui = CreateObject("gui"); {
+    auto gui = CreateObject("gui"); {
         auto debuger = gui->CreateComponent<zephyr::cbs::Debuger>();
         auto title = gui->CreateComponent<zephyr::cbs::TextRenderer>(zephyr::rendering::IGUIWidget::EAlign::BEGIN, zephyr::rendering::IGUIWidget::EAlign::BEGIN, 0.0f);
 
         gui->Connect(debuger->DebugInfo, title->TextIn);
-    }*/
+    }
 }

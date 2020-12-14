@@ -25,7 +25,7 @@ class ShaderProgram {
 public:
     enum class ETrait : unsigned char {
         None = 0,
-        Position = 1 << 0,
+        LocalPosition = 1 << 0,
         Normal = 1 << 1,
         TexCoord = 1 << 2,
         Color = 1 << 3

@@ -27,20 +27,92 @@ glm::mat4 zephyr::cbs::Transform::Model() const {
     }
 }
 
-void zephyr::cbs::Transform::Model(const glm::mat4 model) {
+void zephyr::cbs::Transform::Model(const glm::mat4& model) {
     m_Model = model;
 }
 
-void zephyr::cbs::Transform::Model(const float* model) {
-    m_Model = glm::make_mat4(model);
+void zephyr::cbs::Transform::GlobalModel(const glm::mat4& model) {
+    if (Parent.Connected()) {
+        m_Model = glm::inverse(Parent.Value()->Model()) * model;
+    } else {
+        m_Model = model;
+    }
 }
 
-glm::vec3 zephyr::cbs::Transform::Position() const {
+void zephyr::cbs::Transform::LocalPosition(const glm::vec3& position) {
+    m_Position = position;
+
+    UpdateModel();
+}
+
+glm::vec3 zephyr::cbs::Transform::LocalPosition() const {
+    return m_Position;
+}
+
+void zephyr::cbs::Transform::GlobalPosition(const glm::vec3& position) {
+    if (Parent.Connected()) {
+        m_Position = position - Parent.Value()->GlobalPosition();
+    } else {
+        m_Position = position;
+    }
+
+    UpdateModel();
+}
+
+glm::vec3 zephyr::cbs::Transform::GlobalPosition() const {
     return glm::vec3(Model()[3]);
 }
 
-void zephyr::cbs::Transform::Position(const glm::vec3& position) {
-    m_Position = position;
+glm::quat zephyr::cbs::Transform::LocalRotation() const {
+    return m_Rotation;
+}
+
+void zephyr::cbs::Transform::LocalRotation(const glm::quat &rotation) {
+    m_Rotation = rotation;
+
+    UpdateModel();
+}
+
+glm::quat zephyr::cbs::Transform::GlobalRotation() const {
+    glm::quat rotation;
+    glm::vec3 scale, translation, skew;
+    glm::vec4 perspective;
+    glm::decompose(Model(), scale, rotation, translation, skew, perspective);
+
+    return rotation;
+}
+
+void zephyr::cbs::Transform::GlobalRotation(const glm::quat& rotation) {
+    // TODO
+    static_assert(true);
+}
+
+glm::vec3 zephyr::cbs::Transform::LocalScale() const {
+    return m_Scale;
+}
+
+void zephyr::cbs::Transform::LocalScale(const glm::vec3& scale) {
+    m_Scale = scale;
+    
+    UpdateModel();
+}
+
+glm::vec3 zephyr::cbs::Transform::GlobalScale() const {
+    glm::quat rotation;
+    glm::vec3 scale, translation, skew;
+    glm::vec4 perspective;
+    glm::decompose(Model(), scale, rotation, translation, skew, perspective);
+
+    return scale;
+}
+
+void zephyr::cbs::Transform::GlobalScale(const glm::vec3& scale) {
+    if (Parent.Connected()) {
+        m_Scale = scale - Parent.Value()->GlobalScale();
+    }
+    else {
+        m_Scale = scale;
+    }
 
     UpdateModel();
 }
@@ -51,45 +123,15 @@ void zephyr::cbs::Transform::Move(const glm::vec3& vector) {
     UpdateModel();
 }
 
-glm::quat zephyr::cbs::Transform::Rotation() const {
-    glm::quat rotation;
-    glm::vec3 scale, translation, skew;
-    glm::vec4 perspective;
-    glm::decompose(Model(), scale, rotation, translation, skew, perspective);
-
-    return rotation;
-}
-
-void zephyr::cbs::Transform::Rotation(const glm::quat &rotation) {
-    m_Rotation = rotation;
-
-    UpdateModel();
-}
-
-void zephyr::cbs::Transform::Rotate(const glm::quat& rotation) {
+void zephyr::cbs::Transform::RotateGlobally(const glm::quat& rotation) {
     m_Rotation = rotation * m_Rotation;
 
     UpdateModel();
 }
 
-void zephyr::cbs::Transform::RotateRelative(const glm::quat& rotation) {
+void zephyr::cbs::Transform::RotateLocally(const glm::quat& rotation) {
     m_Rotation = m_Rotation * rotation;
 
-    UpdateModel();
-}
-
-glm::vec3 zephyr::cbs::Transform::Scale() const {
-    glm::quat rotation;
-    glm::vec3 scale, translation, skew;
-    glm::vec4 perspective;
-    glm::decompose(Model(), scale, rotation, translation, skew, perspective);
-
-    return scale;
-}
-
-void zephyr::cbs::Transform::Scale(const glm::vec3& scale) {
-    m_Scale = scale;
-    
     UpdateModel();
 }
 

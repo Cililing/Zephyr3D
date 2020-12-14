@@ -71,17 +71,17 @@ void zephyr::cbs::ThirdPersonController::Update() {
     // Calculate new pos by first rotating point around origin and then move it in respect to m_Target
     glm::vec3 new_pos = rot_y * glm::vec3(m_Radius, 0.0f, 0.0f);
     new_pos = glm::rotate(new_pos, m_XRotation, curr_rotation_axis);
-    new_pos = new_pos + m_TargetTransform->Position();
+    new_pos = new_pos + m_TargetTransform->GlobalPosition();
 
     // Calculate rotation between needed to rotate object into m_Target
     // To prevent rotation around the local Z axis calculation were divided into horizontal and vertical
-    glm::vec3 diff = m_TargetTransform->Position() - new_pos;
+    glm::vec3 diff = m_TargetTransform->GlobalPosition() - new_pos;
     glm::quat front_rot_hor = m_RotationBeetwen(glm::vec3(m_Front.x, 0.0f, m_Front.z), glm::vec3(diff.x, 0.0f, diff.z));
     glm::quat front_rot_ver = m_RotationBeetwen(front_rot_hor * m_Front, diff);
 
     // Apply
-    TransformIn.Value()->Position(new_pos);
-    TransformIn.Value()->Rotation(front_rot_ver * front_rot_hor);
+    TransformIn.Value()->LocalPosition(new_pos);
+    TransformIn.Value()->LocalRotation(front_rot_ver * front_rot_hor);
 }
 
 glm::quat zephyr::cbs::ThirdPersonController::m_RotationBeetwen(const glm::vec3& start, const glm::vec3& dest) {

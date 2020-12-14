@@ -14,12 +14,13 @@ void zephyr::cbs::RigidBody::Initialize() {
     btTransform transform;
     transform.setIdentity();
 
-    transform.setOrigin(Vector3(TransformIn.Value()->Position()));
-    transform.setRotation(Quaternion(TransformIn.Value()->Rotation()));
+    transform.setOrigin(Vector3(TransformIn.Value()->GlobalPosition()));
+    transform.setRotation(Quaternion(TransformIn.Value()->LocalRotation()));
+    
 
     m_BulletHandle->setWorldTransform(transform);
     static_cast<btRigidBody*>(m_BulletHandle)->getMotionState()->setWorldTransform(transform);
-    m_BulletHandle->getCollisionShape()->setLocalScaling(Vector3(TransformIn.Value()->Scale()));
+    m_BulletHandle->getCollisionShape()->setLocalScaling(Vector3(TransformIn.Value()->LocalScale()));
 
     Object().Scene().GetPhysicsManager().AddRigidBody(this, m_Group, m_Mask);
 }
@@ -34,13 +35,15 @@ void zephyr::cbs::RigidBody::OnCollision(const btCollisionObject* collider) {
 
 void zephyr::cbs::RigidBody::PhysicsUpdate() {
     btTransform trans;
-    btRigidBody* rigid_body = static_cast<btRigidBody*>(m_BulletHandle);
-
+    auto* rigid_body = static_cast<btRigidBody*>(m_BulletHandle);
     rigid_body->getMotionState()->getWorldTransform(trans);
 
-    TransformIn.Value()->Position(Vector3(trans.getOrigin()));
-    TransformIn.Value()->Rotation(Quaternion(trans.getRotation()));
-    TransformIn.Value()->Scale(Vector3(rigid_body->getCollisionShape()->getLocalScaling()));
+    auto matrix = new float[16];
+    trans.getOpenGLMatrix(matrix);
+
+    auto glm_trans = glm::make_mat4(matrix);
+    glm_trans = glm::scale(glm_trans, Vector3(m_BulletHandle->getCollisionShape()->getLocalScaling()));
+    TransformIn.Value()->GlobalModel(glm_trans);
 }
 
 btRigidBody* zephyr::cbs::RigidBody::CreateRigibBody(btScalar mass, btCollisionShape* shape) const {

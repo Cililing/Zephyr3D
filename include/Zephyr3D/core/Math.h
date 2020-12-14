@@ -7,10 +7,15 @@
 #include <bullet/btBulletCollisionCommon.h>
 #pragma warning(pop)
 
+#include <iostream>
+
 glm::vec3 Vector3(const btVector3& vector);
 btVector3 Vector3(const glm::vec3& vector);
 
 glm::quat Quaternion(const btQuaternion& quaternion);
 btQuaternion Quaternion(const glm::quat& quaternion);
+
+std::ostream& operator<<(std::ostream& os, const btVector3& vector);
+std::ostream& operator<<(std::ostream& os, const glm::vec3& vector);
 
 #endif

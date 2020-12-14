@@ -16,7 +16,7 @@ void zephyr::cbs::Camera::Initialize() {
 }
 
 void zephyr::cbs::Camera::Update() {
-    m_Camera.Update(TransformIn.Value()->Position(),
+    m_Camera.Update(TransformIn.Value()->GlobalPosition(),
                     TransformIn.Value()->Front(),
                     TransformIn.Value()->Up());
 }

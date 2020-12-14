@@ -34,3 +34,13 @@ btQuaternion Quaternion(const glm::quat& quaternion) {
     );
 }
 
+std::ostream& operator<<(std::ostream& os, const btVector3& vector) {
+    os << vector.x() << ", " << vector.y() << ", " << vector.z();
+    return os;
+}
+
+std::ostream& operator<<(std::ostream& os, const glm::vec3& vector) {
+    os << vector.x << ", " << vector.y << ", " << vector.z;
+    return os;
+}
+

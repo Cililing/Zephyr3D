@@ -35,8 +35,8 @@ void zephyr::cbs::FirstPersonController::Update() {
     }
 
     // Update vectors
-    TransformIn.Value()->Rotate(glm::vec3(0.0f, rot_hor, 0.0f));
-    TransformIn.Value()->RotateRelative(glm::vec3(0.0f, 0.0f, rot_ver));
+    TransformIn.Value()->RotateGlobally(glm::vec3(0.0f, rot_hor, 0.0f));
+    TransformIn.Value()->RotateLocally(glm::vec3(0.0f, 0.0f, rot_ver));
 
     // Keyboard
     if (ZephyrEngine::Instance().Input().KeyHold(GLFW_KEY_LEFT_SHIFT) || ZephyrEngine::Instance().Input().KeyHold(GLFW_KEY_RIGHT_SHIFT)) {

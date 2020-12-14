@@ -25,20 +25,27 @@ public:
     void Identity();
 
     glm::mat4 Model() const;
-    void Model(const glm::mat4 model);
-    void Model(const float* model);
+    void Model(const glm::mat4& model);
+    void GlobalModel(const glm::mat4& model);
 
-    glm::vec3 Position() const;
-    void Position(const glm::vec3& position);
+    glm::vec3 LocalPosition() const;
+    void LocalPosition(const glm::vec3& position);
+    glm::vec3 GlobalPosition() const;
+    void GlobalPosition(const glm::vec3& position);
+
+    glm::quat LocalRotation() const;
+    void LocalRotation(const glm::quat& rotation);
+    glm::quat GlobalRotation() const;
+    void GlobalRotation(const glm::quat& rotation);
+
+    glm::vec3 LocalScale() const;
+    void LocalScale(const glm::vec3& scale);
+    glm::vec3 GlobalScale() const;
+    void GlobalScale(const glm::vec3& scale);
+
     void Move(const glm::vec3& vector);
-
-    glm::quat Rotation() const;
-    void Rotation(const glm::quat& rotation);
-    void Rotate(const glm::quat& rotation);
-    void RotateRelative(const glm::quat& rotation);
-
-    glm::vec3 Scale() const;
-    void Scale(const glm::vec3& scale);
+    void RotateGlobally(const glm::quat& rotation);
+    void RotateLocally(const glm::quat& rotation);
 
     glm::vec3 Front() { return m_Rotation * glm::vec3(1.0f, 0.0f, 0.0f); }
     glm::vec3 Up() { return m_Rotation * glm::vec3(0.0f, 1.0f, 0.0f); }

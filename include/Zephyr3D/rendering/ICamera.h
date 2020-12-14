@@ -15,7 +15,7 @@ public:
 
     virtual glm::mat4 View() = 0;
     virtual glm::mat4 Projection() = 0;
-    virtual glm::vec3 Position() = 0;
+    virtual glm::vec3 LocalPosition() = 0;
 };
 
 }

@@ -12,7 +12,7 @@ void GravityGun::Initialize() {
 }
 
 void GravityGun::Update() {
-	auto _from = TransformIn.Value()->Position();
+	auto _from = TransformIn.Value()->LocalPosition();
 	btVector3 from(_from.x, _from.y, _from.z);
 
 	auto _direction = TransformIn.Value()->Front();

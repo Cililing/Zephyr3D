@@ -15,7 +15,7 @@ glm::mat4 zephyr::rendering::PerspectiveCamera::Projection() {
     return m_Projection;
 }
 
-glm::vec3 zephyr::rendering::PerspectiveCamera::Position() {
+glm::vec3 zephyr::rendering::PerspectiveCamera::LocalPosition() {
     return m_Position;
 }
 

@@ -57,7 +57,7 @@ void zephyr::cbs::TextRenderer::Font(const std::string& path, float size) {
     io.Fonts->Build();
 }
 
-void zephyr::cbs::TextRenderer::Position(glm::vec2 offset, EAlign horizontal, EAlign vertical) {
+void zephyr::cbs::TextRenderer::LocalPosition(glm::vec2 offset, EAlign horizontal, EAlign vertical) {
     m_Offset = offset;
     m_Vertical = vertical;
     m_Horizontal = horizontal;
