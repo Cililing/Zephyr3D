@@ -15,6 +15,12 @@ public:
     virtual ~IDrawable() = default;
 
     virtual void Draw(const ShaderProgram &shader) const = 0;
+
+    void UserPointer(void* user_pointer) { m_UserPointer = user_pointer; }
+    void* UserPointer() const { return m_UserPointer; }
+
+private:
+    void* m_UserPointer;
 };
 
 }

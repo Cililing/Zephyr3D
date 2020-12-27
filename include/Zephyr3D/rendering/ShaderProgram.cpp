@@ -2,6 +2,7 @@
 
 #include "IDrawable.h"
 #include "IShaderProperty.h"
+#include "IRenderListener.h"
 
 zephyr::rendering::ShaderProgram::ShaderProgram(const std::string& name, const std::string& vertex_path, const std::string& fragment_path, const std::string& geometry_path)
     : m_Name(name) {
@@ -69,6 +70,10 @@ void zephyr::rendering::ShaderProgram::CallProperties() {
 
 void zephyr::rendering::ShaderProgram::CallDraws() {
     for (auto& drawable : m_Drawables) {
+        if (auto user_pointer = drawable->UserPointer()) {
+            IRenderListener* p = static_cast<IRenderListener*>(user_pointer);
+            p->OnDrawObject();
+        }
         drawable->Draw(*this);
     }
 }
