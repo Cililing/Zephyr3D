@@ -13,10 +13,18 @@ zephyr::rendering::Phong::StaticModel::StaticModel(const resources::Model& raw_m
 }
 
 void zephyr::rendering::Phong::StaticModel::Draw(const ShaderProgram& shader) const {
-    shader.Uniform("model", glm::mat4(1.0f));
+    shader.Uniform("model", m_Model);
     for (auto it = m_StaticMeshes.begin(); it != m_StaticMeshes.end(); it++) {
         it->Draw(shader);
     }
+}
+
+void zephyr::rendering::Phong::StaticModel::ModelMatrix(const glm::mat4& matrix_model) {
+    m_Model = matrix_model;
+}
+
+glm::mat4 zephyr::rendering::Phong::StaticModel::ModelMatrix() const {
+    return m_Model;
 }
 
 

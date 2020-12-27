@@ -20,7 +20,7 @@ public:
     void* UserPointer() const { return m_UserPointer; }
 
 private:
-    void* m_UserPointer;
+    void* m_UserPointer{nullptr};
 };
 
 }

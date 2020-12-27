@@ -78,10 +78,13 @@ public:
 
     void Draw(const ShaderProgram& shader) const override;
 
+    void ModelMatrix(const glm::mat4& matrix_model);
+    glm::mat4 ModelMatrix() const;
     const std::vector<StaticModel::StaticMesh>& StaticMeshes() const { return m_StaticMeshes; }
 
 private:
     std::vector<StaticModel::StaticMesh> m_StaticMeshes;
+    glm::mat4 m_Model{0.0f};
 };
 
 }

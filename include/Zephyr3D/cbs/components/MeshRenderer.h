@@ -6,12 +6,7 @@
 #include "../connections/PropertyIn.h"
 #include "../../Scene.h"
 #include "../../rendering/IRenderListener.h"
-
-namespace zephyr::rendering {
-
-class IDrawable;
-
-}
+#include "../../rendering/shaders/Phong.h"
 
 namespace zephyr::cbs {
 
@@ -29,7 +24,7 @@ public:
     PropertyIn<Transform*> TransformIn{ this };
 
 private:
-    rendering::IDrawable* m_Model;
+    rendering::Phong::StaticModel m_Model;
     std::string m_ShaderName;
 };
 
