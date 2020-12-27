@@ -3,9 +3,8 @@
 #include "IDrawable.h"
 #include "IShaderProperty.h"
 
-zephyr::rendering::ShaderProgram::ShaderProgram(const std::string& name, ETrait traits, const std::string& vertex_path, const std::string& fragment_path, const std::string& geometry_path)
-    : m_Traits(ETrait::None)
-    , m_Name(name) {
+zephyr::rendering::ShaderProgram::ShaderProgram(const std::string& name, const std::string& vertex_path, const std::string& fragment_path, const std::string& geometry_path)
+    : m_Name(name) {
     m_ID = glCreateProgram();
 
     unsigned int vertex_shader = CompileShader(vertex_path, GL_VERTEX_SHADER);

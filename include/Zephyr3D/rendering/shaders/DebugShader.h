@@ -1,5 +1,5 @@
-#ifndef CommonShaders_h
-#define CommonShaders_h
+#ifndef DebugShader_h
+#define DebugShader_h
 
 #include "../ShaderProgram.h"
 #include "../Primitive.h"
@@ -15,78 +15,10 @@
 #include <glm/gtx/norm.hpp>
 #pragma warning(pop)
 
-#include <iostream>
 #include <vector>
 #include <tuple>
 
 namespace zephyr::rendering {
-
-class Phong : public ShaderProgram {
-public:
-    Phong()
-        : ShaderProgram(
-            "Phong",
-            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PhongVert.glsl"),
-            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PhongFrag.glsl"),
-            "") { }
-
-    Phong(const Phong&) = delete;
-    Phong& operator=(const Phong&) = delete;
-    Phong(Phong&&) = delete;
-    Phong& operator=(Phong&&) = delete;
-    ~Phong() = default;
-};
-
-
-class PureColor : public ShaderProgram {
-public:
-    PureColor()
-        : ShaderProgram(
-            "PureColor",
-            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PureColorVert.glsl"),
-            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PureColorFrag.glsl"),
-            "") { }
-
-    PureColor(const PureColor&) = delete;
-    PureColor& operator=(const PureColor&) = delete;
-    PureColor(PureColor&&) = delete;
-    PureColor& operator=(PureColor&&) = delete;
-    ~PureColor() = default;
-};
-
-
-class PureTexture : public ShaderProgram {
-public:
-    PureTexture()
-        : ShaderProgram(
-            "PureTexture",
-            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PureTextureVert.glsl"),
-            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PureTextureFrag.glsl"),
-            "") { }
-
-    PureTexture(const PureTexture&) = delete;
-    PureTexture& operator=(const PureTexture&) = delete;
-    PureTexture(PureTexture&&) = delete;
-    PureTexture& operator=(PureTexture&&) = delete;
-    ~PureTexture() = default;
-};
-
-
-class Skybox : public ShaderProgram {
-public:
-    Skybox()
-        : ShaderProgram(
-            "Skybox",
-            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/SkyboxVert.glsl"),
-            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/SkyboxFrag.glsl"),
-            "") { }
-
-    Skybox(const Skybox&) = delete;
-    Skybox& operator=(const Skybox&) = delete;
-    Skybox(Skybox&&) = delete;
-    Skybox& operator=(Skybox&&) = delete;
-    ~Skybox() = default;
-};
 
 class Debug : public ShaderProgram {
     using instance_data = std::vector<std::pair<glm::mat4 /*transform*/, glm::vec3 /*color*/>>;
@@ -144,22 +76,22 @@ public:
         static const float X_VAL = std::sqrt(3.0f) / 2.0f;
 
         // T * X = X'  =>  T = X' * X^(-1)
-        
+
         glm::mat4 lhs(
             upper.x, lower_left.x, lower_right.x, 0.0f,
             upper.y, lower_left.y, lower_right.y, 0.0f,
             upper.z, lower_left.z, lower_right.z, 0.0f,
-            0.0f,    0.0f,         0.0f,          0.0f
+            0.0f, 0.0f, 0.0f, 0.0f
         );
-        
+
         const auto _upper = glm::vec3(0.0f, 1.0f, 0.0f);
         const auto _lower_left = glm::vec3(-X_VAL, -0.5f, 0.0f);
         const auto _lower_right = glm::vec3(X_VAL, -0.5f, 0.0f);
         static const glm::mat4 rhs = glm::inverse(glm::mat4(
-            _upper.x,       _upper.y,       _upper.z,       0.0f,
-            _lower_left.x,  _lower_left.y,  _lower_left.z,  0.0f,
+            _upper.x, _upper.y, _upper.z, 0.0f,
+            _lower_left.x, _lower_left.y, _lower_left.z, 0.0f,
             _lower_right.x, _lower_right.y, _lower_right.z, 0.0f,
-            0.0f,           0.0f,           0.0f,           0.0f
+            0.0f, 0.0f, 0.0f, 0.0f
         ));
 
         m_Triangles.emplace_back(lhs * rhs, color);

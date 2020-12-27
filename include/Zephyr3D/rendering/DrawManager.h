@@ -2,7 +2,8 @@
 #define DrawManager_h
 
 #include "IDrawManager.h"
-#include "shaders/CommonShaders.h"
+#include "shaders/Skybox.h"
+#include "shaders/DebugShader.h"
 #include "Cubemap.h"
 
 #pragma warning(push, 0)

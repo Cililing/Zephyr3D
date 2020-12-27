@@ -3,7 +3,9 @@
 #include "IDrawable.h"
 #include "IShaderProperty.h"
 #include "IGUIWidget.h"
-#include "Cubemap.h"
+#include "shaders/PureColor.h"
+#include "shaders/PureTexture.h"
+#include "shaders/Phong.h"
 
 #include "../ZephyrEngine.h"
 #include "../utilities/WindowManager.h"
