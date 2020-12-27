@@ -26,7 +26,6 @@ public:
     Phong()
         : ShaderProgram(
             "Phong",
-            ShaderProgram::ETrait::LocalPosition | ShaderProgram::ETrait::Normal | ShaderProgram::ETrait::TexCoord,
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PhongVert.glsl"),
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PhongFrag.glsl"),
             "") { }
@@ -44,7 +43,6 @@ public:
     PureColor()
         : ShaderProgram(
             "PureColor",
-            ShaderProgram::ETrait::LocalPosition | ShaderProgram::ETrait::Color,
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PureColorVert.glsl"),
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PureColorFrag.glsl"),
             "") { }
@@ -62,7 +60,6 @@ public:
     PureTexture()
         : ShaderProgram(
             "PureTexture",
-            ShaderProgram::ETrait::LocalPosition | ShaderProgram::ETrait::TexCoord,
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PureTextureVert.glsl"),
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PureTextureFrag.glsl"),
             "") { }
@@ -80,7 +77,6 @@ public:
     Skybox()
         : ShaderProgram(
             "Skybox",
-            ShaderProgram::ETrait::LocalPosition,
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/SkyboxVert.glsl"),
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/SkyboxFrag.glsl"),
             "") { }
@@ -99,7 +95,6 @@ public:
     Debug()
         : ShaderProgram(
             "Debug",
-            ShaderProgram::ETrait::LocalPosition | ShaderProgram::ETrait::Color,
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/DebugVert.glsl"),
             ReadShaderFile("../../include/Zephyr3D/rendering/shaders/DebugFrag.glsl"),
             "")

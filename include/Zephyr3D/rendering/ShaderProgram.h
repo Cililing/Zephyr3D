@@ -23,15 +23,7 @@ class IShaderProperty;
 
 class ShaderProgram {
 public:
-    enum class ETrait : unsigned char {
-        None = 0,
-        LocalPosition = 1 << 0,
-        Normal = 1 << 1,
-        TexCoord = 1 << 2,
-        Color = 1 << 3
-    };
-
-    ShaderProgram(const std::string& name, ETrait traits, const std::string& vertex_code, const std::string& fragment_code, const std::string& geometry_code);
+    ShaderProgram(const std::string& name, const std::string& vertex_code, const std::string& fragment_code, const std::string& geometry_code);
 
     ShaderProgram(const ShaderProgram&) = delete;
     ShaderProgram& operator=(const ShaderProgram&) = delete;
@@ -43,7 +35,6 @@ public:
 
     GLuint ID() const { return m_ID; }
     std::string Name() const { return m_Name; }
-    ETrait Traits() const { return m_Traits; }
 
     void RegisterDrawCall(const IDrawable* drawable);
     void UnregisterDrawCall(const IDrawable* drawable);
@@ -73,7 +64,6 @@ protected:
 
 private:
     GLuint m_ID;
-    ETrait m_Traits;
     std::string m_Name;
     std::vector<const IDrawable*> m_Drawables;
     std::vector<const IShaderProperty*> m_Properties;
@@ -81,8 +71,6 @@ private:
     void LinkProgram();
     unsigned int CompileShader(std::string code, GLenum shader);
 };
-
-ENABLE_BITMASK_OPERATORS(ShaderProgram::ETrait);
 
 }
 
