@@ -20,12 +20,12 @@ void MainScene::CreateScene() {
         GetResourcesManager().LoadImage("skyboxes/basic_blue/front.png")
     );
 
-    /*auto light = CreateObject("Light"); {
+    auto light = CreateObject("Light"); {
         light->CreateComponent<zephyr::cbs::DirectionalLight>(glm::vec3(-1.0f, -0.5f, -0.5f),
                                                  glm::vec3(0.05f),
                                                  glm::vec3(0.7f, 0.68f, 0.68f),
                                                  glm::vec3(0.8f, 0.78f, 0.78f));
-    }*/
+    }
 
     auto player = CreateObject("Player"); {
         player->Root().Move(glm::vec3(-10.0f, 4.0f, -2.0f));
@@ -48,41 +48,10 @@ void MainScene::CreateScene() {
         player->Connect(player->Root().This, object_spawner->TransfromIn);
     }
 
-    /*for (auto i = 0; i < 3; i++) {
-        for (auto j = 0; j < 3; j++) {
-            for (auto k = 0; k < 3; k++) {
-                auto cube = CreateObject("Cube"); {
-                    cube->Root().Position(glm::vec3(i, j, k));
-
-                    auto comp = cube->CreateComponent<zephyr::cbs::Cube>(glm::vec3((float)i / 3.0f, (float)j / 3.0f, (float)k / 3.0f));
-                    cube->Connect(cube->Root().This, comp->TransformIn);
-
-                    auto rb = cube->CreateComponent<zephyr::cbs::RigidBody>(10.0f * (i + 1) * (j + 1) * (k + 1), new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
-                    cube->Connect(cube->Root().This, rb->TransformIn);
-                }
-            }
-        }
-    }*/
-
-    int i = 0, j = 0, k = 0;
-    auto cube = CreateObject("Cube"); {
-        auto comp = cube->CreateComponent<zephyr::cbs::Cube>(glm::vec3((float)i / 3.0f, (float)j / 3.0f, (float)k / 3.0f));
-        cube->Connect(cube->Root().This, comp->TransformIn);
-
-        auto rb = cube->CreateComponent<zephyr::cbs::RigidBody>(10.0f * (i + 1) * (j + 1) * (k + 1), new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
-        cube->Connect(cube->Root().This, rb->TransformIn);
+    auto corrin = CreateObject("Model"); {
+        auto model = corrin->CreateComponent<zephyr::cbs::MeshRenderer>(GetResourcesManager().LoadModel("models/Corrin/scene.gltf"), "Phong");
+        corrin->Connect(corrin->Root().This, model->TransformIn);
     }
-
-    auto child = CreateObject("Child"); {
-        auto vis1 = child->CreateComponent<zephyr::cbs::Cube>(glm::vec3(1.0f));
-        child->Connect(child->Root().This, vis1->TransformIn);
-
-        auto rb = child->CreateComponent<zephyr::cbs::RigidBody>(10.0f * (i + 1) * (j + 1) * (k + 1), new btBoxShape(btVector3(0.5f, 0.5f, 0.5f)));
-        child->Connect(child->Root().This, rb->TransformIn);
-    }
-
-    cube->AddChild(child);
-    child->Root().GlobalPosition(glm::vec3(-2.0f, 0.0f, 0.0f));
 
     auto ground = CreateObject("Ground"); {
         ground->Root().GlobalPosition(glm::vec3(0.0f, -5.0f, 0.0f));

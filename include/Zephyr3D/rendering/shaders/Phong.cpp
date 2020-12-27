@@ -1,14 +1,26 @@
-#include "StaticModel.h"
+#include "Phong.h"
+#include "../ICamera.h"
+#include "../Texture.h"
+#include "../../resources/Model.h"
+#include "../../resources/Mesh.h"
 
-zephyr::rendering::StaticModel::StaticModel(const resources::Model& raw_model) {
-    m_Meshes.reserve(raw_model.RawMeshes().size());
 
+zephyr::rendering::Phong::StaticModel::StaticModel(const resources::Model& raw_model) {
+    m_StaticMeshes.reserve(raw_model.RawMeshes().size());
     for (auto it = raw_model.RawMeshes().begin(); it != raw_model.RawMeshes().end(); it++) {
-        m_Meshes.emplace_back(*it);
+        m_StaticMeshes.emplace_back(*it);
     }
 }
 
-zephyr::rendering::StaticModel::StaticMesh::StaticMesh(const resources::Mesh& raw_mesh)
+void zephyr::rendering::Phong::StaticModel::Draw(const ShaderProgram& shader) const {
+    shader.Uniform("model", glm::mat4(1.0f));
+    for (auto it = m_StaticMeshes.begin(); it != m_StaticMeshes.end(); it++) {
+        it->Draw(shader);
+    }
+}
+
+
+zephyr::rendering::Phong::StaticModel::StaticMesh::StaticMesh(const resources::Mesh& raw_mesh)
     : m_IndicesCount(raw_mesh.Indices().size())
     , m_Shininess(static_cast<float>(raw_mesh.Shininess())) {
     if (raw_mesh.Diffuse()) {
@@ -48,13 +60,7 @@ zephyr::rendering::StaticModel::StaticMesh::StaticMesh(const resources::Mesh& ra
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-zephyr::rendering::StaticModel::StaticMesh::~StaticMesh() {
-    glDeleteVertexArrays(1, &m_VAO);
-    glDeleteBuffers(1, &m_VBO);
-    glDeleteBuffers(1, &m_EBO);
-}
-
-zephyr::rendering::StaticModel::StaticMesh::StaticMesh(StaticMesh&& other) noexcept
+zephyr::rendering::Phong::StaticModel::StaticMesh::StaticMesh(StaticMesh&& other) noexcept
     : m_VAO(std::exchange(other.m_VAO, 0))
     , m_VBO(std::exchange(other.m_VBO, 0))
     , m_EBO(std::exchange(other.m_EBO, 0))
@@ -64,7 +70,7 @@ zephyr::rendering::StaticModel::StaticMesh::StaticMesh(StaticMesh&& other) noexc
     m_Shininess = other.m_Shininess;
 }
 
-zephyr::rendering::StaticModel::StaticMesh& zephyr::rendering::StaticModel::StaticMesh::operator=(StaticMesh&& other) noexcept {
+zephyr::rendering::Phong::StaticModel::StaticMesh& zephyr::rendering::Phong::StaticModel::StaticMesh::operator=(StaticMesh&& other) noexcept {
     m_VAO = std::exchange(other.m_VAO, 0);
     m_VBO = std::exchange(other.m_VBO, 0);
     m_EBO = std::exchange(other.m_EBO, 0);
@@ -74,4 +80,32 @@ zephyr::rendering::StaticModel::StaticMesh& zephyr::rendering::StaticModel::Stat
     m_Shininess = other.m_Shininess;
 
     return *this;
+}
+
+zephyr::rendering::Phong::StaticModel::StaticMesh::~StaticMesh() {
+    glDeleteVertexArrays(1, &m_VAO);
+    glDeleteBuffers(1, &m_VBO);
+    glDeleteBuffers(1, &m_EBO);
+}
+
+void zephyr::rendering::Phong::StaticModel::StaticMesh::Draw(const ShaderProgram& shader) const {
+    if (m_Diffuse) {
+        glActiveTexture(GL_TEXTURE0);
+        shader.Uniform("material.diffuse", 0);
+        glBindTexture(GL_TEXTURE_2D, m_Diffuse->ID());
+    }
+
+    if (m_Specular) {
+        glActiveTexture(GL_TEXTURE1);
+        shader.Uniform("material.specular", 1);
+        glBindTexture(GL_TEXTURE_2D, m_Specular->ID());
+    }
+
+    shader.Uniform("material.shininess", m_Shininess);
+
+    glBindVertexArray(m_VAO);
+    glDrawElements(GL_TRIANGLES, m_IndicesCount, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glActiveTexture(GL_TEXTURE0);
 }
