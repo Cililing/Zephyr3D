@@ -42,7 +42,10 @@ public:
     Debug& operator=(Debug&&) = delete;
     ~Debug() = default;
 
-    void CallDraws() override {
+    void Draw(const ICamera* camera) override {
+        glm::mat4 pv = camera->Projection() * camera->View();
+        Uniform("pv", pv);
+
         DrawLines();
         DrawTriangles();
         DrawPlanes();

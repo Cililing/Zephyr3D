@@ -7,6 +7,7 @@
 #pragma warning(push, 0)
 #include <glad/glad.h>
 #include <glm/glm.hpp>
+#pragma warning(pop)
 
 #include <assert.h>
 #include <vector>
@@ -14,12 +15,12 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#pragma warning(pop)
+
+constexpr GLsizei infolog_max_length = 1024;
 
 namespace zephyr::rendering {
 
-class IDrawable;
-class IShaderProperty;
+class ICamera;
 
 class ShaderProgram {
 public:
@@ -34,18 +35,10 @@ public:
     void Use() const;
 
     GLuint ID() const { return m_ID; }
-    std::string Name() const { return m_Name; }
+    const std::string& Name() const { return m_Name; }
 
-    void RegisterDrawCall(const IDrawable* drawable);
-    void UnregisterDrawCall(const IDrawable* drawable);
+    virtual void Draw(const ICamera* camera) = 0;
 
-    void RegisterShaderProperty(const IShaderProperty* property);
-    void UnregisterShaderProperty(const IShaderProperty* property);
-
-    virtual void CallProperties();
-    virtual void CallDraws();
-
-    // Setters for OpenGL shaders
     void Uniform(const std::string &name, bool value) const;
     void Uniform(const std::string &name, int value) const;
     void Uniform(const std::string &name, float value) const;
@@ -65,11 +58,9 @@ protected:
 private:
     GLuint m_ID;
     std::string m_Name;
-    std::vector<const IDrawable*> m_Drawables;
-    std::vector<const IShaderProperty*> m_Properties;
 
     void LinkProgram();
-    unsigned int CompileShader(std::string code, GLenum shader);
+    GLuint CompileShader(const std::string& code, GLenum shader);
 };
 
 }

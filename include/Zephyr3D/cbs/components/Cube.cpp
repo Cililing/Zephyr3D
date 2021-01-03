@@ -74,9 +74,9 @@ void zephyr::cbs::Cube::Draw(const rendering::ShaderProgram& shader) const {
 }
 
 void zephyr::cbs::Cube::Initialize() {
-    Object().Scene().GetDrawManager().RegisterDrawCall(this, "PureColor");
+    //Object().Scene().GetDrawManager().Shader("PureColor")->RegisterDrawCall(this, "PureColor");
 }
 
 void zephyr::cbs::Cube::Destroy() {
-    Object().Scene().GetDrawManager().UnregisterDrawCall(this, "PureColor");
+    //Object().Scene().GetDrawManager().UnregisterDrawCall(this, "PureColor");
 }

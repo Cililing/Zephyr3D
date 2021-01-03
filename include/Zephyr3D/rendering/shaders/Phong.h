@@ -4,6 +4,10 @@
 #include "../ShaderProgram.h"
 #include "../IDrawable.h"
 
+#pragma warning(push, 0)
+#include <glm/glm.hpp>
+#pragma warning(pop)
+
 #include <vector>
 
 namespace zephyr::resources {
@@ -14,24 +18,69 @@ namespace zephyr::resources {
 namespace zephyr::rendering {
 
 class Texture;
+class IRenderListener;
 
 class Phong : public ShaderProgram {
+
+    struct DirectionalLight {
+        glm::vec3 Direction{ 0.0f };
+        glm::vec3 Ambient{ 0.0f };
+        glm::vec3 Diffuse{ 0.0f };
+        glm::vec3 Specular{ 0.0f };
+    };
+
+    struct PointLight {
+        size_t Index{ 0 };
+        glm::vec3 Position{ 0.0f };
+        float Constant{ 1.0f };
+        float Linear{ 0.0f };
+        float Quadratic{ 0.0f };
+        glm::vec3 Ambient{ 0.0f };
+        glm::vec3 Diffuse{ 0.0f };
+        glm::vec3 Specular{ 0.0f };
+    };
+
+    struct SpotLight {
+        size_t Index{ 0 };
+        glm::vec3 Position{ 0.0f };
+        glm::vec3 Direction{ 0.0f };
+        float CutOff{ 0.0f };
+        float OutterCutOff{ 0.0f };
+        float Constant{ 0.0f };
+        float Linear{ 0.0f };
+        float Quadratic{ 0.0f };
+        glm::vec3 Ambient{ 0.0f };
+        glm::vec3 Diffuse{ 0.0f };
+        glm::vec3 Specular{ 0.0f };
+    };
+
 public:
     class StaticModel;
 
-    Phong()
-        : ShaderProgram(
-            "Phong",
-            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PhongVert.glsl"),
-            ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PhongFrag.glsl"),
-            "") { }
-
+    Phong();
     Phong(const Phong&) = delete;
     Phong& operator=(const Phong&) = delete;
     Phong(Phong&&) = delete;
     Phong& operator=(Phong&&) = delete;
     ~Phong() = default;
 
+    void Draw(const ICamera* camera) override;
+
+    void SetDirectionalLight(const glm::vec3& direction, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular);
+
+    void Register(StaticModel* static_model);
+    void Unregister(StaticModel* static_mocel);
+
+private:
+    std::vector<StaticModel*> m_Drawables;
+
+    DirectionalLight m_DirectionalLight;
+    size_t m_MaxSpotLights{ 1 };
+    size_t m_NextSpotLightIndex{ 0 };
+    std::vector<SpotLight> m_SpotLights;
+    size_t m_MaxPointLights{ 4 };
+    size_t m_NextPointLightIndex{ 0 };
+    std::vector<PointLight> m_PointLights;
 };
 
 class Phong::StaticModel : public IDrawable {
@@ -48,14 +97,6 @@ public:
         ~StaticMesh();
 
         void Draw(const ShaderProgram& shader) const;
-
-        GLuint VAO() const { return m_VAO; }
-        GLuint VBO() const { return m_VBO; }
-        GLuint EBO() const { return m_EBO; }
-        GLsizei IndicesCount() const { return m_IndicesCount; }
-        const Texture* Diffuse() const { return m_Diffuse.get(); }
-        const Texture* Specular() const { return m_Specular.get(); }
-        float Shininess() const { return m_Shininess; }
 
     private:
         GLuint m_VAO;
@@ -80,7 +121,6 @@ public:
 
     void ModelMatrix(const glm::mat4& matrix_model);
     glm::mat4 ModelMatrix() const;
-    const std::vector<StaticModel::StaticMesh>& StaticMeshes() const { return m_StaticMeshes; }
 
 private:
     std::vector<StaticModel::StaticMesh> m_StaticMeshes;

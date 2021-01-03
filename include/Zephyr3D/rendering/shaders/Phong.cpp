@@ -1,5 +1,6 @@
 #include "Phong.h"
 #include "../ICamera.h"
+#include "../IRenderListener.h"
 #include "../Texture.h"
 #include "../../resources/Model.h"
 #include "../../resources/Mesh.h"
@@ -116,4 +117,59 @@ void zephyr::rendering::Phong::StaticModel::StaticMesh::Draw(const ShaderProgram
     glBindVertexArray(0);
 
     glActiveTexture(GL_TEXTURE0);
+}
+
+zephyr::rendering::Phong::Phong()
+    : ShaderProgram(
+    "Phong",
+    ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PhongVert.glsl"),
+    ReadShaderFile("../../include/Zephyr3D/rendering/shaders/PhongFrag.glsl"),
+    "") {
+    m_SpotLights.reserve(m_MaxSpotLights);
+    m_PointLights.reserve(m_MaxPointLights);
+}
+
+void zephyr::rendering::Phong::Draw(const ICamera* camera) {
+    glm::mat4 pv = camera->Projection() * camera->View();
+
+    Uniform("directionalLight.direction", m_DirectionalLight.Direction);
+    Uniform("directionalLight.ambient", m_DirectionalLight.Ambient);
+    Uniform("directionalLight.diffuse", m_DirectionalLight.Diffuse);
+    Uniform("directionalLight.specular", m_DirectionalLight.Specular);
+
+    for (size_t i = 0; i < m_NextSpotLightIndex; i++) {
+        
+    }
+
+    for (size_t i = 0; i < m_NextPointLightIndex; i++) {
+        
+    }
+
+    Uniform("pv", pv);
+    Uniform("viewPosition", camera->LocalPosition());
+
+    for (auto& drawable : m_Drawables) {
+        auto user_pointer = static_cast<IRenderListener*>(drawable->UserPointer());
+        user_pointer->OnDrawObject();
+        drawable->Draw(*this);
+    }
+}
+
+void zephyr::rendering::Phong::SetDirectionalLight(const glm::vec3& direction, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular) {
+    m_DirectionalLight.Direction = direction;
+    m_DirectionalLight.Ambient = ambient;
+    m_DirectionalLight.Diffuse = diffuse;
+    m_DirectionalLight.Specular = specular;
+}
+
+void zephyr::rendering::Phong::Register(StaticModel* static_model) {
+    assert(std::find(m_Drawables.begin(), m_Drawables.end(), static_model) == m_Drawables.end());
+    m_Drawables.push_back(static_model);
+}
+
+void zephyr::rendering::Phong::Unregister(StaticModel* static_mocel) {
+    auto to_erase = std::find(m_Drawables.begin(), m_Drawables.end(), static_mocel);
+    if (to_erase != m_Drawables.end()) {
+        m_Drawables.erase(to_erase);
+    }
 }

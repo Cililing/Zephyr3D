@@ -19,6 +19,8 @@ public:
     PureTexture(PureTexture&&) = delete;
     PureTexture& operator=(PureTexture&&) = delete;
     ~PureTexture() = default;
+
+    void Draw(const ICamera* camera) override { }
 };
 
 }

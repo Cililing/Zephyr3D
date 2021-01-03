@@ -12,13 +12,14 @@ namespace zephyr::cbs {
 
 class Transform;
 
-class MeshRenderer : public Component, public IRenderListener {
+class MeshRenderer : public Component, public zephyr::rendering::IRenderListener {
 public:
-    MeshRenderer(class Object& object, ID_t id, const resources::Model& model, const std::string& shader_name);
+    MeshRenderer(class Object& object, ID_t id, const resources::Model& model);
 
     void Initialize() override;
     void Destroy() override;
 
+    zephyr::rendering::IDrawable* DrawableHandle() override;
     void OnDrawObject() override;
 
     PropertyIn<Transform*> TransformIn{ this };

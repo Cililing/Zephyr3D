@@ -56,43 +56,21 @@ zephyr::rendering::ICamera* zephyr::rendering::DrawManager::MainCamera() const {
     return m_Camera;
 }
 
-void zephyr::rendering::DrawManager::Skybox(const resources::Image& right, const resources::Image& left, const resources::Image& top, const resources::Image& bottom, const resources::Image& back, const resources::Image& front) {
-    m_Skybox = std::make_unique<Cubemap>(right, left, top, bottom, back, front);
-}
-
 void zephyr::rendering::DrawManager::ClearColor(const glm::vec3& background) {
     m_Background = background;
 }
 
 glm::vec3 zephyr::rendering::DrawManager::ClearColor() const {
-    return glm::vec3();
-}
-
-void zephyr::rendering::DrawManager::RegisterDrawCall(const IDrawable* drawable, const std::string& shader_name) {
-    m_Shaders.at(shader_name)->RegisterDrawCall(drawable);
-}
-
-void zephyr::rendering::DrawManager::UnregisterDrawCall(const IDrawable* drawable, const std::string& shader_name) {
-    m_Shaders.at(shader_name)->UnregisterDrawCall(drawable);
-}
-
-void zephyr::rendering::DrawManager::RegisterShaderProperty(const IShaderProperty* property, const std::string& shader_name) {
-    m_Shaders.at(shader_name)->RegisterShaderProperty(property);
-}
-
-void zephyr::rendering::DrawManager::UnregisterShaderProperty(const IShaderProperty* property, const std::string& shader_name) {
-    m_Shaders.at(shader_name)->UnregisterShaderProperty(property);
+    return m_Background;
 }
 
 void zephyr::rendering::DrawManager::RegisterGUIWidget(IGUIWidget* widget) {
-    // Ensure that each widget is registered at most once
     assert(std::find(m_GUIWidgets.begin(), m_GUIWidgets.end(), widget) == m_GUIWidgets.end());
 
     m_GUIWidgets.push_back(widget);
 }
 
 void zephyr::rendering::DrawManager::UnregisterGUIWidget(IGUIWidget* widget) {
-    // Unregistering not registered widget has no effect
     auto to_erase = std::find(m_GUIWidgets.begin(), m_GUIWidgets.end(), widget);
     if (to_erase != m_GUIWidgets.end()) {
         m_GUIWidgets.erase(to_erase);
@@ -103,36 +81,23 @@ void zephyr::rendering::DrawManager::CallDraws() {
     glClearColor(m_Background.x, m_Background.y, m_Background.z, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glm::mat4 pv = m_Camera->Projection() * m_Camera->View();
-
     // Call draws in all shaders
     for (auto it = m_Shaders.begin(); it != m_Shaders.end(); it++) {
         auto& shader = it->second;
 
         shader->Use();
-
-        shader->Uniform("pv", pv);
-        shader->Uniform("viewPos", m_Camera->LocalPosition());
-
-        shader->CallProperties();
-        shader->CallDraws();
+        shader->Draw(m_Camera);
     }
 
+    glm::mat4 pv = m_Camera->Projection() * m_Camera->View();
+
+    // Draw debug
     m_DebugShader.Use();
-    m_DebugShader.Uniform("pv", pv);
-    m_DebugShader.CallDraws();
+    m_DebugShader.Draw(m_Camera);
 
     // Draw skybox
-    if (m_Skybox != nullptr) {
-        glDepthFunc(GL_LEQUAL);
-
-        m_SkyboxShader.Use();
-        m_SkyboxShader.Uniform("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->View())));
-
-        m_Skybox->Draw(m_SkyboxShader);
-
-        glDepthFunc(GL_LESS);
-    }
+    m_SkyboxShader.Use();
+    m_SkyboxShader.Draw(m_Camera);
 
     // Draw GUI
     ImGui_ImplOpenGL3_NewFrame();
@@ -155,7 +120,7 @@ zephyr::rendering::ShaderProgram* zephyr::rendering::DrawManager::Shader(const s
     // Special case shaders
     if (name == "Debug")
         return &m_DebugShader;
-    if (name == "Shybox")
+    if (name == "Skybox")
         return &m_SkyboxShader;
 
     assert(m_Shaders.find(name) != m_Shaders.end());

@@ -7,7 +7,7 @@ struct Material {
     float shininess;
 }; 
 
-struct DirLight {
+struct DirectionalLight {
     vec3 direction;
 
     vec3 ambient;
@@ -48,13 +48,13 @@ in vec3 FragPos;
 in vec3 Normal;
 in vec2 TexCoords;
 
-uniform vec3 viewPos;
-uniform DirLight dirLight;
+uniform vec3 viewPosition;
+uniform DirectionalLight directionalLight;
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 uniform SpotLight spotLight;
 uniform Material material;
 
-vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
+vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
@@ -70,9 +70,9 @@ void main() {
     }
 
     vec3 norm = normalize(Normal);
-    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 viewDir = normalize(viewPosition - FragPos);
 
-    vec3 result = CalcDirLight(dirLight, norm, viewDir);
+    vec3 result = CalcDirectionalLight(directionalLight, norm, viewDir);
 
     for(int i = 0; i < NR_POINT_LIGHTS; i++) {
         result  += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
@@ -84,7 +84,7 @@ void main() {
 }
 
 // calculates the color when using a directional light.
-vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir) {
+vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir) {
     vec3 lightDir = normalize(-light.direction);
 
     // diffuse shading

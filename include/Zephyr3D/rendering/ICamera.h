@@ -13,9 +13,9 @@ public:
     ICamera(ICamera&&) = delete;
     ICamera& operator=(ICamera&&) = delete;
 
-    virtual glm::mat4 View() = 0;
-    virtual glm::mat4 Projection() = 0;
-    virtual glm::vec3 LocalPosition() = 0;
+    virtual glm::mat4 View() const = 0;
+    virtual glm::mat4 Projection() const = 0;
+    virtual glm::vec3 LocalPosition() const = 0;
 };
 
 }

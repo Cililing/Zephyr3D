@@ -1,27 +1,20 @@
 #include "ShaderProgram.h"
 
-#include "IDrawable.h"
-#include "IShaderProperty.h"
-#include "IRenderListener.h"
-
 zephyr::rendering::ShaderProgram::ShaderProgram(const std::string& name, const std::string& vertex_path, const std::string& fragment_path, const std::string& geometry_path)
     : m_Name(name) {
     m_ID = glCreateProgram();
 
-    unsigned int vertex_shader = CompileShader(vertex_path, GL_VERTEX_SHADER);
-    unsigned int fragment_shader = CompileShader(fragment_path, GL_FRAGMENT_SHADER);
-    unsigned int geometry_shader = geometry_path != "" ? CompileShader(geometry_path, GL_GEOMETRY_SHADER) : -1;
+    auto vertex_shader = CompileShader(vertex_path, GL_VERTEX_SHADER);
+    auto fragment_shader = CompileShader(fragment_path, GL_FRAGMENT_SHADER);
+    auto geometry_shader = !geometry_path.empty() ? CompileShader(geometry_path, GL_GEOMETRY_SHADER) : 0;
 
-    // Either vertex and fragment shaders are mandatory
-    assert(vertex_shader != -1 && fragment_shader != -1);
+    assert(vertex_shader != 0 && fragment_shader != 0);
 
     LinkProgram();
 
     glDeleteShader(vertex_shader);
     glDeleteShader(fragment_shader);
-    if (geometry_shader != -1) {
-        glDeleteShader(geometry_shader);
-    }
+    glDeleteShader(geometry_shader);
 }
 
 zephyr::rendering::ShaderProgram::~ShaderProgram() {
@@ -30,52 +23,6 @@ zephyr::rendering::ShaderProgram::~ShaderProgram() {
 
 void zephyr::rendering::ShaderProgram::Use() const {
     glUseProgram(m_ID);
-}
-
-void zephyr::rendering::ShaderProgram::RegisterDrawCall(const IDrawable* drawable) {
-    // Ensure that each component is registered at most once
-    assert(std::find(m_Drawables.begin(), m_Drawables.end(), drawable) == m_Drawables.end());
-
-    m_Drawables.push_back(drawable);
-}
-
-void zephyr::rendering::ShaderProgram::UnregisterDrawCall(const IDrawable* drawable) {
-    // Unregistering not registered component has no effect
-    auto to_erase = std::find(m_Drawables.begin(), m_Drawables.end(), drawable);
-    if (to_erase != m_Drawables.end()) {
-        m_Drawables.erase(to_erase);
-    }
-}
-
-void zephyr::rendering::ShaderProgram::RegisterShaderProperty(const IShaderProperty* property) {
-    // Ensure that each component is registered at most once
-    assert(std::find(m_Properties.begin(), m_Properties.end(), property) == m_Properties.end());
-
-    m_Properties.push_back(property);
-}
-
-void zephyr::rendering::ShaderProgram::UnregisterShaderProperty(const IShaderProperty* property) {
-    // Unregistering not registered component has no effect
-    auto to_erase = std::find(m_Properties.begin(), m_Properties.end(), property);
-    if (to_erase != m_Properties.end()) {
-        m_Properties.erase(to_erase);
-    }
-}
-
-void zephyr::rendering::ShaderProgram::CallProperties() {
-    for (auto& property : m_Properties) {
-        property->SetProperty(*this);
-    }
-}
-
-void zephyr::rendering::ShaderProgram::CallDraws() {
-    for (auto& drawable : m_Drawables) {
-        if (auto user_pointer = drawable->UserPointer()) {
-            IRenderListener* p = static_cast<IRenderListener*>(user_pointer);
-            p->OnDrawObject();
-        }
-        drawable->Draw(*this);
-    }
 }
 
 void zephyr::rendering::ShaderProgram::Uniform(const std::string &name, bool value) const {
@@ -146,21 +93,21 @@ std::string zephyr::rendering::ShaderProgram::ReadShaderFile(const std::string& 
     return shader_stream.str();
 }
 
-unsigned int zephyr::rendering::ShaderProgram::CompileShader(std::string code, GLenum shader_type) {
+GLuint zephyr::rendering::ShaderProgram::CompileShader(const std::string& code, GLenum shader_type) {
     // Compile shader
-    unsigned int shader = glCreateShader(shader_type);
-    const char *shader_code_ptr = code.c_str();
+    GLuint shader = glCreateShader(shader_type);
+    const GLchar* shader_code_ptr = code.c_str();
     glShaderSource(shader, 1, &shader_code_ptr, nullptr);
     glCompileShader(shader);
     
     // Check compile errors
     GLint success;
-    GLchar info_log[1024];
+    GLchar info_log[infolog_max_length];
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
-        glGetShaderInfoLog(shader, 1024, NULL, info_log);
+        glGetShaderInfoLog(shader, infolog_max_length, nullptr, info_log);
         ERROR_LOG(Logger::ESender::Rendering, "Failed to compile shader %d:\n%s", shader_type, info_log);
-        return -1;
+        return 0;
     }
     
     glAttachShader(m_ID, shader);
@@ -172,11 +119,11 @@ void zephyr::rendering::ShaderProgram::LinkProgram() {
     glLinkProgram(m_ID);
     
     // Check linking errors
-    int success;
-    char info_log[1024];
+    GLint success;
+    GLchar info_log[infolog_max_length];
     glGetProgramiv(m_ID, GL_LINK_STATUS, &success);
     if (!success) {
-        glGetProgramInfoLog(m_ID, 1024, nullptr, info_log);
-        Logger::Instance().ErrorLog(Logger::ESender::Rendering, "Failed to link shader %d:\n%s", m_ID, info_log);
+        glGetProgramInfoLog(m_ID, infolog_max_length, nullptr, info_log);
+        ERROR_LOG(Logger::ESender::Rendering, "Failed to link shader %d:\n%s", m_ID, info_log);
     }
 }

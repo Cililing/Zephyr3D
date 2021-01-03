@@ -7,15 +7,15 @@ zephyr::rendering::PerspectiveCamera::PerspectiveCamera(float fovy, float aspect
 
 }
 
-glm::mat4 zephyr::rendering::PerspectiveCamera::View() {
+glm::mat4 zephyr::rendering::PerspectiveCamera::View() const {
     return m_View;
 }
 
-glm::mat4 zephyr::rendering::PerspectiveCamera::Projection() {
+glm::mat4 zephyr::rendering::PerspectiveCamera::Projection() const {
     return m_Projection;
 }
 
-glm::vec3 zephyr::rendering::PerspectiveCamera::LocalPosition() {
+glm::vec3 zephyr::rendering::PerspectiveCamera::LocalPosition() const {
     return m_Position;
 }
 

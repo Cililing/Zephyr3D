@@ -1,6 +1,7 @@
 #include "MainScene.h"
 
 #include <Zephyr3D/ZephyrEngine.h>
+#include <Zephyr3D/rendering/shaders/SkyboxShader.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -11,7 +12,7 @@ MainScene::MainScene(zephyr::Timer& timer, zephyr::InputManager& input)
 void MainScene::CreateScene() {
     FrameRateLimit(60);
 
-    GetDrawManager().Skybox(
+    static_cast<zephyr::rendering::SkyboxShader*>(GetDrawManager().Shader("Skybox"))->SkyboxCubemap(
         GetResourcesManager().LoadImage("skyboxes/basic_blue/right.png"),
         GetResourcesManager().LoadImage("skyboxes/basic_blue/left.png"),
         GetResourcesManager().LoadImage("skyboxes/basic_blue/top.png"),
@@ -49,8 +50,18 @@ void MainScene::CreateScene() {
     }
 
     auto corrin = CreateObject("Model"); {
-        auto model = corrin->CreateComponent<zephyr::cbs::MeshRenderer>(GetResourcesManager().LoadModel("models/Corrin/scene.gltf"), "Phong");
+        corrin->Root().RotateGlobally(glm::vec3(0.0f, glm::radians(90.0f), 0.0f));
+        auto model = corrin->CreateComponent<zephyr::cbs::MeshRenderer>(GetResourcesManager().LoadModel("models/Corrin/scene.gltf"));
         corrin->Connect(corrin->Root().This, model->TransformIn);
+    }
+
+    auto elf = CreateObject("Elf"); {
+        elf->Root().RotateGlobally(glm::vec3(0.0f, glm::radians(90.0f), glm::radians(90.0f)));
+        elf->Root().Move(glm::vec3(5.0f, 0.0f, 0.0f));
+        elf->Root().GlobalScale(glm::vec3(0.25f));
+
+        auto model = elf->CreateComponent<zephyr::cbs::MeshRenderer>(GetResourcesManager().LoadModel("models/ElfGirl/scene.gltf"));
+        elf->Connect(elf->Root().This, model->TransformIn);
     }
 
     auto ground = CreateObject("Ground"); {

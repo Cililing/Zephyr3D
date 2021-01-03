@@ -19,6 +19,8 @@ public:
     PureColor(PureColor&&) = delete;
     PureColor& operator=(PureColor&&) = delete;
     ~PureColor() = default;
+
+    void Draw(const ICamera* camera) override { }
 };
 
 }

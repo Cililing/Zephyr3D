@@ -3,10 +3,9 @@
 #include "../../rendering/IDrawable.h"
 
 
-zephyr::cbs::MeshRenderer::MeshRenderer(class Object& object, ID_t id, const resources::Model& raw_model, const std::string& shader_name)
+zephyr::cbs::MeshRenderer::MeshRenderer(class Object& object, ID_t id, const resources::Model& raw_model)
     : Component(object, id)
-    , m_Model(raw_model)
-    , m_ShaderName(shader_name) {
+    , m_Model(raw_model) {
 
     m_Model.UserPointer(static_cast<IRenderListener*>(this));
 }
@@ -14,11 +13,15 @@ zephyr::cbs::MeshRenderer::MeshRenderer(class Object& object, ID_t id, const res
 void zephyr::cbs::MeshRenderer::Initialize() {
     assert(TransformIn.Connected());
 
-    Object().Scene().GetDrawManager().RegisterDrawCall(&m_Model, "Phong");
+    static_cast<zephyr::rendering::Phong*>(Object().Scene().GetDrawManager().Shader("Phong"))->Register(&m_Model);
 }
 
 void zephyr::cbs::MeshRenderer::Destroy() {
-    Object().Scene().GetDrawManager().UnregisterDrawCall(&m_Model, "Phong");
+    static_cast<zephyr::rendering::Phong*>(Object().Scene().GetDrawManager().Shader("Phong"))->Unregister(&m_Model);
+}
+
+zephyr::rendering::IDrawable* zephyr::cbs::MeshRenderer::DrawableHandle() {
+    return &m_Model;
 }
 
 void zephyr::cbs::MeshRenderer::OnDrawObject() {

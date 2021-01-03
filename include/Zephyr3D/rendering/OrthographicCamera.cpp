@@ -7,15 +7,15 @@ zephyr::rendering::OrthographicCamera::OrthographicCamera(float left, float righ
 
 }
 
-glm::mat4 zephyr::rendering::OrthographicCamera::View() {
+glm::mat4 zephyr::rendering::OrthographicCamera::View() const {
     return m_View;
 }
 
-glm::mat4 zephyr::rendering::OrthographicCamera::Projection() {
+glm::mat4 zephyr::rendering::OrthographicCamera::Projection() const {
     return m_Projection;
 }
 
-glm::vec3 zephyr::rendering::OrthographicCamera::LocalPosition() {
+glm::vec3 zephyr::rendering::OrthographicCamera::LocalPosition() const {
     return m_Position;
 }
 
