@@ -6,6 +6,7 @@
 #include "shaders/DebugShader.h"
 
 #pragma warning(push, 0)
+#define IMGUI_USER_CONFIG "../dependencies/imconfig.h"
 #include <imgui.h>
 #include "../dependencies/imgui_impl_opengl3.h"
 #include "../dependencies/imgui_impl_glfw.h"
