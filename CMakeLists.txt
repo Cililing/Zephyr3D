@@ -9,8 +9,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MD")
 
 file(GLOB_RECURSE Zephyr3D_HEADERS "include/*.h" "include/*.cpp")
-file(GLOB_RECURSE Zephyr3D_SHADERS "include/*.frag" "include/*.vert")
+file(GLOB_RECURSE Zephyr3D_SHADERS "include/*.glsl" "include/*.glsl")
 
 add_subdirectory(include/Zephyr3D)
 add_subdirectory(example)
+add_subdirectory(test)
+
 target_compile_definitions(Zephyr3D PRIVATE CONFIGURATION="$(ConfigurationName)")
