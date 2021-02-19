@@ -2,12 +2,10 @@
 #define GhostObject_h
 
 #include "Component.h"
+#include "Transform.h"
 #include "../../physics/CollisionObject.h"
 #include "../connections/PropertyIn.h"
 #include "../connections/MessageOut.h"
-#include "../Object.h"
-#include "../../Scene.h"
-#include "../../core/Math.h"
 
 #pragma warning(push, 0)
 #include "btBulletCollisionCommon.h"
@@ -18,7 +16,7 @@ namespace zephyr::cbs {
 
 class GhostObject : public Component, public physics::CollisionObject {
 public:
-    GhostObject(class Object& object, ID_t id, btCollisionShape* shape, int group = 1, int mask = -1);
+    GhostObject(class Object& object, ID_t id, btCollisionShape* shape, int group, int mask);
 
     void Initialize() override;
     void Destroy() override;

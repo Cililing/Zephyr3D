@@ -1,13 +1,14 @@
 #include "TextRenderer.h"
+#include "../Object.h"
+#include "../../Scene.h"
+#include "../../ZephyrEngine.h"
 
 unsigned int zephyr::cbs::TextRenderer::s_Index = 1;
 
 zephyr::cbs::TextRenderer::TextRenderer(class Object& object, ID_t id, EAlign horizontal, EAlign vertical, float size, const std::string& font_path)
     : Component(object, id)
     , m_Horizontal(horizontal)
-    , m_Vertical(vertical)
-    , m_Offset(0.0f)
-    , m_Color(0.0f, 0.0f, 0.0f, 1.0f) {
+    , m_Vertical(vertical) {
 
     ImGuiIO& io = ImGui::GetIO();
 
@@ -24,11 +25,11 @@ zephyr::cbs::TextRenderer::TextRenderer(class Object& object, ID_t id, EAlign ho
 }
 
 void zephyr::cbs::TextRenderer::Initialize() {
-    Object().Scene().GetDrawManager().RegisterGUIWidget(this);
+    Object().Scene().Rendering().RegisterGUIWidget(this);
 }
 
 void zephyr::cbs::TextRenderer::Destroy() {
-    Object().Scene().GetDrawManager().UnregisterGUIWidget(this);
+    Object().Scene().Rendering().UnregisterGUIWidget(this);
 }
 
 void zephyr::cbs::TextRenderer::Draw() const {

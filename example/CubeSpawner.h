@@ -1,9 +1,9 @@
 #ifndef CubeSpawner_t
 #define CubeSpawner_t
 
+#include <Zephyr3D/cbs/Object.h>
 #include <Zephyr3D/cbs/components/Component.h>
-#include <Zephyr3D/cbs/components/Cube.h>
-#include <Zephyr3D/cbs/components/RigidBody.h>
+#include <Zephyr3D/cbs/components/Transform.h>
 #include <Zephyr3D/cbs/connections/PropertyIn.h>
 
 #include <vector>
@@ -19,6 +19,7 @@ public:
 
 private:
     float m_Offset;
+    std::vector<zephyr::cbs::Object*> m_Objects;
 };
 
 #endif

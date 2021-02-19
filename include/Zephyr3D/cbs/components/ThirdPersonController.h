@@ -1,14 +1,9 @@
 #ifndef ThirdPersonController_h
 #define ThirdPersonController_h
 
-#include "../../ZephyrEngine.h"
 #include "Component.h"
-#include "../Object.h"
-#include "../../Scene.h"
+#include "Transform.h"
 #include "../connections/PropertyIn.h"
-
-#include "../../utilities/Timer.h"
-#include "../../utilities/Input.h"
 
 #pragma warning(push, 0)
 #include <glm/gtx/rotate_vector.hpp>
@@ -20,7 +15,7 @@ constexpr auto ROTATION_LIMIT = (75.0f * 3.14f / 180.0f);
 
 class ThirdPersonController : public Component {
 public:
-    ThirdPersonController(class Object& object, ID_t id, class Object& target, glm::vec3 front, glm::vec3 right, float radius = 0.0f, float mouse_sensitivity = 0.1f);
+    ThirdPersonController(class Object& object, ID_t id, class Object& target, glm::vec3 front, glm::vec3 right, float radius, float mouse_sensitivity);
     
     void Initialize() override;
     void Update() override;
@@ -32,14 +27,14 @@ public:
 
 private:
     class Object& m_Target;
-    Transform* m_TargetTransform;
+    Transform* m_TargetTransform{ nullptr };
     float m_Radius;
     float m_MouseSensitivity;
     
     glm::vec3 m_Front;
     glm::vec3 m_RotationAxis;
-    float m_XRotation;
-    float m_YRotation;
+    float m_XRotation{ 0.0f };
+    float m_YRotation{ 0.0f };
     
     glm::quat m_RotationBeetwen(const glm::vec3& start, const glm::vec3& dest);
 };

@@ -2,12 +2,7 @@
 #define DEBUGER_H
 
 #include "Component.h"
-#include "../Object.h"
-#include "../../Scene.h"
 #include "../connections/MessageOut.h"
-#include "../../ZephyrEngine.h"
-
-#include <string>
 
 namespace zephyr::cbs {
 

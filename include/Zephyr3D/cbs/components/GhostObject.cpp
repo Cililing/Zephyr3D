@@ -1,4 +1,7 @@
 #include "GhostObject.h"
+#include "../Object.h"
+#include "../../Scene.h"
+#include "../../core/Math.h"
 
 zephyr::cbs::GhostObject::GhostObject(class Object& object, ID_t id, btCollisionShape* shape, int group, int mask)
     : Component(object, id)
@@ -21,11 +24,11 @@ void zephyr::cbs::GhostObject::Initialize() {
     m_BulletHandle->setWorldTransform(transform);
     m_BulletHandle->getCollisionShape()->setLocalScaling(Vector3(TransformIn.Value()->LocalScale()));
 
-    Object().Scene().GetPhysicsManager().AddCollisionObject(this, m_Group, m_Mask);
+    Object().Scene().Physics().AddCollisionObject(this, m_Group, m_Mask);
 }
 
 void zephyr::cbs::GhostObject::Destroy() {
-    Object().Scene().GetPhysicsManager().RemoveCollisionObject(this);
+    Object().Scene().Physics().RemoveCollisionObject(this);
 }
 
 void zephyr::cbs::GhostObject::PhysicsUpdate() {

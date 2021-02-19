@@ -24,7 +24,7 @@ public:
     virtual ~Component() = default;
 
     ID_t ID() const { return m_ID; }
-    Object& Object() const { return m_Object; }
+    Object& Object() const { return object; }
 
     virtual void Initialize() {};
     virtual void Update() {};
@@ -35,7 +35,7 @@ protected:
     void UnregisterUpdateCall() const;
 
 private:
-    class Object& m_Object;
+    class Object& object;
     ID_t m_ID;
 };
 

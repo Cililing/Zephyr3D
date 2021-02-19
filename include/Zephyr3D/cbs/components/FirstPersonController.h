@@ -1,14 +1,9 @@
 #ifndef FirstPersonController_h
 #define FirstPersonController_h
 
-#include "../../ZephyrEngine.h"
 #include "Component.h"
-#include "../Object.h"
+#include "Transform.h"
 #include "../connections/PropertyIn.h"
-#include "../../Scene.h"
-
-#include "../../utilities/Timer.h"
-#include "../../utilities/Input.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #pragma warning(push, 0)
@@ -19,11 +14,11 @@
 
 namespace zephyr::cbs {
 
-constexpr auto DEGREES_60 = (60.0f * 3.14f / 180.0f);
+constexpr auto DEGREES_60 = (90.0f * 3.14f / 180.0f);
 
 class FirstPersonController : public Component {
 public:
-    FirstPersonController(class Object& object, ID_t id, float movement_speed_fast = 25.0f, float movement_speed_slow = 1.0f, float mouse_sensitivity = 0.1f);
+    FirstPersonController(class Object& object, ID_t id, float movement_speed_fast, float movement_speed_slow, float mouse_sensitivity);
 
     void Initialize() override;
     void Update() override;
@@ -31,13 +26,12 @@ public:
     PropertyIn<Transform*> TransformIn{ this };
 
 private:
-    float m_CurrentMovementSpeed;
+    float m_CurrentMovementSpeed{ 0.0f };
     float m_MovementSpeedFast;
     float m_MovementSpeedSlow;
     float m_MouseSensitivity;
-    float m_VerticalRotation;
-
-    glm::vec2 m_LastMousePos;
+    float m_VerticalRotation{ 0.0f };
+    glm::vec2 m_LastMousePos{ 0.0f };
 };
 
 }

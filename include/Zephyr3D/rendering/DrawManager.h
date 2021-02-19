@@ -31,15 +31,15 @@ public:
     void RegisterCamera(ICamera* camera) override;
     ICamera* MainCamera() const override;
 
-    void ClearColor(const glm::vec3& background);
+    void ClearColor(const glm::vec3& background) override;
     glm::vec3 ClearColor() const override;
 
     void RegisterGUIWidget(IGUIWidget* widget) override;
     void UnregisterGUIWidget(IGUIWidget* widget) override;
 
-    void CallDraws();
-
     ShaderProgram* Shader(const std::string& name) override;
+
+    void CallDraws();
 
 private:
     glm::vec3 m_Background{ 0.0f };

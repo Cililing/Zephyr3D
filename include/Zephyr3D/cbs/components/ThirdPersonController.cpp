@@ -1,15 +1,15 @@
 #include "ThirdPersonController.h"
+#include "../Object.h"
+#include "../../Scene.h"
+#include "../../ZephyrEngine.h"
 
 zephyr::cbs::ThirdPersonController::ThirdPersonController(class Object& object, ID_t id, class Object& target, glm::vec3 front, glm::vec3 right, float radius, float mouse_sensitivity)
     : Component(object, id)
     , m_Target(target)
-    , m_TargetTransform(nullptr)
     , m_Radius(radius)
     , m_MouseSensitivity(mouse_sensitivity)
     , m_Front(-front)
-    , m_RotationAxis(right)
-    , m_XRotation(0.0f)
-    , m_YRotation(0.0f) {
+    , m_RotationAxis(right) {
 }
 
 void zephyr::cbs::ThirdPersonController::Initialize() {

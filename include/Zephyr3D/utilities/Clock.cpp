@@ -1,20 +1,20 @@
-#include "Timer.h"
+#include "Clock.h"
 
-zephyr::Timer::Timer()
+zephyr::Clock::Clock()
     : m_CurrentTime(0.0f)
     , m_DeltaTime(0.0f)
     , m_LastFrame(0.0f){
 }
 
-void zephyr::Timer::Initialize() {
+void zephyr::Clock::Initialize() {
     m_CurrentTime = static_cast<float>(glfwGetTime());
 }
 
-void zephyr::Timer::HoldFrame() {
+void zephyr::Clock::HoldFrame() {
     m_DeltaTime = static_cast<float>(glfwGetTime()) - m_LastFrame;
 }
 
-void zephyr::Timer::Update() {
+void zephyr::Clock::Update() {
     m_DeltaTime = static_cast<float>(glfwGetTime()) - m_LastFrame;
     m_LastFrame = CurrentTime();
 }

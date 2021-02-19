@@ -2,27 +2,11 @@
 #define Camera_h
 
 #include "Component.h"
+#include "Transform.h"
 #include "../connections/PropertyIn.h"
-#include "../Object.h"
-#include "../../Scene.h"
 #include "../../rendering/PerspectiveCamera.h"
-#include "../../rendering/OrthographicCamera.h"
-
-#pragma warning(push, 0)
-#include <glad/glad.h>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/rotate_vector.hpp>
-#pragma warning(pop)
-
-#include <iostream>
-#include <string>
 
 namespace zephyr::cbs {
-
-#undef far
-#undef near
 
 class Camera : public Component {
 public:

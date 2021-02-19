@@ -4,23 +4,17 @@
 #include "physics/PhysicsManager.h"
 #include "cbs/ObjectManager.h"
 #include "rendering/DrawManager.h"
-#include "rendering/IDrawManager.h"
-#include "resources/ResourcesManager.h"
-
-#include "utilities/Timer.h"
-#include "utilities/Input.h"
-#include "utilities/WindowManager.h"
-
-#undef LoadImage
 
 namespace zephyr {
 
 class IGUIWidget;
 class ICamera;
+class Clock;
+class InputManager;
 
 class Scene {
 public:
-    Scene(Timer& timer, InputManager& input_manager);
+    Scene();
 
     Scene(const Scene&) = delete;
     Scene& operator=(const Scene&) = delete;
@@ -31,7 +25,7 @@ public:
     void Initialize();
     virtual void PreRun() {}
     virtual void CreateScene() = 0;
-    void Run();
+    void Run(Clock& clock, InputManager& input_manager);
     virtual void PostRun() {}
     void Destroy();
 
@@ -43,18 +37,13 @@ public:
     cbs::Object* CreateObject(const std::string& name);
     void DestroyObject(cbs::Object::ID_t id);
 
-    rendering::IDrawManager& GetDrawManager() { return m_DrawManager; }
-    physics::IPhysicsManager& GetPhysicsManager() { return m_PhysicsManager; }
-    resources::ResourcesManager& GetResourcesManager() { return m_ResourceManager; }
+    rendering::IDrawManager& Rendering();
+    physics::IPhysicsManager& Physics();
 
 private:
-    Timer& m_Timer;
-    InputManager& m_InputManager;
-
     cbs::ObjectManager m_ObjectManager;
     rendering::DrawManager m_DrawManager;
     physics::PhysicsManager m_PhysicsManager;
-    resources::ResourcesManager m_ResourceManager;
 
     float m_FrameRateLimit{ 0.0f };
     bool m_Running{ false };

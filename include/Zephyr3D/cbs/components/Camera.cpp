@@ -1,16 +1,19 @@
 #include "Camera.h"
+#include "../Object.h"
+#include "../../Scene.h"
 #include "../../ZephyrEngine.h"
+
+#undef far
+#undef near
 
 zephyr::cbs::Camera::Camera(class Object& object, ID_t id, float fovy, float aspect, float near, float far)
     : Component(object, id)
-    , m_Camera(fovy, aspect, near, far) {
-
-}
+    , m_Camera(fovy, aspect, near, far) { }
 
 void zephyr::cbs::Camera::Initialize() {
     assert(TransformIn.Connected());
 
-    Object().Scene().GetDrawManager().RegisterCamera(&m_Camera);
+    Object().Scene().Rendering().RegisterCamera(&m_Camera);
 
     RegisterUpdateCall();
 }

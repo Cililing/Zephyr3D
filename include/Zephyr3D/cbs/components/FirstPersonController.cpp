@@ -1,14 +1,13 @@
 #include "FirstPersonController.h"
-#include "Transform.h"
+#include "../Object.h"
+#include "../../Scene.h"
+#include "../../ZephyrEngine.h"
 
 zephyr::cbs::FirstPersonController::FirstPersonController(class Object& object, ID_t id, float movement_speed_fast, float movement_speed_slow, float mouse_sensivity)
     : Component(object, id)
-    , m_CurrentMovementSpeed(0.0f)
     , m_MovementSpeedFast(movement_speed_fast)
     , m_MovementSpeedSlow(movement_speed_slow)
-    , m_MouseSensitivity(mouse_sensivity)
-    , m_VerticalRotation(0.0f)
-    , m_LastMousePos(0.0f) {}
+    , m_MouseSensitivity(mouse_sensivity) {}
 
 void zephyr::cbs::FirstPersonController::Initialize() {
     assert(TransformIn.Connected());

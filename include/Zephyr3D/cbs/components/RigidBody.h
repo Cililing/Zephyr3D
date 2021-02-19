@@ -2,13 +2,11 @@
 #define RigidBody_h
 
 #include "Component.h"
-#include "../../Scene.h"
-#include "../../physics/PhysicsManager.h"
+#include "Transform.h"
 #include "../../physics/CollisionObject.h"
 #include "../connections/PropertyIn.h"
 #include "../connections/PropertyOut.h"
 #include "../connections/MessageOut.h"
-#include "../../core/Math.h"
 
 namespace zephyr::cbs {
 

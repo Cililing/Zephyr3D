@@ -1,11 +1,9 @@
 #ifndef TextRenderer_h
 #define TextRenderer_h
 
-#include "../../ZephyrEngine.h"
 #include "Component.h"
+#include "../../rendering/DrawManager.h"
 #include "../../rendering/IGUIWidget.h"
-#include "../Object.h"
-#include "../../Scene.h"
 #include "../connections/MessageIn.h"
 
 #include <string>
@@ -44,8 +42,8 @@ private:
 
     EAlign m_Horizontal;
     EAlign m_Vertical;
-    glm::vec2 m_Offset;
-    glm::vec4 m_Color;
+    glm::vec2 m_Offset{ 0.0f };
+    glm::vec4 m_Color{ 1.0f };
     ImFont* m_Font;
 };
 

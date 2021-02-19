@@ -1,9 +1,10 @@
 #include "Debuger.h"
+#include "../Object.h"
+#include "../../Scene.h"
+#include "../../ZephyrEngine.h"
 
 zephyr::cbs::Debuger::Debuger(class Object& object, ID_t id)
-    : Component(object, id) {
-
-}
+    : Component(object, id) { }
 
 void zephyr::cbs::Debuger::Initialize() {
     RegisterUpdateCall();

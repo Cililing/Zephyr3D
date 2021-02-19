@@ -1,8 +1,8 @@
 #ifndef ZephyrEngine_h
 #define ZephyrEngine_h
 
-#include "Zephyr3D/utilities/ITimer.h"
-#include "Zephyr3D/utilities/Timer.h"
+#include "Zephyr3D/utilities/IClock.h"
+#include "Zephyr3D/utilities/Clock.h"
 #include "Zephyr3D/utilities/Input.h"
 #include "Zephyr3D/utilities/IWindow.h"
 #include "Zephyr3D/utilities/WindowManager.h"
@@ -41,25 +41,26 @@ public:
 
     template <class T>
     void StartScene() {
-        T scene(m_Timer, m_InputManager);
+        T scene;
 
         scene.Initialize();
         scene.CreateScene();
-        scene.Run();
+        scene.Run(m_Clock, m_InputManager);
         scene.Destroy();
     }
-    
 
-    Timer& Time();
+    IClock& Time();
     IInput& Input();
     IWindow& Window();
+    resources::ResourcesManager& Resources();
 
 private:
     ZephyrEngine() = default;
 
-    Timer m_Timer;
+    Clock m_Clock;
     InputManager m_InputManager;
     WindowManager m_WindowManager;
+    resources::ResourcesManager m_ResourceManager;
 };
 
 }

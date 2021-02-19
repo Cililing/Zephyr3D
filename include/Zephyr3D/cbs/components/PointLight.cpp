@@ -1,79 +1,36 @@
 #include "PointLight.h"
+#include "../Object.h"
+#include "../../Scene.h"
+#include "../../debuging/Logger.h"
 
-int zephyr::cbs::PointLight::QUANTITY = 0;
-
-zephyr::cbs::PointLight::PointLight(class Object& object, ID_t id, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic)
+zephyr::cbs::PointLight::PointLight(class Object& object, ID_t id, float constant, float linear, float quadratic, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular)
     : Component(object, id)
-    , m_Ambient(ambient)
-    , m_Diffuse(diffuse)
-    , m_Specular(specular)
-    , m_Constant(constant)
-    , m_Linear(linear)
-    , m_Quadratic(quadratic) {
+    , m_PointLight(static_cast<rendering::Phong*>(Object().Scene().Rendering().Shader("Phong"))->CreatePointLight()) {
 
-    assert(constant > 0.0f);
-    assert(linear > 0.0f);
-    assert(quadratic > 0.0f);
-
-    m_Index = QUANTITY;
-    QUANTITY = (QUANTITY + 1) % 4;
+    if (m_PointLight) {
+        m_PointLight->Constant = constant;
+        m_PointLight->Linear = linear;
+        m_PointLight->Quadratic = quadratic;
+        m_PointLight->Ambient = ambient;
+        m_PointLight->Diffuse = diffuse;
+        m_PointLight->Specular = specular;
+    }
 }
 
 void zephyr::cbs::PointLight::Initialize() {
-    //Object().Scene().GetDrawManager().RegisterShaderProperty(this, "Phong");
+    if (m_PointLight) {
+        m_PointLight->Position = (*TransformIn).GlobalPosition();
+    }
+
+    RegisterUpdateCall();
+}
+
+void zephyr::cbs::PointLight::Update() {
+    if (m_PointLight) {
+        m_PointLight->Position = (*TransformIn).GlobalPosition();
+    }
 }
 
 void zephyr::cbs::PointLight::Destroy() {
-    //Object().Scene().GetDrawManager().UnregisterShaderProperty(this, "Phong");
-}
-
-void zephyr::cbs::PointLight::SetProperty(const rendering::ShaderProgram& shader) const {
-    std::string pointLight = "pointLights[" + std::to_string(m_Index) + "].";
-
-    shader.Uniform(pointLight + "position", Object().Root().GlobalPosition());
-    shader.Uniform(pointLight + "ambient", m_Ambient);
-    shader.Uniform(pointLight + "diffuse", m_Diffuse);
-    shader.Uniform(pointLight + "constant", m_Constant);
-    shader.Uniform(pointLight + "linear", m_Linear);
-    shader.Uniform(pointLight + "quadratic", m_Quadratic);
-}
-
-void zephyr::cbs::PointLight::Ambient(const glm::vec3& ambient) {
-    m_Ambient = ambient;
-
-    NumberInRange(m_Ambient.x);
-    NumberInRange(m_Ambient.y);
-    NumberInRange(m_Ambient.z);
-}
-
-void zephyr::cbs::PointLight::Diffuse(const glm::vec3& diffuse) {
-    m_Diffuse = diffuse;
-
-    NumberInRange(m_Diffuse.x);
-    NumberInRange(m_Diffuse.y);
-    NumberInRange(m_Diffuse.z);
-}
-
-void zephyr::cbs::PointLight::Constant(float constant) {
-    if (constant <= 0) {
-        constant = 0.0000001f;
-    }
-
-    m_Constant = constant;
-}
-
-void zephyr::cbs::PointLight::Linear(float linear) {
-    if (linear <= 0) {
-        linear = 0.0000001f;
-    }
-
-    m_Linear = linear;
-}
-
-void zephyr::cbs::PointLight::Quadratic(float quadratic) {
-    if (quadratic <= 0) {
-        quadratic = 0.0000001f;
-    }
-
-    m_Quadratic = quadratic;
+    static_cast<rendering::Phong*>(Object().Scene().Rendering().Shader("Phong"))->DestroyPointLight(m_PointLight);
 }

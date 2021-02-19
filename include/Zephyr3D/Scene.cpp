@@ -1,40 +1,37 @@
 #include "Scene.h"
 #include "rendering/ICamera.h"
 #include "rendering/IDrawable.h"
-#include "rendering/IShaderProperty.h"
 #include "rendering/IGUIWidget.h"
 #include "rendering/Cubemap.h"
 
 #include "ZephyrEngine.h"
 
-zephyr::Scene::Scene(Timer& timer, InputManager& input_manager)
-    : m_Timer(timer)
-    , m_InputManager(input_manager)
-    , m_ObjectManager(*this)
+zephyr::Scene::Scene()
+    : m_ObjectManager(*this)
     , m_PhysicsManager(m_DrawManager) {
 }
 
 void zephyr::Scene::Initialize() {
     m_DrawManager.Initialize();
     m_PhysicsManager.Initialize();
-    m_ObjectManager.InitializeObjects();
+    //m_ObjectManager.InitializeObjects();
 }
 
-void zephyr::Scene::Run() {
+void zephyr::Scene::Run(Clock& clock, InputManager& input_manager) {
     m_Running = true;
 
     // Initialize Time manager as close to game loop as possible
     // to avoid misrepresented delta time
-    m_Timer.Initialize();
+    clock.Initialize();
     
     // Game loop
     while (m_Running && !ZephyrEngine::Instance().Window().ShouldClose()) {
-        m_Timer.Update();
-        m_InputManager.Update(ZephyrEngine::Instance().Window());
+        clock.Update();
+        input_manager.Update(ZephyrEngine::Instance().Window());
 
         // Update global systems
-        while (m_Timer.DeltaTime() < m_FrameRateLimit) {
-            m_Timer.HoldFrame();
+        while (clock.DeltaTime() < m_FrameRateLimit) {
+            clock.HoldFrame();
             glfwPollEvents();
         }
 
@@ -69,12 +66,18 @@ float zephyr::Scene::FrameRate() const {
     return 1.0f / ZephyrEngine::Instance().Time().DeltaTime();
 }
 
-
-
 zephyr::cbs::Object* zephyr::Scene::CreateObject(const std::string& name) {
     return m_ObjectManager.CreateObject(name);
 }
 
 void zephyr::Scene::DestroyObject(zephyr::cbs::Object::ID_t id) {
     m_ObjectManager.DestroyObject(id);
+}
+
+zephyr::rendering::IDrawManager& zephyr::Scene::Rendering() {
+    return m_DrawManager;
+}
+
+zephyr::physics::IPhysicsManager& zephyr::Scene::Physics() {
+    return m_PhysicsManager;
 }

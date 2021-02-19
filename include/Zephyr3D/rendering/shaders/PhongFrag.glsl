@@ -42,7 +42,9 @@ struct SpotLight {
     vec3 specular;
 };
 
-#define NR_POINT_LIGHTS 4
+#define EPSILON 0.00001f
+#define POINTLIGHTS_COUNT 4
+#define SPOTLIGHTS_COUNT 4
 
 in vec3 FragPos;
 in vec3 Normal;
@@ -50,10 +52,11 @@ in vec2 TexCoords;
 
 uniform vec3 viewPosition;
 uniform DirectionalLight directionalLight;
-uniform PointLight pointLights[NR_POINT_LIGHTS];
-uniform SpotLight spotLight;
+uniform PointLight pointLights[POINTLIGHTS_COUNT];
+uniform SpotLight spotLights[SPOTLIGHTS_COUNT];
 uniform Material material;
 
+bool NearZero(float value);
 vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
@@ -74,17 +77,26 @@ void main() {
 
     vec3 result = CalcDirectionalLight(directionalLight, norm, viewDir);
 
-    for(int i = 0; i < NR_POINT_LIGHTS; i++) {
-        result  += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
+    for (int i = 0; i < POINTLIGHTS_COUNT; i++) {
+        result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
     }
 
-    result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
+    for (int i = 0; i < SPOTLIGHTS_COUNT; i++) {
+        result += CalcSpotLight(spotLights[i], norm, FragPos, viewDir);
+    }
 
     FragColor = vec4(result, 1.0f);
 }
 
+bool NearZero(float value) {
+    return abs(value) < EPSILON;
+}
+
 // calculates the color when using a directional light.
 vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir) {
+    if (NearZero(light.direction.x) && NearZero(light.direction.y) && NearZero(light.direction.z))
+        return vec3(0.0f, 0.0f, 0.0f);
+
     vec3 lightDir = normalize(-light.direction);
 
     // diffuse shading

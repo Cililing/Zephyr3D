@@ -6,9 +6,13 @@
 
 #pragma warning(push, 0)
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include <assimp/scene.h>
 #pragma warning(pop)
 
 #include <vector>
+#include <optional>
 
 namespace zephyr::resources {
     class Model;
@@ -21,6 +25,11 @@ class Texture;
 class IRenderListener;
 
 class Phong : public ShaderProgram {
+    const size_t MAX_POINTLIGHTS = 4;
+    const size_t MAX_SPOTLIGHTS = 4;
+
+public:
+    class StaticModel;
 
     struct DirectionalLight {
         glm::vec3 Direction{ 0.0f };
@@ -30,7 +39,6 @@ class Phong : public ShaderProgram {
     };
 
     struct PointLight {
-        size_t Index{ 0 };
         glm::vec3 Position{ 0.0f };
         float Constant{ 1.0f };
         float Linear{ 0.0f };
@@ -41,7 +49,6 @@ class Phong : public ShaderProgram {
     };
 
     struct SpotLight {
-        size_t Index{ 0 };
         glm::vec3 Position{ 0.0f };
         glm::vec3 Direction{ 0.0f };
         float CutOff{ 0.0f };
@@ -54,9 +61,6 @@ class Phong : public ShaderProgram {
         glm::vec3 Specular{ 0.0f };
     };
 
-public:
-    class StaticModel;
-
     Phong();
     Phong(const Phong&) = delete;
     Phong& operator=(const Phong&) = delete;
@@ -66,7 +70,12 @@ public:
 
     void Draw(const ICamera* camera) override;
 
-    void SetDirectionalLight(const glm::vec3& direction, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular);
+    DirectionalLight* CreateDirectionalLight();
+    void DestroyDirectionalLight();
+    PointLight* CreatePointLight();
+    void DestroyPointLight(const PointLight* light);
+    SpotLight* CreateSpotLight();
+    void DestroySpotLight(const SpotLight* light);
 
     void Register(StaticModel* static_model);
     void Unregister(StaticModel* static_mocel);
@@ -75,40 +84,44 @@ private:
     std::vector<StaticModel*> m_Drawables;
 
     DirectionalLight m_DirectionalLight;
-    size_t m_MaxSpotLights{ 1 };
-    size_t m_NextSpotLightIndex{ 0 };
-    std::vector<SpotLight> m_SpotLights;
-    size_t m_MaxPointLights{ 4 };
-    size_t m_NextPointLightIndex{ 0 };
-    std::vector<PointLight> m_PointLights;
+    std::vector<std::pair<bool /*is used*/, PointLight /*light struct*/>> m_PointLights{ MAX_POINTLIGHTS };
+    std::vector<std::pair<bool /*is used*/, SpotLight /*light struct*/>> m_SpotLights{ MAX_POINTLIGHTS };
 };
+
 
 class Phong::StaticModel : public IDrawable {
 public:
-    class StaticMesh {
+    class Mesh {
     public:
-        explicit StaticMesh(const resources::Mesh& raw_StaticMesh);
+        Mesh(const aiMesh& mesh, const aiScene& scene, const std::string& directory, const aiMatrix4x4& transform);
 
-        StaticMesh() = delete;
-        StaticMesh(const StaticMesh&) = delete;
-        StaticMesh& operator=(const StaticMesh&) = delete;
-        StaticMesh(StaticMesh&& other) noexcept;
-        StaticMesh& operator=(StaticMesh&& other) noexcept;
-        ~StaticMesh();
+        Mesh() = delete;
+        Mesh(const Mesh&) = delete;
+        Mesh& operator=(const Mesh&) = delete;
+        Mesh(Mesh&& other) noexcept;
+        Mesh& operator=(Mesh&& other) noexcept;
+        ~Mesh();
 
-        void Draw(const ShaderProgram& shader) const;
+        void Draw(const ShaderProgram& shader, const glm::mat4& model) const;
 
     private:
         GLuint m_VAO;
-        GLuint m_VBO;
+
+        // Buffer objects
+        GLuint m_Positions;
+        GLuint m_Normals;
+        GLuint m_TextureCoords;
+
         GLuint m_EBO;
         GLsizei m_IndicesCount;
         std::unique_ptr<Texture> m_Diffuse{ nullptr };
         std::unique_ptr<Texture> m_Specular{ nullptr };
         float m_Shininess;
+
+        glm::mat4 m_Transform;
     };
 
-    explicit StaticModel(const resources::Model& raw_model);
+    StaticModel(const aiScene& raw_model, const std::string& directory);
 
     StaticModel() = delete;
     StaticModel(const StaticModel&) = delete;
@@ -123,8 +136,10 @@ public:
     glm::mat4 ModelMatrix() const;
 
 private:
-    std::vector<StaticModel::StaticMesh> m_StaticMeshes;
+    std::vector<StaticModel::Mesh> m_StaticMeshes;
     glm::mat4 m_Model{0.0f};
+
+    void LoadNode(const aiNode& node, const aiScene& scene, const std::string& directory, const aiMatrix4x4& transform);
 };
 
 }

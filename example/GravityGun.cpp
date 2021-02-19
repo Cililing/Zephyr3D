@@ -24,7 +24,7 @@ void GravityGun::Update() {
 		// Pick up rigidbody
 
 		btCollisionWorld::ClosestRayResultCallback result(from, to);
-		Object().Scene().GetPhysicsManager().Raycast(from, to, result);
+		Object().Scene().Physics().Raycast(from, to, result);
 
 		if (!result.hasHit()) {
 			return;
@@ -41,7 +41,7 @@ void GravityGun::Update() {
 		btVector3 pick_position = result.m_hitPointWorld;
 		btVector3 local_pivot = m_Target->getCenterOfMassTransform().inverse() * pick_position;
 		m_Constraint = new btPoint2PointConstraint(*m_Target, local_pivot);
-		Object().Scene().GetPhysicsManager().AddConstraint(m_Constraint, true);
+		Object().Scene().Physics().AddConstraint(m_Constraint, true);
 		m_Constraint->m_setting.m_impulseClamp = 30.0f;
 		m_Constraint->m_setting.m_tau = 0.001f;
 		m_OldPickingDistance = (pick_position - from).length();
@@ -59,7 +59,7 @@ void GravityGun::Update() {
 
 		m_Target->forceActivationState(m_SavedState);
 		m_Target->activate();
-		Object().Scene().GetPhysicsManager().RemoveConstraint(m_Constraint);
+		Object().Scene().Physics().RemoveConstraint(m_Constraint);
 		delete m_Constraint;
 		m_Constraint = nullptr;
 		m_Target = nullptr;
@@ -67,7 +67,7 @@ void GravityGun::Update() {
 		// Push
 
 		btCollisionWorld::ClosestRayResultCallback result(from, to);
-		Object().Scene().GetPhysicsManager().Raycast(from, to, result);
+		Object().Scene().Physics().Raycast(from, to, result);
 
 		if (!result.hasHit()) {
 			return;

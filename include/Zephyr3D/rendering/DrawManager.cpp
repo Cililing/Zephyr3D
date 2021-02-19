@@ -1,7 +1,6 @@
 #include "DrawManager.h"
 #include "ICamera.h"
 #include "IDrawable.h"
-#include "IShaderProperty.h"
 #include "IGUIWidget.h"
 #include "shaders/PureColor.h"
 #include "shaders/PureTexture.h"

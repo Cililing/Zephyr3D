@@ -1,7 +1,7 @@
-#ifndef Timer_h
-#define Timer_h
+#ifndef Clock_h
+#define Clock_h
 
-#include "ITimer.h"
+#include "IClock.h"
 
 #pragma warning(push, 0)
 #include <glad/glad.h>
@@ -14,9 +14,9 @@ constexpr auto FPS_LIMIT30 = (1.0f / 30.0f);
 constexpr auto FPS_LIMIT60 = (1.0f / 60.0f);
 constexpr auto FPS_LIMIT300 = (1.0f / 300.0f);
 
-class Timer : public ITimer {
+class Clock : public IClock {
 public:
-    Timer();
+    Clock();
     
     void Initialize();
     void HoldFrame();

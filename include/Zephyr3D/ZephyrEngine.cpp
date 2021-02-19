@@ -39,8 +39,8 @@ void zephyr::ZephyrEngine::Destroy() {
     glfwTerminate();
 }
 
-zephyr::Timer& zephyr::ZephyrEngine::Time() {
-    return m_Timer;
+zephyr::IClock& zephyr::ZephyrEngine::Time() {
+    return m_Clock;
 }
 
 zephyr::IInput& zephyr::ZephyrEngine::Input() {
@@ -49,4 +49,8 @@ zephyr::IInput& zephyr::ZephyrEngine::Input() {
 
 zephyr::IWindow& zephyr::ZephyrEngine::Window() {
     return m_WindowManager;
+}
+
+zephyr::resources::ResourcesManager& zephyr::ZephyrEngine::Resources() {
+    return m_ResourceManager;
 }

@@ -1,4 +1,7 @@
 #include "RigidBody.h"
+#include "../../Scene.h"
+#include "../../physics/PhysicsManager.h"
+#include "../../core/Math.h"
 
 zephyr::cbs::RigidBody::RigidBody(class Object& object, ID_t id, btScalar mass, btCollisionShape* shape, int group, int mask)
     : Component(object, id)
@@ -22,11 +25,11 @@ void zephyr::cbs::RigidBody::Initialize() {
     static_cast<btRigidBody*>(m_BulletHandle)->getMotionState()->setWorldTransform(transform);
     m_BulletHandle->getCollisionShape()->setLocalScaling(Vector3(TransformIn.Value()->LocalScale()));
 
-    Object().Scene().GetPhysicsManager().AddRigidBody(this, m_Group, m_Mask);
+    Object().Scene().Physics().AddRigidBody(this, m_Group, m_Mask);
 }
 
 void zephyr::cbs::RigidBody::Destroy() {
-    Object().Scene().GetPhysicsManager().RemoveRigidBody(this);
+    Object().Scene().Physics().RemoveRigidBody(this);
 }
 
 void zephyr::cbs::RigidBody::OnCollision(const btCollisionObject* collider) {

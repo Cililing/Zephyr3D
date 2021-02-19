@@ -2,8 +2,10 @@
 #define ResourcesManager_h
 
 #include "Image.h"
-#include "Model.h"
 #include "../debuging/Logger.h"
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
 
 #include <string>
 #include <unordered_map>
@@ -20,12 +22,11 @@ constexpr const char* ASSETS_PATH_PREFIX = "../../assets/";
 class ResourcesManager {
 public:
     Image& LoadImage(std::string path);
-    Model& LoadModel(std::string path);
-
+    const aiScene& LoadModel(const std::string& path);
 
 private:
     std::unordered_map<std::string, Image> m_Textures;
-    std::unordered_map<std::string, Model> m_Models;
+    std::unordered_map<std::string, Assimp::Importer> m_Models2;
 };
 
 }

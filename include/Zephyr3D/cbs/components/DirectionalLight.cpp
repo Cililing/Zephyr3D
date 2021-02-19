@@ -1,13 +1,28 @@
 #include "DirectionalLight.h"
+#include "../../Scene.h"
 
-zephyr::cbs::DirectionalLight::DirectionalLight(class Object& object, ID_t id, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular)
+zephyr::cbs::DirectionalLight::DirectionalLight(class Object& object, ID_t id, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular)
     : Component(object, id)
-    , m_Direction(direction)
-    , m_Ambient(ambient)
-    , m_Diffuse(diffuse) 
-    , m_Specular(specular) {
+    , m_DirectionalLight(static_cast<rendering::Phong*>(Object().Scene().Rendering().Shader("Phong"))->CreateDirectionalLight()) {
+    if (m_DirectionalLight) {
+        m_DirectionalLight->Ambient = ambient;
+        m_DirectionalLight->Diffuse = diffuse;
+        m_DirectionalLight->Specular = specular;
+    }
 }
 
 void zephyr::cbs::DirectionalLight::Initialize() {
-    static_cast<rendering::Phong*>(Object().Scene().GetDrawManager().Shader("Phong"))->SetDirectionalLight(m_Direction, m_Ambient, m_Diffuse, m_Specular);
+    if (m_DirectionalLight) {
+        m_DirectionalLight->Direction = (*TransformIn).Front();
+    }
+}
+
+void zephyr::cbs::DirectionalLight::Update() {
+    if (m_DirectionalLight) {
+        m_DirectionalLight->Direction = (*TransformIn).Front();
+    }
+}
+
+void zephyr::cbs::DirectionalLight::Destroy() {
+    static_cast<rendering::Phong*>(Object().Scene().Rendering().Shader("Phong"))->DestroyDirectionalLight();
 }

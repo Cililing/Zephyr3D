@@ -2,9 +2,8 @@
 #define MeshRenderer_h
 
 #include "Component.h"
-#include "../Object.h"
+#include "Transform.h"
 #include "../connections/PropertyIn.h"
-#include "../../Scene.h"
 #include "../../rendering/IRenderListener.h"
 #include "../../rendering/shaders/Phong.h"
 
@@ -14,7 +13,7 @@ class Transform;
 
 class MeshRenderer : public Component, public zephyr::rendering::IRenderListener {
 public:
-    MeshRenderer(class Object& object, ID_t id, const resources::Model& model);
+    MeshRenderer(class Object& object, ID_t id, const aiScene& raw_model, const std::string& path);
 
     void Initialize() override;
     void Destroy() override;
