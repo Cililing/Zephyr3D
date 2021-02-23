@@ -1,13 +1,9 @@
 #ifndef ZephyrEngine_h
 #define ZephyrEngine_h
 
-#include "Zephyr3D/utilities/IClock.h"
-#include "Zephyr3D/utilities/Clock.h"
-#include "Zephyr3D/utilities/Input.h"
-#include "Zephyr3D/utilities/IWindow.h"
-#include "Zephyr3D/utilities/WindowManager.h"
-#include "rendering/IDrawManager.h"
-#include "physics/IPhysicsManager.h"
+#include "core/Clock.h"
+#include "core/Input.h"
+#include "core/WindowManager.h"
 #include "resources/ResourcesManager.h"
 
 #pragma warning(push, 0)
@@ -36,7 +32,7 @@ public:
     ZephyrEngine(ZephyrEngine&&) = delete;
     ZephyrEngine& operator=(ZephyrEngine&&) = delete;
 
-    int Init();
+    void Initialize(unsigned int window_width, unsigned int window_height, const std::string& window_title);
     void Destroy();
 
     template <class T>

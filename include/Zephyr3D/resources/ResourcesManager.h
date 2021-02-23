@@ -2,10 +2,11 @@
 #define ResourcesManager_h
 
 #include "Image.h"
-#include "../debuging/Logger.h"
 
+#pragma warning(push, 0)
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
+#pragma warning(pop)
 
 #include <string>
 #include <unordered_map>

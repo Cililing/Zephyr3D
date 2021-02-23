@@ -1,5 +1,7 @@
 #include "ShaderProgram.h"
 
+#include "../core/debugging/Logger.h"
+
 zephyr::rendering::ShaderProgram::ShaderProgram(const std::string& name, const std::string& vertex_path, const std::string& fragment_path, const std::string& geometry_path)
     : m_Name(name) {
     m_ID = glCreateProgram();

@@ -1,6 +1,8 @@
 #include "Image.h"
 #include "ResourcesManager.h"
 
+#include "../core/debugging/Logger.h"
+
 zephyr::resources::Image::Image(const std::string& path)
     : m_Path(ASSETS_PATH_PREFIX + path) {
     m_Data = stbi_load(m_Path.c_str(), &m_Width, &m_Height, &m_Components, 0);

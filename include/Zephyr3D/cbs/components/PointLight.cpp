@@ -1,7 +1,8 @@
 #include "PointLight.h"
+
 #include "../Object.h"
 #include "../../Scene.h"
-#include "../../debuging/Logger.h"
+#include "../../core/debugging/Logger.h"
 
 zephyr::cbs::PointLight::PointLight(class Object& object, ID_t id, float constant, float linear, float quadratic, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular)
     : Component(object, id)

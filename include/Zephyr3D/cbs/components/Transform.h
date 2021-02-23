@@ -5,8 +5,8 @@
 #include "../connections/PropertyOut.h"
 #include "../connections/PropertyIn.h"
 
-#define GLM_ENABLE_EXPERIMENTAL
 #pragma warning(push, 0)
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>

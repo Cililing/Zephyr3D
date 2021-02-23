@@ -15,20 +15,18 @@ constexpr auto FPS_LIMIT60 = (1.0f / 60.0f);
 constexpr auto FPS_LIMIT300 = (1.0f / 300.0f);
 
 class Clock : public IClock {
-public:
-    Clock();
-    
+public:    
     void Initialize();
     void HoldFrame();
     void Update();
     
-    float CurrentTime() const { return static_cast<float>(glfwGetTime()); }
-    float DeltaTime() const { return m_DeltaTime; }
+    float CurrentTime() const override;
+    float DeltaTime() const override;
  
 private:
-    float m_CurrentTime;
-    float m_DeltaTime;
-    float m_LastFrame;
+    float m_CurrentTime{ 0.0f };
+    float m_DeltaTime{ 0.0f };
+    float m_LastFrame{ 0.0f };
 };
 
 }

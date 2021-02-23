@@ -6,7 +6,9 @@
 #include "../connections/PropertyIn.h"
 #include "../../rendering/shaders/Phong.h"
 
+#pragma warning(push, 0)
 #include <glm/glm.hpp>
+#pragma warning(pop)
 
 namespace zephyr::cbs {
 
@@ -26,4 +28,4 @@ private:
 
 }
 
-#endif // !SpotLight_h
+#endif

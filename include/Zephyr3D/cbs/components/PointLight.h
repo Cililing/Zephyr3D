@@ -24,11 +24,6 @@ public:
 
 private:
     rendering::Phong::PointLight* m_PointLight;
-
-    // Keep number in range of <0.0f, 1.0f>
-    void NumberInRange(float& number) {
-        number = number < 0.0f ? 0.0f : number > 1.0f ? 1.0f : number;
-    }
 };
 
 }

@@ -55,7 +55,7 @@ void zephyr::cbs::ObjectManager::ProcessFrame() {
         auto objects_count = m_Objects.size();
         m_MarkedToDestroy.clear();
 
-        for (int i = objects_count - destroy_count; i < objects_count; i++) {
+        for (size_t i = objects_count - destroy_count; i < objects_count; i++) {
             m_Objects[i]->DestroyComponents();
         }
 

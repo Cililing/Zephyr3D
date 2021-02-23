@@ -18,9 +18,8 @@ public:
     std::string Title() const override { return m_Title; }
     void Title(const std::string& title) override;
 
-    GLFWwindow* Pointer() const override { return m_GLFWHandler; }
-    operator GLFWwindow*() const override { return m_GLFWHandler; }
-    
+    GLFWwindow* Handle() const override { return m_GLFWHandler; }
+
 private:
     GLFWwindow* m_GLFWHandler{ nullptr };
     unsigned int m_Width{ 0 };

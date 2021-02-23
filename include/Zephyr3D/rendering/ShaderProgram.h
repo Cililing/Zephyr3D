@@ -1,9 +1,6 @@
 #ifndef ShaderProgram_h
 #define ShaderProgram_h
 
-#include "../debuging/Logger.h"
-#include "../core/Enum.h"
-
 #pragma warning(push, 0)
 #include <glad/glad.h>
 #include <glm/glm.hpp>

@@ -7,7 +7,10 @@ void zephyr::WindowManager::Initialize(unsigned int width, unsigned int height, 
     m_Title = title;
 
     m_GLFWHandler = glfwCreateWindow(m_Width, m_Height, title.c_str(), nullptr, nullptr);
+    glfwMakeContextCurrent(m_GLFWHandler);
+
     glfwSetWindowUserPointer(m_GLFWHandler, this);
+    glfwSetFramebufferSizeCallback(m_GLFWHandler, framebuffer_size_callback);
 }
 
 bool zephyr::WindowManager::ShouldClose() const {

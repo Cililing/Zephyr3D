@@ -3,7 +3,6 @@
 
 #pragma warning(push, 0)
 #include <glad/glad.h>
-
 #include <glm/glm.hpp>
 #pragma warning(pop)
 

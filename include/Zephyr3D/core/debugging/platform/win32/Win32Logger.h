@@ -2,11 +2,13 @@
 #ifndef Win32Logger_h
 #define Win32Logger_h
 
-#include "../../../core/Enum.h"
+#include "../../../Enum.h"
 
 #include <iostream>
 #define NOMINMAX
 #include <Windows.h>
+
+namespace zephyr {
 
 #define INFO_LOG(sender, ...)                                              \
 do {                                                                       \
@@ -67,6 +69,8 @@ private:
 };
 ENABLE_BITMASK_OPERATORS(Logger::EChannel);
 ENABLE_BITMASK_OPERATORS(Logger::ESender);
+
+}
 
 #endif
 #endif

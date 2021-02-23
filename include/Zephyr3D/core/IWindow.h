@@ -25,8 +25,7 @@ public:
     virtual std::string Title() const = 0;
     virtual void Title(const std::string& title) = 0;
 
-    virtual GLFWwindow* Pointer() const = 0;
-    virtual operator GLFWwindow* () const = 0;
+    virtual GLFWwindow* Handle() const = 0;
 };
 
 }

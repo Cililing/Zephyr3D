@@ -1,7 +1,8 @@
 #include "RigidBody.h"
+
 #include "../../Scene.h"
 #include "../../physics/PhysicsManager.h"
-#include "../../core/Math.h"
+#include "../../core/math/glm2bt.h"
 
 zephyr::cbs::RigidBody::RigidBody(class Object& object, ID_t id, btScalar mass, btCollisionShape* shape, int group, int mask)
     : Component(object, id)

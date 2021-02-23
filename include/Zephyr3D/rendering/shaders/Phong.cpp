@@ -181,7 +181,7 @@ zephyr::rendering::Phong::StaticModel::Mesh::Mesh(const aiMesh& mesh, const aiSc
         const aiFace& face = mesh.mFaces[i];
         indices.insert(indices.end(), face.mIndices, face.mIndices + face.mNumIndices);
     }
-    m_IndicesCount = indices.size();
+    m_IndicesCount = static_cast<GLsizei>(indices.size());
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(indices[0]), indices.data(), GL_STATIC_DRAW);

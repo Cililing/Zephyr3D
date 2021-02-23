@@ -3,7 +3,7 @@
 
 #include "IPhysicsManager.h"
 #include "PhysicsRenderer.h"
-#include "../debuging/Logger.h"
+#include "../core/debugging/Logger.h"
 
 #pragma warning(push, 0)
 #include "btBulletDynamicsCommon.h"
@@ -11,10 +11,10 @@
 #include "BulletDynamics/MLCPSolvers/btMLCPSolver.h"
 #include "BulletDynamics/MLCPSolvers/btDantzigSolver.h"
 #include "BulletCollision/CollisionDispatch/btGhostObject.h"
+#pragma warning(pop)
 
 #include <assert.h>
 #include <vector>
-#pragma warning(pop)
 
 namespace zephyr::physics {
 

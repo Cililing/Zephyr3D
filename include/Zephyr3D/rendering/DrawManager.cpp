@@ -1,13 +1,14 @@
 #include "DrawManager.h"
+
 #include "ICamera.h"
 #include "IDrawable.h"
 #include "IGUIWidget.h"
 #include "shaders/PureColor.h"
 #include "shaders/PureTexture.h"
 #include "shaders/Phong.h"
-
 #include "../ZephyrEngine.h"
-#include "../utilities/WindowManager.h"
+#include "../core/WindowManager.h"
+#include "../core/debugging/Logger.h"
 #include "../cbs/components/Camera.h"
 
 void zephyr::rendering::DrawManager::Initialize() {
@@ -16,7 +17,7 @@ void zephyr::rendering::DrawManager::Initialize() {
     // Dear imgui initialiation
     ImGui::CreateContext();
     ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(ZephyrEngine::Instance().Window(), true);
+    ImGui_ImplGlfw_InitForOpenGL(ZephyrEngine::Instance().Window().Handle(), true);
     ImGui_ImplOpenGL3_Init("#version 330 core");
 
     // Load default font
@@ -112,7 +113,7 @@ void zephyr::rendering::DrawManager::CallDraws() {
     ImGui::EndFrame();
 
     // End of drawing
-    glfwSwapBuffers(ZephyrEngine::Instance().Window());
+    glfwSwapBuffers(ZephyrEngine::Instance().Window().Handle());
 }
 
 zephyr::rendering::ShaderProgram* zephyr::rendering::DrawManager::Shader(const std::string& name) {

@@ -1,5 +1,8 @@
 #include "PhysicsRenderer.h"
 
+#include "../core/debugging/Logger.h"
+#include "../core/math/glm2bt.h"
+
 zephyr::physics::PhysicsRenderer::PhysicsRenderer(zephyr::rendering::DrawManager& draw_manager)
     : m_DebugMode(0) {
     m_DebugShader = (zephyr::rendering::Debug*)draw_manager.Shader("Debug");

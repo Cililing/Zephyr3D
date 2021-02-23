@@ -2,8 +2,6 @@
 #define PhysicsRenderer_h
 
 #include "../rendering/DrawManager.h"
-#include "../debuging/Logger.h"
-#include "../core/Math.h"
 
 #pragma warning(push, 0)
 #include <LinearMath/btIDebugDraw.h>

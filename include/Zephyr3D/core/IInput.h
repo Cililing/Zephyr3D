@@ -10,8 +10,7 @@ namespace zephyr {
 
 class IInput {
 public:
-    // Old style enums to allow easy check
-    enum EKeyState {
+    enum class EKeyState {
         FREE = 0,   // The key is not being pressed nor has been
         PRESSED,    // The key is pressed in this frame
         HOLD,       // The key is still being pressed

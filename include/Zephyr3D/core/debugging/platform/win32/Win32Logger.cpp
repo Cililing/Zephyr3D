@@ -1,25 +1,25 @@
 #include "Win32Logger.h"
 
-Logger& Logger::Instance() {
+zephyr::Logger& zephyr::Logger::Instance() {
     static Logger instance;
 
     return instance;
 }
 
-Logger::Logger() {
+zephyr::Logger::Logger() {
     m_ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     m_ChannelMask = EChannel::Info | EChannel::Warning | EChannel::Error;
 }
 
-void Logger::Push(EChannel channel) {
+void zephyr::Logger::Push(EChannel channel) {
     m_ChannelMask = m_ChannelMask | channel;
 }
 
-void Logger::Pop(EChannel channel) {
+void zephyr::Logger::Pop(EChannel channel) {
     m_ChannelMask = m_ChannelMask | (~channel);
 }
 
-void Logger::InfoLog(ESender sender, const char* file, int line, const char* format, ...) {
+void zephyr::Logger::InfoLog(ESender sender, const char* file, int line, const char* format, ...) {
     if (static_cast<unsigned char>(m_ChannelMask & EChannel::Info)) {
         SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(sender));
 
@@ -31,11 +31,11 @@ void Logger::InfoLog(ESender sender, const char* file, int line, const char* for
         va_end(argptr);
 
         // Return to default state white text on black background
-        SetConsoleTextAttribute(m_ConsoleHandle, 15);
+        SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(ESender::None));
     }
 }
 
-void Logger::WarningLog(ESender sender, const char* file, int line, const char* format, ...) {
+void zephyr::Logger::WarningLog(ESender sender, const char* file, int line, const char* format, ...) {
     if (static_cast<unsigned char>(m_ChannelMask & EChannel::Warning)) {
         SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(sender));
 
@@ -47,11 +47,11 @@ void Logger::WarningLog(ESender sender, const char* file, int line, const char* 
         va_end(argptr);
 
         // Return to default state white text on black background
-        SetConsoleTextAttribute(m_ConsoleHandle, 15);
+        SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(ESender::None));
     }
 }
 
-void Logger::ErrorLog(ESender sender, const char* file, int line, const char* format, ...) {
+void zephyr::Logger::ErrorLog(ESender sender, const char* file, int line, const char* format, ...) {
     if (static_cast<unsigned char>(m_ChannelMask & EChannel::Error)) {
         SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(sender));
 
@@ -63,6 +63,6 @@ void Logger::ErrorLog(ESender sender, const char* file, int line, const char* fo
         va_end(argptr);
 
         // Return to default state white text on black background
-        SetConsoleTextAttribute(m_ConsoleHandle, 15);
+        SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(ESender::None));
     }
 }

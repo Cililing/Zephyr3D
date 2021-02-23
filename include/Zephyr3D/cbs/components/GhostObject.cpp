@@ -1,7 +1,7 @@
 #include "GhostObject.h"
 #include "../Object.h"
 #include "../../Scene.h"
-#include "../../core/Math.h"
+#include "../../core/math/glm2bt.h"
 
 zephyr::cbs::GhostObject::GhostObject(class Object& object, ID_t id, btCollisionShape* shape, int group, int mask)
     : Component(object, id)

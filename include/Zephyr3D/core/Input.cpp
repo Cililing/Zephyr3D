@@ -20,6 +20,15 @@ zephyr::InputManager::InputManager()
 }
 #pragma warning(default: 26495)
 
+void zephyr::InputManager::Initialize() {
+    GLFWwindow* context = glfwGetCurrentContext();
+
+    glfwSetKeyCallback(context, key_callback);
+    glfwSetCursorPosCallback(context, mouse_callback);
+    glfwSetScrollCallback(context, scroll_callback);
+    glfwSetInputMode(context, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
 void zephyr::InputManager::Update(GLFWwindow *window) {
     m_AnyKeyPressed = false;
     m_AnyKeyHold = false;
@@ -91,6 +100,10 @@ bool zephyr::InputManager::KeyReleased(int glfw_key_enum) const {
 
 zephyr::InputManager::EKeyState zephyr::InputManager::KeyState(int glfw_key_enum) const {
     return m_Keys[glfw_key_enum];
+}
+
+void zephyr::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+
 }
 
 void zephyr::mouse_callback(GLFWwindow* window, double x_pos, double y_pos) {

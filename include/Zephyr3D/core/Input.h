@@ -11,12 +11,14 @@
 namespace zephyr {
 
 class InputManager : public IInput {
+    friend void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
     friend void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);
     friend void scroll_callback(GLFWwindow* window, double x_offset, double y_offset);
 
 public:
     InputManager();
 
+    void Initialize();
     void Update(GLFWwindow *window);
 
     bool AnyKeyPressed() const { return m_AnyKeyPressed; }
@@ -45,6 +47,7 @@ private:
     glm::vec2 m_MouseOffset;
 };
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);
 void scroll_callback(GLFWwindow* window, double x_pos, double y_pos);
 

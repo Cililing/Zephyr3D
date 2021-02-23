@@ -3,8 +3,10 @@
 
 #include "ICamera.h"
 
+#pragma warning(push, 0)
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/rotate_vector.hpp>
+#pragma warning(pop)
 
 namespace zephyr::rendering {
 

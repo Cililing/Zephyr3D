@@ -1,6 +1,10 @@
 #include "ResourcesManager.h"
 
+#include "../core/debugging/Logger.h"
+
 #include <assimp/postprocess.h>
+
+#undef LoadImage
 
 zephyr::resources::Image& zephyr::resources::ResourcesManager::LoadImage(std::string path) {
     if (m_Textures.find(path) == m_Textures.end()) {

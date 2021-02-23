@@ -1,14 +1,12 @@
 #ifndef Image_h
 #define Image_h
 
-#include "../debuging/Logger.h"
-
 #pragma warning(push, 0)
 #include <stb_image.h>
+#pragma warning(pop)
 
 #include <iostream>
 #include <string>
-#pragma warning(pop)
 
 namespace zephyr::resources {
 

@@ -1,6 +1,6 @@
-#include "Math.h"
+#include "glm2bt.h"
 
-glm::vec3 Vector3(const btVector3& vector) {
+glm::vec3 zephyr::Vector3(const btVector3& vector) {
     return glm::vec3(
         vector.getX(),
         vector.getY(),
@@ -8,7 +8,7 @@ glm::vec3 Vector3(const btVector3& vector) {
     );
 }
 
-btVector3 Vector3(const glm::vec3& vector) {
+btVector3 zephyr::Vector3(const glm::vec3& vector) {
     return btVector3(
         vector.x,
         vector.y,
@@ -16,7 +16,7 @@ btVector3 Vector3(const glm::vec3& vector) {
     );
 }
 
-glm::quat Quaternion(const btQuaternion& quaternion) {
+glm::quat zephyr::Quaternion(const btQuaternion& quaternion) {
     return glm::quat(
         quaternion.getW(),
         quaternion.getX(),
@@ -25,7 +25,7 @@ glm::quat Quaternion(const btQuaternion& quaternion) {
     );
 }
 
-btQuaternion Quaternion(const glm::quat& quaternion) {
+btQuaternion zephyr::Quaternion(const glm::quat& quaternion) {
     return btQuaternion(
         quaternion.x,
         quaternion.y,
@@ -34,12 +34,12 @@ btQuaternion Quaternion(const glm::quat& quaternion) {
     );
 }
 
-std::ostream& operator<<(std::ostream& os, const btVector3& vector) {
+std::ostream& zephyr::operator<<(std::ostream& os, const btVector3& vector) {
     os << vector.x() << ", " << vector.y() << ", " << vector.z();
     return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const glm::vec3& vector) {
+std::ostream& zephyr::operator<<(std::ostream& os, const glm::vec3& vector) {
     os << vector.x << ", " << vector.y << ", " << vector.z;
     return os;
 }

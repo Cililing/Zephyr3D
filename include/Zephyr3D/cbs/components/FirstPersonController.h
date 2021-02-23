@@ -5,8 +5,8 @@
 #include "Transform.h"
 #include "../connections/PropertyIn.h"
 
-#define GLM_ENABLE_EXPERIMENTAL
 #pragma warning(push, 0)
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/vector_angle.hpp>
 #pragma warning(pop)
 

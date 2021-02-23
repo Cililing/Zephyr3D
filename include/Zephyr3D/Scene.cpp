@@ -27,9 +27,8 @@ void zephyr::Scene::Run(Clock& clock, InputManager& input_manager) {
     // Game loop
     while (m_Running && !ZephyrEngine::Instance().Window().ShouldClose()) {
         clock.Update();
-        input_manager.Update(ZephyrEngine::Instance().Window());
+        input_manager.Update(ZephyrEngine::Instance().Window().Handle());
 
-        // Update global systems
         while (clock.DeltaTime() < m_FrameRateLimit) {
             clock.HoldFrame();
             glfwPollEvents();

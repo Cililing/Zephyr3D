@@ -1,7 +1,7 @@
 #include "ZephyrEngine.h"
 #include "Scene.h"
 
-int zephyr::ZephyrEngine::Init() {
+void zephyr::ZephyrEngine::Initialize(unsigned int window_width, unsigned int window_height, const std::string& window_title) {
     // Initialize OpenGL
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -10,32 +10,16 @@ int zephyr::ZephyrEngine::Init() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_SAMPLES, 4);
 
-    // Create window
-    m_WindowManager.Initialize(1920, 1080, "Zephyr3D");
-    if (!m_WindowManager) {
-        glfwTerminate();
-        std::cout << "Failed to create GLFW window\n";
-        return EXIT_FAILURE;
-    }
-    glfwMakeContextCurrent(m_WindowManager);
+    m_WindowManager.Initialize(window_width, window_height, window_title);
 
     // Load glad
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cout << "Failed to initialize GLAD\n";
-        return EXIT_FAILURE;
-    }
+    auto glad_result = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
-    // Set callbacks
-    glfwSetFramebufferSizeCallback(m_WindowManager, framebuffer_size_callback);
-    glfwSetCursorPosCallback(m_WindowManager, mouse_callback);
-    glfwSetScrollCallback(m_WindowManager, scroll_callback);
-
-    glfwSetInputMode(m_WindowManager, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    return EXIT_SUCCESS;
+    m_InputManager.Initialize();
 }
 
 void zephyr::ZephyrEngine::Destroy() {
-    glfwSetWindowShouldClose(m_WindowManager, true);
+    glfwSetWindowShouldClose(m_WindowManager.Handle(), true);
     glfwTerminate();
 }
 
