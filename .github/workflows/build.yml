@@ -15,9 +15,11 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Prepare env
         run: |
-         mkdir -p $HOME/.local/bin
-         cp $(which ls) $HOME/.local/bin/lets-see
-         echo ::add-path::$HOME/.local/bin
+          mkdir -p $HOME/.local/bin
+          cp $(which ls) $HOME/.local/bin/lets-see
+          echo ::add-path::$HOME/.local/bin
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       - name: Download Conan package manager.
         run: |
            pip3 install wheel setuptools
