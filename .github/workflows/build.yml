@@ -14,7 +14,7 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Prepare env
-         run: |
+        run: |
          mkdir -p $HOME/.local/bin
          cp $(which ls) $HOME/.local/bin/lets-see
          echo ::add-path::$HOME/.local/bin
