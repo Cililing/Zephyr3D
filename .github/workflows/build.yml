@@ -34,6 +34,14 @@ jobs:
           mkdir build
           conan install .
           cmake . -G "Unix Makefiles"
+      - name: Install build wrapper
+        run: |
+          wget https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
+          unzip build-wrapper-linux-x86.zip build-wrapper
+          cd build-wrpper && export PATH=$PATH:$(pwd)
+      - name: wrap build
+        run: |
+          build-wrapper-linux-x86-64 --out-dir=bw-outputs make clean install
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
