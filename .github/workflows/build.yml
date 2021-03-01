@@ -30,7 +30,7 @@ jobs:
       - name: build
         run: |
           mkdir build
-          conan instal .
+          conan install .
           cmake . -G "Unix Makefiles"
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
