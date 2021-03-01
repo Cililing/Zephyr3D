@@ -20,13 +20,15 @@ jobs:
           echo ::add-path::$HOME/.local/bin
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-      - name: Download Conan package manager.
+      - name: Download Conan package manager and setup required repositories.
         run: |
            pip3 install wheel setuptools
            pip3 install conan
            export PATH=$PATH:/home/runner/.local/bin
            echo $PATH
            conan --version
+           conan remote add bincrafters https://bincrafters.jfrog.io/artifactory/api/conan/public-conan
+           conan config set general.revisions_enabled=1
       - name: build
         run: |
           mkdir build
