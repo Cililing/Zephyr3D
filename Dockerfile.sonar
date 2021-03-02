@@ -1,0 +1,12 @@
+# Use sonar-scanner image
+FROM sonarsource/sonar-scanner-cli:4.5
+ARG SONAR_SCANNER_HOME=/opt/sonar-scanner
+ARG NODEJS_HOME=/opt/nodejs
+ENV PATH=${PATH}:${SONAR_SCANNER_HOME}/bin:${NODEJS_HOME}/bin
+WORKDIR /opt
+
+# Prepare entrypoint
+USER root
+COPY entrypoint.scanner.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint/sh"]

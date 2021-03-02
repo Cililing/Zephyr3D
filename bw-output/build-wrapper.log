@@ -1,0 +1,30 @@
+Tue Mar 02 13:25:02 2021: build-wrapper, version 6.17 (macosx-x86)
+Tue Mar 02 13:25:02 2021: System name: Darwin Nodename: pmaterna Release: 19.6.0 Version: Darwin Kernel Version 19.6.0: Mon Aug 31 22:12:52 PDT 2020; root:xnu-6153.141.2~1/RELEASE_X86_64 Machine: x86_64
+Tue Mar 02 13:25:02 2021: socket path: /tmp/build-wrapper-socket.4yDv10
+Tue Mar 02 13:25:02 2021: dynamic library found: /Users/opera_user/Library/build-wrapper/libinterceptor.dylib
+Tue Mar 02 13:25:02 2021: command executed as: <build-wrapper-macosx-x86>
+Tue Mar 02 13:25:02 2021: command line received: <make clean all>
+Tue Mar 02 13:25:02 2021: env 0: <TERM_PROGRAM=Apple_Terminal>
+Tue Mar 02 13:25:02 2021: env 1: <SHELL=/bin/zsh>
+Tue Mar 02 13:25:02 2021: env 2: <TERM=xterm-256color>
+Tue Mar 02 13:25:02 2021: env 3: <TMPDIR=/var/folders/2z/m4gmhlvs6tl1df7sl2mtzypm0000cm/T/>
+Tue Mar 02 13:25:02 2021: env 4: <TERM_PROGRAM_VERSION=433>
+Tue Mar 02 13:25:02 2021: env 5: <TERM_SESSION_ID=701F744E-4224-41D0-B4AA-87D5B5AEAF0B>
+Tue Mar 02 13:25:02 2021: env 6: <USER=opera_user>
+Tue Mar 02 13:25:02 2021: env 7: <SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.plGGaE437P/Listeners>
+Tue Mar 02 13:25:02 2021: env 8: <PATH=/usr/local/sbin:/Library/TeX/texbin/:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Wireshark.app/Contents/MacOS:/Users/opera_user/Library/Android/sdk/platform-tools/:/Users/opera_user/Library/build-wrapper>
+Tue Mar 02 13:25:02 2021: env 9: <PWD=/Users/opera_user/cpp/Zephyr3D>
+Tue Mar 02 13:25:02 2021: env 10: <XPC_FLAGS=0x0>
+Tue Mar 02 13:25:02 2021: env 11: <XPC_SERVICE_NAME=0>
+Tue Mar 02 13:25:02 2021: env 12: <SHLVL=1>
+Tue Mar 02 13:25:02 2021: env 13: <HOME=/Users/opera_user>
+Tue Mar 02 13:25:02 2021: env 14: <LOGNAME=opera_user>
+Tue Mar 02 13:25:02 2021: env 15: <OLDPWD=/Users/opera_user/cpp/Zephyr3D/build_wrapper_output_directory>
+Tue Mar 02 13:25:02 2021: env 16: <JAVA_HOME=/usr/bin/java>
+Tue Mar 02 13:25:02 2021: env 17: <EDITOR=/usr/bin/nano>
+Tue Mar 02 13:25:02 2021: env 18: <LC_CTYPE=UTF-8>
+Tue Mar 02 13:25:02 2021: env 19: <_=/Users/opera_user/Library/build-wrapper/build-wrapper-macosx-x86>
+Tue Mar 02 13:25:02 2021: executing: <make clean all>
+Tue Mar 02 13:25:02 2021: initializing json file
+Tue Mar 02 13:25:04 2021: finalizing json file
+Tue Mar 02 13:25:04 2021: returned with code: 1

@@ -1,0 +1,49 @@
+FROM ubuntu:latest
+
+# configure shell...
+ENV DEBIAN_FRONTEND=noninteractive 
+ENV DEBCONF_NONINTERACTIVE_SEEN=true
+
+RUN apt-get update && apt-get -y upgrade
+
+# Tools
+RUN apt-get -y install wget && \
+    apt-get -y install unzip && \
+    apt-get -y install python3-pip
+
+# Libraries
+RUN apt-get install -y libgl1-mesa-dev
+RUN apt-get install -y cmake
+
+# install and configure conan
+RUN pip3 install wheel setuptools
+RUN pip3 install conan
+ENV PATH=$PATH:/home/runner/.local/bin
+RUN conan remote add bincrafters https://bincrafters.jfrog.io/artifactory/api/conan/public-conan
+RUN conan config set general.revisions_enabled=1
+
+# change dir
+RUN mkdir zephyr
+WORKDIR /zephyr
+
+# install build-wrapper
+RUN wget https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
+RUN unzip build-wrapper-linux-x86.zip
+RUN ls -lah
+RUN cd build-wrapper-linux-x86 && export PATH=$PATH:$(pwd)
+
+# clone repo
+COPY . .
+
+# conan and build :)
+RUN mkdir build && cd build && conan install .. 
+RUN cd build && cmake .. -G "Unix Makefiles"
+
+# DEBUG
+RUN find . -type f
+
+# run wrapper
+RUN build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir=bw-outputs make install
+
+# DEBUG
+RUN find . -type f
