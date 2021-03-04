@@ -43,7 +43,8 @@ RUN cd build && cmake .. -G "Unix Makefiles"
 RUN find . -type f
 
 # run wrapper
-RUN build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir=bw-outputs make install
+RUN ./build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir=bw-outputs cmake . -G "Unix Makefiles"
+# cmake .. -G "Unix Makefiles"
 
 # DEBUG
 RUN find . -type f
